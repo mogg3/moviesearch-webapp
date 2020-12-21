@@ -1,0 +1,17 @@
+.menu {
+    display: flex;
+    list-style: none;
+    background-color: aqua;
+    border: solid black;
+}
+
+.menu-button {
+    font-size: x-large;
+    margin: auto;
+    border:solid rgb(0, 101, 253) 1px;
+}
+
+.footer {
+    background-color: rgb(218, 25, 25);
+    text-align:center;
+}
