@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MovieBuff</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+    <header>
+        <div>
+            <nav>
+                <ul class = "menu">
+                    <li class="menu-button">
+                        <a href="">
+                            Main
+                        </a>
+                    </li>
+
+                    <li class="menu-button">
+                        <a href="">
+                            Friends
+                        </a>
+                    </li>
+
+                    <li class="menu-button">
+                        <a href="">
+                            Watch List
+                        </a>
+                    </li>
+
+                    <li class="menu-button">
+                        <a href="">
+                            Login/Signup
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+<footer class="footer">
+    <p>MovieBuff , copyright © 2020</p>
+</footer>
+</body>
+</html>
