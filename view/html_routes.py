@@ -26,9 +26,11 @@ def profile():
         return render_template('index.html')
     return render_template('profile.html', username=username)
 
+
 @app.route('/friends')
 def friends():
     return render_template("friends.html")
+
 
 @app.errorhandler(404)
 def handler404(_):
