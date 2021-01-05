@@ -4,7 +4,6 @@ from flask import render_template, session
 
 @app.route('/login')
 def login():
-    #session['username'] = username
     return render_template('login.html')
 
 
@@ -22,20 +21,10 @@ def profile():
 def create_account():
     return render_template('create_account.html')
 
+
 @app.route('/edit_account')
 def edit_account():
     return render_template('edit_account.html')
-
-
-# @app.route("/logout")
-# def logout():
-#     session.clear()
-#     return None
-#     return render_template('index.html')
-    # username = session['username']
-    # if username is None:
-    #     return render_template('index.html')
-    # return render_template('profile.html', username=username)
 
 
 @app.route('/friends')
