@@ -17,6 +17,9 @@ def index():
 def profile():
     return render_template('profile.html')
 
+@app.route('/watchlist')
+def watchlist():
+    return render_template('watchlist.html')
 
 @app.route('/create_account')
 def create_account():
