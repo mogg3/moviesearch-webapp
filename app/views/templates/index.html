@@ -1,18 +1,28 @@
 {% extends "base.html" %}
 
-{% block  content %}
-<head>
+{% block extra_head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index_style.css') }}"/>
-</head>
-<body>
-    <div id="title">
-        <span>MovieBuff</span>
-    </div>
-    <div id="search-bar">
-        <input type="text" placeholder="search">
-    </div>
-</body>
 {% endblock %}
 
+{% block  content %}
+<div id="title">
+    <span>MovieBuff</span>
+</div>
+<div id="search-bar" class="search_bar">
+    <form action="/" method="POST">
+        <input type="text" placeholder="Search.." name="search">
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<div class="matching-movies">
+    {% for title in title_list %}
+        <div class="movie"><p>{{title}}</p></div>
+    {% endfor %}
+</div>
+<button><img src="{{ poster }}"/></button>
+{% endblock %}
+
+{% block  script %}
+{% endblock%}
 
 
