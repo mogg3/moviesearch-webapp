@@ -8,12 +8,12 @@
 <div id="search-bar">
 
      <form action="/" method="POST">
-       <input type="text" placeholder="Search.." name="search">
+       <input type="text" placeholder="Search.." id='search_word' name="search">
        <input type="submit" value="Submit">
     </form>
 </div>
     <p>{{ title }}</p>
-   <button><img src="{{ poster }}"/></button>
+    <a href="{{ url_for('movie', title=title) }}"><img src="{{ poster }}"/></a>
 
 </body>
 {% endblock %}
