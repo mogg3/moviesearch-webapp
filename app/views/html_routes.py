@@ -1,5 +1,5 @@
 from views import app
-from flask import render_template, session, request
+from flask import render_template, session, request, redirect, url_for
 
 from views.api_routes import get_movie_by_title_first, get_movies_by_title
 
@@ -10,8 +10,11 @@ def login():
     return render_template('login.html')
 
 
+movie_information = None
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    global movie_information
 
     if request.method == 'POST':
         title = request.form['search']
@@ -23,12 +26,12 @@ def index():
     return render_template("index.html")
 
 
+
 @app.route('/movie/<title>')
 def movie(title):
 
-    movie_information = get_movie_by_title_first(title)
+    return render_template('movie.html', title=title, movie_information=movie_information)
 
-    return render_template('movie.html', movie_information=movie_information)
 
 
 @app.route('/profile')
