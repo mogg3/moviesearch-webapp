@@ -1,20 +1,18 @@
 {% extends "base.html" %}
 
-
 {% block  content %}
-<body>
-<div id="title">
-    <span>MovieBuff</span>
-</div>
-<div id="search-bar">
 
+<div id="title">
+    <h1>MovieBuff</h1>
+</div>
+
+<div id="search-bar">
      <form action="/" method="POST">
-       <input type="text" placeholder="Search.." id='search_word' name="search">
-       <input type="submit" value="Submit">
+         <input type="text" placeholder="Search.." name="search">
+         <button type="submit">Submit</button>
     </form>
 </div>
     <p>{{ title }}</p>
     <a href="{{ url_for('movie', title=title ) }}"><img src="{{ poster }}"/></a>
 
-</body>
 {% endblock %}
