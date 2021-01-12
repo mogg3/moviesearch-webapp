@@ -1,20 +1,19 @@
-from views import app
+from views import app, user_datastore, db
 from flask import render_template, session, request, redirect, url_for
 
 from views.api_routes import get_movie_by_title_first, get_movies_by_title
-
 
 @app.route('/login')
 def login():
     #session['username'] = username
     return render_template('login.html')
 
-
 movie_information = None
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     global movie_information
+    user_datastore.create_user(email='New@new.se', password='secret')
 
     if request.method == 'POST':
         title = request.form['search']
@@ -29,7 +28,6 @@ def index():
 
 @app.route('/movie/<title>')
 def movie(title):
-
     return render_template('movie.html', title=title, movie_information=movie_information)
 
 
@@ -44,6 +42,7 @@ def watchlist():
 
 @app.route('/create_account')
 def create_account():
+
     return render_template('create_account.html')
 
 @app.route('/edit_account')
