@@ -5,7 +5,7 @@ from views import app, user_datastore
 from flask import render_template, session, request, redirect, url_for
 
 from views.api_routes import get_movie_by_title_first
-from views.utils.flask_wtf import RegisterForm, LoginForm
+from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 
 
 @app.route('/', methods=['GET', 'POST'])

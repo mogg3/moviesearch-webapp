@@ -3,16 +3,12 @@ from flask_mongoengine import MongoEngine
 from flask_security import MongoEngineUserDatastore, \
     UserMixin, RoleMixin, Security, roles_required
 
+import config
+
 app = Flask(__name__)
+app.config.from_object(config)
 
-app.config['MONGODB_SETTINGS'] = {
-    'connect': False,
-    'host': "mongodb://root:s3cr37@localhost:27028/movie_web_app?authSource=admin"
-}
-
-app.secret_key = 'super secret key'
 db = MongoEngine(app)
-app.config['SECURITY_PASSWORD_SALT'] = 'lkjsdflkilkjsdlkjndlkk'
 
 class Role(db.Document, RoleMixin):
     name = db.StringField(max_length=80, unique=True)

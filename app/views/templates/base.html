@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>MovieBuff</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_style.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mainstyles.css') }}"/>
+    {% block links %}
+    {% endblock %}
 </head>
 <body>
-{% include "menu.html" %}
 
 {% block content %}
 {% endblock %}
 
-<footer class="footer">
-    <p>MovieBuff , copyright © 2020</p>
-</footer>
+
+    <footer class="footer">
+        <p>MovieBuff , copyright © 2020</p>
+    </footer>
+
+
 </body>
 </html>
