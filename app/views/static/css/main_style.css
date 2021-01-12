@@ -1,11 +1,11 @@
-.menu {
+#site-navigation {
     display: flex;
     list-style: none;
     background-color: aqua;
     border: solid black;
 }
 
-.menu-link {
+.site-navigation__link {
     font-size: x-large;
     margin: auto;
     border:solid rgb(0, 101, 253) 1px;
