@@ -3,41 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>MovieBuff</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
-    {% block extra_head %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_style.css') }}"/>
 </head>
 <body>
-<header id="head_test" >
-    <div>
-        <nav>
-            <ul class="menu">
-                <li class="menu-button">
-                    <a href="{{ url_for('index')}}">
-                        Main
-                    </a>
-                </li>
-
-                <li class="menu-button">
-                    <a href="{{ url_for('friends')}}">
-                        Friends
-                    </a>
-                </li>
-
-                <li class="menu-button" >
-                     <a href="{{ url_for('watchlist')}}">
-                        Watch List
-                    </a>
-                </li>
-
-                <li class="menu-button">
-                    <a href="{{ url_for('login')}}">
-                        Login/Signup
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
+{% include "menu.html" %}
 
 {% block content %}
 {% endblock %}
@@ -45,7 +14,5 @@
 <footer class="footer">
     <p>MovieBuff , copyright © 2020</p>
 </footer>
-{% block script %}
-{% endblock %}
 </body>
 </html>
