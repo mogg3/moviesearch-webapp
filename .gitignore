@@ -3,4 +3,4 @@ venv/
 __pycache__/
 app/views/api_settings/
 app/data/MongoDB/db/db_settings
-docker-compdose.yml
+docker-compose.yml
