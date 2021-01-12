@@ -1,5 +1,5 @@
-from flask_login import login_required, login_manager
-from flask_security.utils import hash_password, login_user
+from flask_login import login_required, login_manager, current_user
+from flask_security.utils import hash_password, login_user, logout_user
 
 from views import app, user_datastore
 from flask import render_template, session, request, redirect, url_for
@@ -50,11 +50,17 @@ def signin():
         print(form.errors)
     return render_template('signin.html', form=form)
 
+@app.route("/signout")
+def signout():
+    logout_user()
+    print("Signing out")
+    return render_template('index.html')
+
 
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')
+    return render_template('profile.html', first_name=current_user.first_name)
 
 
 @app.route('/edit_account')
