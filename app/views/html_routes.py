@@ -1,14 +1,14 @@
 from flask_login import login_required, login_manager, current_user
 from flask_security.utils import hash_password, login_user, logout_user
 
-from views import app, user_datastore
+
 from flask import render_template, session, request, redirect, url_for
 
+from controllers.user_controller import get_user_by_email, create_user
 from views.api_routes import get_movie_by_title_first
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
+from views import app
 
-def is_authenticated():
-    return 'username' in session
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -18,16 +18,17 @@ def index():
         title = request.form['search']
         movie_information = get_movie_by_title_first(title)
         return render_template("index.html", movie_information=movie_information, title=movie_information['Title'],
-                               poster=movie_information['Poster'], authenticated = is_authenticated())
+                               poster=movie_information['Poster'])
 
-    return render_template("index.html", authenticated = is_authenticated())
+    return render_template("index.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
     if request.method == "POST":
-        user_datastore.create_user(
+
+        create_user(
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             email=form.email.data,
@@ -42,10 +43,11 @@ def signin():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = user_datastore.find_user(email=form.email.data)
+        user = get_user_by_email(email=form.email.data)
         print(user.__str__)
         if user:
             login_user(user, remember=form.remember.data)
+            # session['email'] = user.email
             return redirect(url_for('profile'))
     else:
         print(form.errors)
@@ -55,8 +57,7 @@ def signin():
 def signout():
     logout_user()
     print("Signing out")
-    return render_template('index.html', authenticated = is_authenticated())
-
+    return render_template('index.html')
 
 @app.route('/profile')
 @login_required

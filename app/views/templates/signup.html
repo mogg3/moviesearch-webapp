@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_acc_style.css') }}"/>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block links %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}"/>
+{% endblock %}
+
+{% block content %}
+
 <div class="sign_up_box">
     <form class="sign_up_form" action="/signup" method="POST">
+
         {{ form.scrf_token }}
         {{ form.first_name.label }} {{ form.first_name(size=50) }} <br />
         {{ form.last_name.label }} {{ form.last_name(size=50) }} <br />
@@ -15,20 +16,21 @@
         {{ form.username.label }} {{ form.username() }} <br />
         {{ form.password.label }} {{ form.password() }} <br />
 
-        <div class="checkboxes">
-            <input type="checkbox" id="aggree">
-                <label for="aggree">I agree to the MovieBuff Terms of service and Privacy policy.</label><br>
+        <div class="checkbox">
+            <input type="checkbox" id="terms-agreement">
+                <label for="terms-agreement">I agree to the MovieBuff Terms of service and Privacy policy.</label><br>
             <input type="checkbox" id="subscribe">
                 <label for="subscribe">I wish to subscribe to MovieBuff newsletter.</label>
         </div>
+
         <div class="create_account">
             <button type="submit" id="create_account">Create Account</button>
         </div>
     </form>
-    <div class="login">
+    <div class="sign-in">
         <a>Already have an account?</a>
-        <a href="" id="login_link"> Login here.</a>
+        <a href="" id="sign-in__link"> Login here.</a>
     </div>
 </div>
-</body>
-</html>
+
+{% endblock %}
