@@ -27,7 +27,7 @@
     height: 40px;
 }
 
-.login{
+.sign-in{
     margin-top: 20px;
     display: flex;
     flex-direction: row;
@@ -35,7 +35,7 @@
     margin-right: auto;
 }
 
-#login_link{
+#sign-in__link{
     margin-left: 10px;
 }
 

@@ -1,25 +1,44 @@
 <ul id="site-navigation">
-    <li class="site-navigation__link">
-        <a href="{{ url_for('index') }}">
-            Main
-        </a>
-    </li>
 
-    <li class="site-navigation__link">
-        <a href="{{ url_for('friends') }}">
-            Friends
-        </a>
-    </li>
+     {% if current_user.is_authenticated %}
 
-    <li class="site-navigation__link" >
-         <a href="{{ url_for('watchlist') }}">
-            Watch List
-        </a>
-    </li>
+         <li class="site-navigation__link">
+            <a href="{{ url_for('index') }}">
+                Main
+            </a>
+         </li>
+        <li class="site-navigation__link">
+            <a href="{{ url_for('profile') }}">
+                Profile
+            </a>
+        </li>
 
-    <li class="site-navigation__link">
-        <a href="{{ url_for('signin') }}">
-            Login/Signup
-        </a>
-    </li>
+         <li class="site-navigation__link" >
+             <a href="{{ url_for('watchlist') }}">
+                Watch List
+            </a>
+        </li>
+
+         <li class="site-navigation__link">
+            <a href="{{ url_for('friends') }}">
+                Friends
+            </a>
+        </li>
+
+         <li class="site-navigation__link">
+            <a href="{{ url_for('signout') }}">
+                Sign out
+            </a>
+        </li>
+
+     {% else %}
+
+         <li class="site-navigation__link" >
+            <a href="{{ url_for('signin') }}">
+                Sign in / Sign up
+            </a>
+         </li>
+
+    {% endif %}
+
 </ul>
