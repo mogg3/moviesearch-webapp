@@ -7,6 +7,8 @@ from flask import render_template, session, request, redirect, url_for
 from views.api_routes import get_movie_by_title_first
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 
+def is_authenticated():
+    return 'username' in session
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -16,9 +18,9 @@ def index():
         title = request.form['search']
         movie_information = get_movie_by_title_first(title)
         return render_template("index.html", movie_information=movie_information, title=movie_information['Title'],
-                               poster=movie_information['Poster'])
+                               poster=movie_information['Poster'], authenticated = is_authenticated())
 
-    return render_template("index.html")
+    return render_template("index.html", authenticated = is_authenticated())
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -44,7 +46,6 @@ def signin():
         print(user.__str__)
         if user:
             login_user(user, remember=form.remember.data)
-            # session['email'] = user.email
             return redirect(url_for('profile'))
     else:
         print(form.errors)
@@ -54,7 +55,7 @@ def signin():
 def signout():
     logout_user()
     print("Signing out")
-    return render_template('index.html')
+    return render_template('index.html', authenticated = is_authenticated())
 
 
 @app.route('/profile')

@@ -7,6 +7,11 @@
 </div>
 
 <div id="search-bar">
+    {% if authenticated %}
+        <h1>Logged in</h1>
+    {% else %}
+        <h1>Not logged in</h1>
+    {% endif %}
      <form action="/" method="POST">
          <input type="text" placeholder="Search.." name="search">
          <button type="submit">Submit</button>

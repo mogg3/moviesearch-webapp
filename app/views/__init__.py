@@ -14,6 +14,7 @@ app.secret_key = 'super secret key'
 db = MongoEngine(app)
 app.config['SECURITY_PASSWORD_SALT'] = 'lkjsdflkilkjsdlkjndlkk'
 
+
 class Role(db.Document, RoleMixin):
     name = db.StringField(max_length=80, unique=True)
     description = db.StringField(max_length=255)
