@@ -1,9 +1,18 @@
+.matching-movies img{
+    width: 150px;
+    height: auto;
+}
+
 .matching-movies {
     display: flex;
-    flex-direction: row;
 }
 
 .movie {
     background-color: lightgray;
     margin: 10px;
 }
+
+a {
+    height: 10px;
+}
+
