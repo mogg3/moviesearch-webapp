@@ -13,24 +13,28 @@
 
         </form>
     </div>
-        <p id="title">{{ title }}</p>
-        <a href="{{ url_for('movie', title=title ) }}"><img src="{{ poster }}"/></a>
+        <div class="matching-movies">
+        {% for movie in movies %}
+            <div class="movie">
+                <a>{{ movie["Title"] }}</a> </br>
+                <a href="{{ url_for('movie', title=movie["Title"] ) }}"><img src="{{ movie['Poster'] }}"/></a>
+            </div>
+        {% endfor %}
+        </div>
+
     <script>
-
-    $(search).keyup(()=> {
-        $.ajax ({
-            method: 'POST',
-            url: 'http://127.0.0.1:5000/search',
-            data: {'current_value': $(search).val()},
-            success: (response)=> {
-                $('#title').text(response)
-                console.log(response);
-            },
-            datatype: 'json'
-        })
-    })
-
-
+        $(search).keyup(()=> {
+                $.ajax ({
+                    method: 'POST',
+                    url: 'http://127.0.0.1:5000/search',
+                    data: {'current_value': $(search).val()},
+                    success: (response)=> {
+                        $('#title').text(response)
+                        console.log(response);
+                    },
+                    datatype: 'json'
+                })
+            })
     </script>
 
 {% endblock %}

@@ -7,7 +7,7 @@ from flask_security.utils import hash_password, login_user, logout_user, verify_
 from flask import render_template, session, request, redirect, url_for
 
 from controllers.user_controller import get_user_by_email, create_user
-from views.api_routes import get_movie_by_title_first
+from views.api_routes import get_movie_by_title_first, get_movies_by_title
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 from views import app
 from data.MongoDB_MongoEngine.db.db_user_role_security import user_datastore
@@ -18,10 +18,9 @@ def index():
     global movie_information
 
     if request.method == 'POST':
-        title = request.form['search']
-        movie_information = get_movie_by_title_first(title)
-        return render_template("index.html", movie_information=movie_information, title=movie_information['Title'],
-                               poster=movie_information['Poster'])
+        search = request.form['search']
+        movies = get_movies_by_title(search)
+        return render_template("index.html", movies=movies)
 
     return render_template("index.html")
 
@@ -39,8 +38,7 @@ def signup():
         )
         return redirect(url_for('signin'))
     return render_template('signup.html', form=form)
-
-
+  
   
 @app.route('/search', methods=['POST'])
 def search():
@@ -59,6 +57,8 @@ def search():
 
 
     return response
+  
+  
 @app.route("/signout")
 def signout():
     logout_user()
@@ -88,18 +88,17 @@ def signin():
 def edit_account():
     return render_template('edit_account.html')
 
-movie_information = None
 
 @app.route('/movie/<title>')
 def movie(title):
-    return render_template('movie.html', title=title, movie_information=movie_information)
+    movie_information = get_movie_by_title_first(title)
+    return render_template('movie.html', movie_information=movie_information)
 
 
 @app.route('/watchlist')
 @login_required
 def watchlist():
     return render_template('watchlist.html')
-
 
 @app.route('/friends')
 def friends():
