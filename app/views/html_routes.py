@@ -41,10 +41,10 @@ def search():
     global movie_search_cache
     value = request.values['current_value']
 
-    movie_search_cache = get_movies_by_title(value)
+    movie_result = get_movies_by_title(value)
 
     response = app.response_class(
-        response=json.dumps(movie_search_cache['Search']),
+        response=json.dumps(movie_result),
         status=200,
         mimetype="application/json"
     )
