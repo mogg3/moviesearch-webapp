@@ -1,3 +1,5 @@
+import json
+
 from flask_login import login_required, login_manager, current_user
 from flask_security.utils import hash_password, login_user, logout_user, verify_password
 
@@ -36,8 +38,8 @@ def signup():
         )
         return redirect(url_for('signin'))
     return render_template('signup.html', form=form)
-
-
+  
+  
 @app.route('/search', methods=['POST'])
 def search():
     value = request.values['current_value']
@@ -55,13 +57,15 @@ def search():
 
 
     return response
-
+  
+  
 @app.route("/signout")
 def signout():
     logout_user()
     print("Signing out")
     return render_template('index.html')
 
+  
 @app.route('/profile')
 @login_required
 def profile():
