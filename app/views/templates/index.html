@@ -4,31 +4,51 @@
 
     {% include "menu.html" %}
 
+
     <h2>MovieBuff</h2>
 
     <div id="search-bar">
          <form action="/" method="POST">
              <input type="text" id="search" placeholder="Search.." name="search">
-             <button type="submit">Submit</button>
+             <button type="submit" id="search_submit">Submit</button>
 
         </form>
     </div>
         <p id="title">{{ title }}</p>
-        <a href="{{ url_for('movie', title=title ) }}"><img src="{{ poster }}"/></a>
+        <a href="{{ url_for('movie', title="Interstellar") }}"><img id="poster"/></a>
     <script>
 
-    $(search).keyup(()=> {
+    {#$(search).keyup(()=> {#}
+    {#    $.ajax ({#}
+    {#        method: 'POST',#}
+    {#        url: 'http://127.0.0.1:5000/search',#}
+    {#        data: {'current_value': $(search).val()},#}
+    {#        success: (response) => {#}
+    {#            $('#title').text(response)#}
+    {#            console.log(response);#}
+    {#        },#}
+    {#        datatype: 'json'#}
+    {#    })#}
+   // {#})#}
+
+     $(search_submit).click((e)=> {
+         e.preventDefault();
+
         $.ajax ({
             method: 'POST',
             url: 'http://127.0.0.1:5000/search',
             data: {'current_value': $(search).val()},
-            success: (response)=> {
-                $('#title').text(response)
+            success: (response) => {
+                response = JSON.parse(response)
+                $('#title').text(response.title);
+                $('#poster').attr("src",response.poster);
+
                 console.log(response);
             },
             datatype: 'json'
         })
     })
+
 
 
     </script>

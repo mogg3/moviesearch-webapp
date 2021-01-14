@@ -3,24 +3,24 @@ import json
 from flask_login import login_required, login_manager, current_user
 from flask_security.utils import hash_password, login_user, logout_user
 
-
 from flask import render_template, session, request, redirect, url_for
 
 from controllers.user_controller import get_user_by_email, create_user
 from views.api_routes import get_movie_by_title_first
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 from views import app
+import json
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
-    global movie_information
+    # global movie_information
 
-    if request.method == 'POST':
-        title = request.form['search']
-        movie_information = get_movie_by_title_first(title)
-        return render_template("index.html", movie_information=movie_information, title=movie_information['Title'],
-                               poster=movie_information['Poster'])
+    # if request.method == 'POST':
+    #     title = request.form['search']
+    #     movie_information = get_movie_by_title_first(title)
+    #     return render_template("index.html", movie_information=movie_information, title=movie_information['Title'],
+    #                            poster=movie_information['Poster'])
 
     return render_template("index.html")
 
@@ -29,7 +29,6 @@ def index():
 def signup():
     form = RegisterForm()
     if request.method == "POST":
-
         create_user(
             first_name=form.first_name.data,
             last_name=form.last_name.data,
@@ -42,21 +41,23 @@ def signup():
 
 @app.route('/search', methods=['POST'])
 def search():
+    global movie_information
     value = request.values['current_value']
-    print(value)
 
-    omdb_result = get_movie_by_title_first(value)
-    to_send = [omdb_result['Title'], omdb_result['Poster']]
-    test = omdb_result['Title']
+    movie_information = get_movie_by_title_first(value)
+
+    title = movie_information['Title']
+    poster = movie_information['Poster']
+    to_send = json.dumps({"title": title, "poster": poster})
 
     response = app.response_class(
-        response=json.dumps(test),
+        response=json.dumps(to_send),
         status=200,
         mimetype="application/json"
     )
 
-
     return response
+
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
@@ -73,11 +74,13 @@ def signin():
         print(form.errors)
     return render_template('signin.html', form=form)
 
+
 @app.route("/signout")
 def signout():
     logout_user()
     print("Signing out")
     return render_template('index.html')
+
 
 @app.route('/profile')
 @login_required
@@ -89,7 +92,9 @@ def profile():
 def edit_account():
     return render_template('edit_account.html')
 
+
 movie_information = None
+
 
 @app.route('/movie/<title>')
 def movie(title):
