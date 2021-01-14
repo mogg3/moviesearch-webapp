@@ -3,25 +3,23 @@ import json
 from flask_login import login_required, login_manager, current_user
 from flask_security.utils import hash_password, login_user, logout_user, verify_password
 
-
 from flask import render_template, session, request, redirect, url_for
 
 from controllers.user_controller import get_user_by_email, create_user
 from views.api_routes import get_movie_by_title_first, get_movies_by_title
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 from views import app
+import json
 from data.MongoDB_MongoEngine.db.db_user_role_security import user_datastore
 
-
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
-    global movie_information
+    # global movie_search_cache
 
-    if request.method == 'POST':
-        search = request.form['search']
-        movies = get_movies_by_title(search)
-        return render_template("index.html", movies=movies)
-
+   # if request.method == 'POST':
+    #    search = request.form['search']
+     #   movies = get_movies_by_title(search)
+      #  return render_template("index.html", movies=movies)
     return render_template("index.html")
 
 
@@ -29,7 +27,6 @@ def index():
 def signup():
     form = RegisterForm()
     if request.method == "POST":
-
         create_user(
             first_name=form.first_name.data,
             last_name=form.last_name.data,
@@ -38,34 +35,29 @@ def signup():
         )
         return redirect(url_for('signin'))
     return render_template('signup.html', form=form)
-  
-  
+
 @app.route('/search', methods=['POST'])
 def search():
+    global movie_search_cache
     value = request.values['current_value']
-    print(value)
 
-    omdb_result = get_movie_by_title_first(value)
-    to_send = [omdb_result['Title'], omdb_result['Poster']]
-    test = omdb_result['Title']
+    movie_search_cache = get_movies_by_title(value)
 
     response = app.response_class(
-        response=json.dumps(test),
+        response=json.dumps(movie_search_cache['Search']),
         status=200,
         mimetype="application/json"
     )
 
-
     return response
-  
-  
+
 @app.route("/signout")
 def signout():
     logout_user()
     print("Signing out")
     return render_template('index.html')
 
-  
+
 @app.route('/profile')
 @login_required
 def profile():
@@ -93,6 +85,7 @@ def edit_account():
 def movie(title):
     movie_information = get_movie_by_title_first(title)
     return render_template('movie.html', movie_information=movie_information)
+
 
 
 @app.route('/watchlist')
