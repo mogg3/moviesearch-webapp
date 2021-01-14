@@ -6,7 +6,7 @@ from flask_security.utils import hash_password, login_user, logout_user
 from flask import render_template, session, request, redirect, url_for
 
 from controllers.user_controller import get_user_by_email, create_user
-from views.api_routes import get_movie_by_title_first
+from views.api_routes import get_movie_by_title_first, get_movies_by_title
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 from views import app
 import json
@@ -14,13 +14,13 @@ import json
 
 @app.route('/', methods=['GET'])
 def index():
-    # global movie_information
+    # global movie_search_cache
 
     # if request.method == 'POST':
     #     title = request.form['search']
-    #     movie_information = get_movie_by_title_first(title)
-    #     return render_template("index.html", movie_information=movie_information, title=movie_information['Title'],
-    #                            poster=movie_information['Poster'])
+    #     movie_search_cache = get_movie_by_title_first(title)
+    #     return render_template("index.html", movie_search_cache=movie_search_cache, title=movie_search_cache['Title'],
+    #                            poster=movie_search_cache['Poster'])
 
     return render_template("index.html")
 
@@ -39,19 +39,18 @@ def signup():
     return render_template('signup.html', form=form)
 
 
+movie_search_cache = None
+
+
 @app.route('/search', methods=['POST'])
 def search():
-    global movie_information
+    global movie_search_cache
     value = request.values['current_value']
 
-    movie_information = get_movie_by_title_first(value)
-
-    title = movie_information['Title']
-    poster = movie_information['Poster']
-    to_send = json.dumps({"title": title, "poster": poster})
+    movie_search_cache = get_movies_by_title(value)
 
     response = app.response_class(
-        response=json.dumps(to_send),
+        response=json.dumps(movie_search_cache['Search']),
         status=200,
         mimetype="application/json"
     )
@@ -93,12 +92,14 @@ def edit_account():
     return render_template('edit_account.html')
 
 
-movie_information = None
-
-
 @app.route('/movie/<title>')
 def movie(title):
-    return render_template('movie.html', title=title, movie_information=movie_information)
+    return render_template('movie.html', title=title, movie_information=get_movie_by_title_first(title))
+
+
+# @app.route('/movie/')
+# def movie():
+#     return render_template('movie.html')
 
 
 @app.route('/watchlist')
