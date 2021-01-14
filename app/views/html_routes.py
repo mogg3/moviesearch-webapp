@@ -1,5 +1,5 @@
 from flask_login import login_required, login_manager, current_user
-from flask_security.utils import hash_password, login_user, logout_user, verify_password
+from flask_security.utils import hash_password, login_user, logout_user
 
 
 from flask import render_template, session, request, redirect, url_for
@@ -39,6 +39,24 @@ def signup():
     return render_template('signup.html', form=form)
 
 
+@app.route('/search', methods=['POST'])
+def search():
+    value = request.values['current_value']
+    print(value)
+
+    omdb_result = get_movie_by_title_first(value)
+    to_send = [omdb_result['Title'], omdb_result['Poster']]
+    test = omdb_result['Title']
+
+    response = app.response_class(
+        response=json.dumps(test),
+        status=200,
+        mimetype="application/json"
+    )
+
+
+    return response
+
 @app.route("/signout")
 def signout():
     logout_user()
@@ -75,9 +93,20 @@ def movie(title):
 
 
 @app.route('/watchlist')
+@login_required
 def watchlist():
     return render_template('watchlist.html')
 
+
+# @app.route("/logout")
+# def logout():
+#     session.clear()
+#     return None
+#     return render_template('index.html')
+# username = session['username']
+# if username is None:
+#     return render_template('index.html')
+# return render_template('profile.html', username=username)
 
 @app.route('/friends')
 def friends():
