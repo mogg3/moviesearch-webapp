@@ -7,33 +7,81 @@
     <h2>MovieBuff</h2>
 
     <div id="search-bar">
-         <form action="/" method="POST">
-             <input type="text" id="search" placeholder="Search.." name="search">
-             <button type="submit">Submit</button>
+        <form action="/" method="POST">
+            <input type="text" id="search" placeholder="Search.." name="search">
+            <button type="submit" id="search_submit">Submit</button>
+
         </form>
     </div>
-        <div class="matching-movies">
-        {% for movie in movies %}
-            <div class="movie">
-                <a>{{ movie["Title"] }}</a> </br>
-                <a href="{{ url_for('movie', title=movie["Title"] ) }}"><img src="{{ movie['Poster'] }}"/></a>
-            </div>
-        {% endfor %}
-        </div>
+    <div id="result"></div>
+    <div id="movie_content"></div>
+    <input type="image" onclick="show_movie()"
+           src="https://m.media-amazon.com/images/M/MV5BMGYxMmM0ZWUtMzViMS00YzUxLTllZjEtYzI2YzAzYjlkMWY4XkEyXkFqcGdeQXVyNTY3NjQzNjM@._V1_SX300.jpg"/>
 
     <script>
-        $(search).keyup(()=> {
-                $.ajax ({
-                    method: 'POST',
-                    url: 'http://127.0.0.1:5000/search',
-                    data: {'current_value': $(search).val()},
-                    success: (response)=> {
-                        $('#title').text(response)
-                        console.log(response);
-                    },
-                    datatype: 'json'
-                })
+
+        $("#search_submit").click((e) => {
+            e.preventDefault();
+
+            $('#result').show()
+
+            $.ajax({
+                method: 'POST',
+                url: 'http://127.0.0.1:5000/search',
+                data: {'current_value': $(search).val()},
+                success: (response) => {
+                    show_result(response);
+                },
+                datatype: 'json'
             })
+        })
+
+        let movies = "";
+
+        function show_result(response) {
+            var i;
+            movies = response;
+            $('#result').empty()
+
+            for (i = 0; i < response.length; i++) {
+
+                let title_element = "<p>" + response[i]['Title'] + "<p>";
+
+                let poster_element = "<input type='image' id=" + response[i]['imdbID'] + " src=" + response[i]['Poster'] + " onclick=\"show_movie(this)\" />";
+
+                $('#result').append(title_element, poster_element);
+            }
+        }
+
+        function show_movie(element) {
+            $(result).hide()
+
+            console.log(element.id)
+
+            for (i = 0; i < movies.length; i++) {
+
+                if (movies[i]['imdbID'] === element.id) {
+                    console.log(movies[i])
+                }
+            }
+        }
     </script>
 
 {% endblock %}
+
+{#$(search).keyup(()=> {#}
+{#    $.ajax ({#}
+{#        method: 'POST',#}
+{#        url: 'http://127.0.0.1:5000/search',#}
+{#        data: {'current_value': $(search).val()},#}
+{#        success: (response) => {#}
+{#            $('#title').text(response)#}
+{#            console.log(response);#}
+{#        },#}
+{#        datatype: 'json'#}
+{#    })#}
+// {#})#}
+
+{#response = JSON.parse(response)#}
+{#$('#title').text(response.title);#}
+{#$('#poster').attr("src",response.poster);#}
