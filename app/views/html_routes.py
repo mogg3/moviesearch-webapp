@@ -87,7 +87,6 @@ def movie(title):
     return render_template('movie.html', movie_information=movie_information)
 
 
-
 @app.route('/watchlist')
 @login_required
 def watchlist():
