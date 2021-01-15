@@ -81,7 +81,7 @@ def edit_account():
     return render_template('edit_account.html')
 
 
-@app.route('/movie/<title>')
+@app.route('/movies/<title>')
 def movie(title):
     movie_information = get_movie_by_title_first(title)
     return render_template('movie.html', movie_information=movie_information)
