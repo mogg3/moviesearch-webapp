@@ -7,11 +7,13 @@ def get_user_by_email(email):
     return user_datastore.find_user(email=email)
 
 
-def create_user(first_name, last_name, email, password):
+def create_user(first_name, last_name, email, password, role):
     user_datastore.create_user(
         first_name=first_name,
         last_name=last_name,
         email=email,
-        password=password)
+        password=password,
+        roles=[role])
+
 
 
