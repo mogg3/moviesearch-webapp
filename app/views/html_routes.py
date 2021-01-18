@@ -6,7 +6,8 @@ from flask_security import roles_accepted, roles_required
 from flask import render_template, session, request, redirect, url_for, Response, current_app
 
 from controllers.role_controller import create_role, get_role_by_name, get_all_roles
-from controllers.user_controller import get_user_by_email, create_user, add_role_to_user, get_all_users
+from controllers.user_controller import get_user_by_email, create_user, add_role_to_user, get_all_users, \
+    get_user_by_username
 from views.api_routes import get_movie_by_title_first, get_movies_by_title
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 from views import app
@@ -16,7 +17,7 @@ from data.MongoDB_MongoEngine.db.db_user_role_security import user_datastore
 
 @app.route("/")
 def index():
-    # user = get_user_by_email("oskar.hallin@gmail.com")
+    # user = get_user_by_email("hanna@hanna.com")
     # role = get_role_by_name("admin")
     # add_role_to_user(user, role)
 
@@ -32,13 +33,14 @@ def signup():
             last_name=form.last_name.data,
             email=form.email.data,
             password=hash_password(form.password.data),
+            username=form.username.data
         )
 
         # create_role("editor")
 
-        role = get_role_by_name("editor")
-        user = get_user_by_email(email=form.email.data)
-        add_role_to_user(role=role, user=user)
+        # role = get_role_by_name("editor")
+        # user = get_user_by_email(email=form.email.data)
+        # add_role_to_user(role=role, user=user)
 
         # user_datastore.create_role(name="admin")
         # user = user_datastore.find_user(email="o@o.com")
@@ -124,14 +126,13 @@ def admin():
     return render_template('admin.html', users=get_all_users(), roles=get_all_roles())
 
 
-@app.route("/admin/users/<user_email>")
+@app.route("/admin/users/<username>")
 @roles_required("admin")
-def user(user_email):
+def user(username):
 
-    user = get_user_by_email(user_email)
+    user = get_user_by_username(username)
 
-
-
+    print(user)
 
 
     return render_template('user.html', user=user)
