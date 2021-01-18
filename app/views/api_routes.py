@@ -16,7 +16,5 @@ def get_movies_by_title(input_title):
     movie_list = []
     for movie in info["Search"]:
         movie_list.append(movie)
+
     return movie_list
-
-
-
