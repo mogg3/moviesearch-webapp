@@ -15,8 +15,4 @@ class User(db.Document, UserMixin):
     watchlist = db.ListField(default=[])
 
     def __str__(self):
-        print(self.first_name)
-        print(self.last_name)
-        print(self.email)
-        print(self.password)
-        print(self.watchlist)
+        return self.first_name
