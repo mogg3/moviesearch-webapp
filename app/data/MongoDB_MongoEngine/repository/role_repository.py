@@ -11,7 +11,4 @@ def get_role_by_name(name):
 
 
 def get_all_roles():
-    roles = []
-    for role in Role.objects:
-        roles.append(role)
-    return roles
+    return [role for role in Role.objects]
