@@ -37,39 +37,39 @@
         let movies = "";
 
         function show_result(response) {
-            var i;
+
             movies = response;
+
             $('#result').empty()
 
+            $.each(movies, (i, movie)=> {
 
-            for (i = 0; i < response.length; i++) {
-
-                let title_element = "<p>" + response[i]['Title'] + "<p>";
+                let title_element = "<p>" + movie['Title'] + "<p>";
 
                 let poster_element = "<input type='image' id=" + response[i]['imdbID'] + " src=" + response[i]['Poster'] + " onclick=\"show_movie(this)\" />";
-
-                $('#result').append(title_element, poster_element);
-            }
+                let button = "<button id=" + response[i]['imdbID'] + " onclick ='add_movie_to_watchlist()'>Add movie to Watchlist</button>";
+                $('#result').append(title_element, poster_element, button);
+            });
         }
-
         function show_movie(element) {
+
             $(result).hide()
+            $('#movie_content').empty()
 
-            console.log(element.id)
-
-            for (i = 0; i < movies.length; i++) {
-
-                if (movies[i]['imdbID'] === element.id) {
-                    console.log(movies[i])
+            $.each(movies, (i, movie)=> {
+                if (movie['imdbID'] === element.id) {
                     $('#movie_content').append("<img src='" + movies[i]['Poster'] + "'>");
                     $('#movie_content').append(movies[i]['Title']);
                     $('#movie_content').append(movies[i]['Type']);
                     $('#movie_content').append(movies[i]['Year']);
                 }
-            }
-K
-
+            });
         }
+
+        function add_movie_to_watchlist(element) {
+            console.log("Working")
+        }
+
     </script>
 
 {% endblock %}

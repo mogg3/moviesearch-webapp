@@ -1,9 +1,11 @@
 import json
 
 from flask_login import login_required, current_user
-from flask_security.utils import hash_password, login_user, logout_user, verify_password
+from flask_security.utils import login_user, logout_user, verify_password
 from flask_security import roles_required
 from flask import render_template, request, redirect, url_for, flash
+
+import json
 
 from controllers.role_controller import get_all_roles
 from controllers.user_controller import create_user, get_all_users, \
@@ -12,7 +14,7 @@ from controllers.user_controller import create_user, get_all_users, \
 from views.api_routes import get_movies_by_title
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 from views import app
-import json
+
 
 @app.route("/")
 def index():
