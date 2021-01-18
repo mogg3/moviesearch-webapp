@@ -10,7 +10,7 @@
     <div id="users">
         <h1>Users</h1>
         {% for user in users %}
-            <a href="{{url_for('user', user_email=user.email)}}" style="display:inline">{{ user.email }}</a>
+            <a href="{{url_for('user', username=user.username)}}" style="display:inline">{{ user.username }}</a>
             <br/>
         {% endfor %}
     </div>
