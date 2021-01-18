@@ -13,9 +13,15 @@ from views import app
 import json
 from data.MongoDB_MongoEngine.db.db_user_role_security import user_datastore
 
+
 @app.route("/")
 def index():
+    # user = get_user_by_email("oskar.hallin@gmail.com")
+    # role = get_role_by_name("admin")
+    # add_role_to_user(user, role)
+
     return render_template("index.html")
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -34,10 +40,6 @@ def signup():
         user = get_user_by_email(email=form.email.data)
         add_role_to_user(role=role, user=user)
 
-
-
-
-
         # user_datastore.create_role(name="admin")
         # user = user_datastore.find_user(email="o@o.com")
         # role = user_datastore.find_role("admin")
@@ -45,6 +47,7 @@ def signup():
 
         return redirect(url_for('signin'))
     return render_template('signup.html', form=form)
+
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -59,8 +62,8 @@ def search():
         mimetype="application/json"
     )
 
-
     return response
+
 
 @app.route("/signout")
 def signout():
@@ -102,7 +105,8 @@ def movie(title):
 @app.route('/watchlist')
 @login_required
 def watchlist():
-    return render_template('watchlist.html', watchlist = current_user.watchlist)
+    return render_template('watchlist.html', watchlist=current_user.watchlist)
+
 
 @app.route('/friends')
 def friends():
@@ -118,3 +122,27 @@ def handler404(_):
 @roles_required("admin")
 def admin():
     return render_template('admin.html', users=get_all_users(), roles=get_all_roles())
+
+
+@app.route("/admin/users/<user_email>")
+@roles_required("admin")
+def user(user_email):
+
+    user = get_user_by_email(user_email)
+
+
+
+
+
+    return render_template('user.html', user=user)
+
+
+@app.route('/admin/data/users', methods=['GET'])
+def get_users():
+    response = app.response_class(
+        response=json.dumps([u.to_json() for u in get_all_users()]),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
