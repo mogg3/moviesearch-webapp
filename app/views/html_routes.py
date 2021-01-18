@@ -5,8 +5,8 @@ from flask_security.utils import hash_password, login_user, logout_user, verify_
 from flask_security import roles_accepted, roles_required
 from flask import render_template, session, request, redirect, url_for, Response, current_app
 
-from controllers.role_controller import create_role, get_role_by_name
-from controllers.user_controller import get_user_by_email, create_user, add_role_to_user
+from controllers.role_controller import create_role, get_role_by_name, get_all_roles
+from controllers.user_controller import get_user_by_email, create_user, add_role_to_user, get_all_users
 from views.api_routes import get_movie_by_title_first, get_movies_by_title
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 from views import app
@@ -69,13 +69,6 @@ def signout():
     return render_template('index.html')
 
 
-@app.route("/admin")
-@roles_required("admin")
-def admin():
-    return render_template('admin.html')
-
-
-
 @app.route('/profile')
 @login_required
 def profile():
@@ -119,3 +112,9 @@ def friends():
 @app.errorhandler(404)
 def handler404(_):
     return render_template('404.html')
+
+
+@app.route("/admin")
+@roles_required("admin")
+def admin():
+    return render_template('admin.html', users=get_all_users(), roles=get_all_roles())

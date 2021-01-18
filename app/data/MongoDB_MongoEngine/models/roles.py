@@ -7,5 +7,5 @@ class Role(db.Document, RoleMixin):
     name = db.StringField(max_length=80, unique=True)
     description = db.StringField(max_length=255)
 
-    def __repr__(self):
+    def __str__(self):
         return self.name
