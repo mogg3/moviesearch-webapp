@@ -2,12 +2,6 @@ from abc import ABC
 from pymongo import MongoClient
 from data.MongoDB.db.db_settings import *
 
-MONGO_USER = "root"
-MONGO_PASSWORD = "s3cr37"
-MONGO_HOST = "localhost"
-MONGO_PORT = "27027"
-DB_DATABASE = "Movie_Buff_Db"
-
 
 client = MongoClient(f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}')
 db = client.movie_web_App
