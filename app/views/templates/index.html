@@ -15,8 +15,6 @@
     </div>
     <div id="result"></div>
     <div id="movie_content"></div>
-    <input type="image" onclick="show_movie()"
-           src="https://m.media-amazon.com/images/M/MV5BMGYxMmM0ZWUtMzViMS00YzUxLTllZjEtYzI2YzAzYjlkMWY4XkEyXkFqcGdeQXVyNTY3NjQzNjM@._V1_SX300.jpg"/>
 
     <script>
 
@@ -62,8 +60,14 @@
 
                 if (movies[i]['imdbID'] === element.id) {
                     console.log(movies[i])
+                    $('#movie_content').append("<img src='" + movies[i]['Poster'] + "'>");
+                    $('#movie_content').append(movies[i]['Title']);
+                    $('#movie_content').append(movies[i]['Type']);
+                    $('#movie_content').append(movies[i]['Year']);
                 }
             }
+
+
         }
     </script>
 

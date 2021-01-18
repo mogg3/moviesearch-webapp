@@ -3,9 +3,10 @@ import json
 from flask_login import login_required, login_manager, current_user
 from flask_security.utils import hash_password, login_user, logout_user, verify_password
 from flask_security import roles_accepted, roles_required
-from flask import render_template, session, request, redirect, url_for, Response
+from flask import render_template, session, request, redirect, url_for, Response, current_app
 
-from controllers.user_controller import get_user_by_email, create_user
+from controllers.role_controller import create_role, get_role_by_name
+from controllers.user_controller import get_user_by_email, create_user, add_role_to_user
 from views.api_routes import get_movie_by_title_first, get_movies_by_title
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 from views import app
@@ -27,10 +28,20 @@ def signup():
             password=hash_password(form.password.data),
         )
 
+        # create_role("editor")
+
+        role = get_role_by_name("editor")
+        user = get_user_by_email(email=form.email.data)
+        add_role_to_user(role=role, user=user)
+
+
+
+
+
         # user_datastore.create_role(name="admin")
-        user = user_datastore.find_user(email="o@o.com")
-        role = user_datastore.find_role("admin")
-        user_datastore.add_role_to_user(user=user, role=role)
+        # user = user_datastore.find_user(email="o@o.com")
+        # role = user_datastore.find_role("admin")
+        # user_datastore.add_role_to_user(user=user, role=role)
 
         return redirect(url_for('signin'))
     return render_template('signup.html', form=form)
@@ -48,6 +59,7 @@ def search():
         mimetype="application/json"
     )
 
+
     return response
 
 @app.route("/signout")
@@ -61,6 +73,8 @@ def signout():
 @roles_required("admin")
 def admin():
     return render_template('admin.html')
+
+
 
 @app.route('/profile')
 @login_required
@@ -76,9 +90,8 @@ def signin():
         if user:
             if verify_password(form.password.data, user.password):
                 login_user(user, remember=form.remember.data)
-
-
                 return redirect(url_for('profile'))
+
     return render_template('signin.html', form=form)
 
 
