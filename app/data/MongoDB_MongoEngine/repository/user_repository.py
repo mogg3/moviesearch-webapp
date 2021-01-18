@@ -13,3 +13,7 @@ def create_user(first_name, last_name, email, password):
         last_name=last_name,
         email=email,
         password=password)
+
+
+def add_role_to_user(user, role):
+    user_datastore.add_role_to_user(user=user, role=role)

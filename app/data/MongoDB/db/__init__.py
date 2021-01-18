@@ -2,8 +2,9 @@ from abc import ABC
 from pymongo import MongoClient
 from data.MongoDB.db.db_settings import *
 
+
 client = MongoClient(f'mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}')
-db = client.poems_db
+db = client.movie_web_App
 
 
 class ResultList(list):
@@ -58,4 +59,3 @@ class Document(dict, ABC):
     @classmethod
     def delete(cls, **kwargs):
         cls.collection.delete_many(kwargs)
-

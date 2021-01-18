@@ -1,6 +1,8 @@
-def main():
-    pass
+from data.MongoDB_MongoEngine.db.db_user_role_security import user_datastore
 
 
-if __name__ == '__main__':
-    main()
+def create_role(name):
+    user_datastore.create_role(name=name)
+
+def get_role_by_name(name):
+    return user_datastore.find_role(name)

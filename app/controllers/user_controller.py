@@ -7,3 +7,8 @@ def get_user_by_email(email: str):
 
 def create_user(first_name, last_name, email, password):
     rm.create_user(first_name, last_name, email, password)
+
+def add_role_to_user(user, role):
+    rm.add_role_to_user(user=user, role=role)
+
+
