@@ -11,7 +11,7 @@ class User(db.Document, UserMixin):
     password = db.StringField(max_length=255)
     active = db.BooleanField(default=True)
     confirmed_at = db.DateTimeField()
-    roles = db.ListField(db.ReferenceField(Role), default=[])
+    roles = db.ListField(db.ReferenceField(Role))
     watchlist = db.ListField(default=[])
 
     def __str__(self):

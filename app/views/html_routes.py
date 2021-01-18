@@ -25,9 +25,13 @@ def signup():
             last_name=form.last_name.data,
             email=form.email.data,
             password=hash_password(form.password.data),
-            role=form.role.data
         )
-        user_datastore.add_role_to_user(user=current_user, role=form.role.data)
+
+        # user_datastore.create_role(name="admin")
+        user = user_datastore.find_user(email="o@o.com")
+        role = user_datastore.find_role("admin")
+        user_datastore.add_role_to_user(user=user, role=role)
+
         return redirect(url_for('signin'))
     return render_template('signup.html', form=form)
 
@@ -72,6 +76,8 @@ def signin():
         if user:
             if verify_password(form.password.data, user.password):
                 login_user(user, remember=form.remember.data)
+
+
                 return redirect(url_for('profile'))
     return render_template('signin.html', form=form)
 

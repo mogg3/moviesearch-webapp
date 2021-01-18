@@ -5,5 +5,5 @@ def get_user_by_email(email: str):
     return rm.get_user_by_email(email)
 
 
-def create_user(first_name, last_name, email, password, role):
-    rm.create_user(first_name, last_name, email, password, role)
+def create_user(first_name, last_name, email, password):
+    rm.create_user(first_name, last_name, email, password)
