@@ -19,3 +19,5 @@ def add_role_to_user(user, role):
 def get_all_users():
     return rm.get_all_users()
 
+def add_movie_to_users_watchlist(user, movie):
+    rm.add_movie_to_users_watchlist(user, movie)

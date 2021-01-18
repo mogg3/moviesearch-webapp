@@ -6,9 +6,19 @@
 
 {% block content %}
 
-<div class="login_box">
-    <form action="/signin" method="POST">
 
+<div class="login_box">
+        {% with messages = get_flashed_messages() %}
+          {% if get_flashed_messages() %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+    <form action="/signin" method="POST">
             {{ form.csrf_token }}
             {{ form.email.label }} {{ form.email() }} <br />
             {{ form.password.label }} {{ form.password() }} <br />
