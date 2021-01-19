@@ -10,11 +10,11 @@ class User(Document, UserMixin):
     password = StringField(max_length=255)
     active = BooleanField(default=True)
     confirmed_at = DateTimeField(nullable=True)
+
     watchlist = ListField(default=[])
     friends = ListField(default=[])
-
     roles = ListField(ReferenceField('Role'), default=[])
-    #chats = ListField(ReferenceField('Chat'))
+    chats = ListField(ReferenceField('Chat'))
 
     def __str__(self):
         return f"first name : {self.first_name}"
