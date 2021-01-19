@@ -33,9 +33,3 @@ def add_movie_to_users_watchlist(user, movie):
     user.save()
 
 
-
-
-
-
-
-

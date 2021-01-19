@@ -40,6 +40,8 @@
 
             movies = response;
 
+            console.log(movies)
+
             $('#result').empty()
 
             $.each(movies, (i, movie)=> {
@@ -47,7 +49,7 @@
                 let title_element = "<p>" + movie['Title'] + "<p>";
 
                 let poster_element = "<input type='image' id=" + response[i]['imdbID'] + " src=" + response[i]['Poster'] + " onclick=\"show_movie(this)\" />";
-                let button = "<button id=" + response[i]['imdbID'] + " onclick ='add_movie_to_watchlist()'>Add movie to Watchlist</button>";
+                let button = "<button id=" + response[i]['imdbID'] + " onclick ='add_movie_to_watchlist(this)'>Add movie to Watchlist</button>";
                 $('#result').append(title_element, poster_element, button);
             });
         }
@@ -67,7 +69,23 @@
         }
 
         function add_movie_to_watchlist(element) {
-            console.log("Working")
+            let movie;
+
+            $.each(movies, (i, m)=> {
+                if (m['imdbID'] === element.id) {
+                    movie = m;
+                }
+            });
+
+              $.ajax({
+                method: 'POST',
+                url: 'http://127.0.0.1:5000/post_watchlist',
+                data: {'movie': JSON.stringify(movie)},
+                success: (response) => {
+                           console.log(response)
+                },
+                datatype: 'json'
+            })
         }
 
     </script>
