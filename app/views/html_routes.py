@@ -9,7 +9,7 @@ import json
 
 from controllers.role_controller import get_all_roles
 from controllers.user_controller import create_user, get_all_users, \
-    get_user_by_username, get_user_by_email
+    get_user_by_username, get_user_by_email, add_movie_to_users_watchlist
 
 from views.api_routes import get_movies_by_title
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
@@ -51,6 +51,21 @@ def search():
         mimetype="application/json"
     )
 
+    return response
+
+
+@app.route('/post_watchlist', methods=['POST'])
+def post_watchlist():
+    movie = request.values['movie']
+
+    add_movie_to_users_watchlist(current_user, json.loads(movie))
+
+
+    response = app.response_class(
+        response="json.dumps(movie)",
+        status=200,
+        mimetype="application/json"
+    )
     return response
 
 
