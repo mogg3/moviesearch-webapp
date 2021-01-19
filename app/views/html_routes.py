@@ -10,6 +10,7 @@ import json
 from controllers.role_controller import get_all_roles, get_role_by_name
 from controllers.user_controller import create_user, get_all_users, \
     get_user_by_username, get_user_by_email, add_role_to_user
+from controllers.chat_controller import initiate_chat
 
 from views.api_routes import get_movies_by_title
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
@@ -18,9 +19,8 @@ from views import app
 
 @app.route("/")
 def index():
-#     user = get_user_by_email("marcus.eriksson00@hotmail.com")
-#     role = get_role_by_name("editor")
-#     add_role_to_user(user, role)
+    chat = initiate_chat()
+    print(chat)
     return render_template("index.html")
 
 
