@@ -1,18 +1,23 @@
 from flask_security import UserMixin
-
-from data.MongoDB_MongoEngine.models.roles import Role
-from views import db
+from mongoengine import StringField, Document, BooleanField, DateTimeField, ListField, ReferenceField
 
 
-class User(db.Document, UserMixin):
-    first_name = db.StringField(max_length=40)
-    last_name = db.StringField(max_length=40)
-    email = db.StringField(max_length=255)
-    password = db.StringField(max_length=255)
-    active = db.BooleanField(default=True)
-    confirmed_at = db.DateTimeField()
-    roles = db.ListField(db.ReferenceField(Role))
-    watchlist = db.ListField(default=[])
+class User(Document, UserMixin):
+    first_name = StringField(max_length=40)
+    last_name = StringField(max_length=40)
+    email = StringField(max_length=100, unique=True)
+    username = StringField(max_length=50, unique=True)
+    password = StringField(max_length=255)
+    active = BooleanField(default=True)
+    confirmed_at = DateTimeField(nullable=True)
+    watchlist = ListField(default=[])
+    friends = ListField(default=[])
+
+    roles = ListField(ReferenceField('Role'), default=[])
+    #chats = ListField(ReferenceField('Chat'))
 
     def __str__(self):
-        return self.first_name
+        return f"first name : {self.first_name}"
+
+
+

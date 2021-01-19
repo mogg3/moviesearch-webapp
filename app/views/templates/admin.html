@@ -3,15 +3,21 @@
 {% block  links %}
 {% endblock %}
 
+
+
 {% block  content %}
     {% include "menu.html" %}
-    <h1>Role administration</h1>
-    {% for user in users %}
-        <a href="#" style="display:inline">{{ user }}</a>
-        <br/>
-    {% endfor %}
-    {% for role in roles %}
-        <p>{{ role }}</p>
-    {% endfor %}
+    <div id="users">
+        <h1>Users</h1>
+        {% for user in users %}
+            <a href="{{url_for('user', username=user.username)}}" style="display:inline">{{ user.username }}</a>
+            <br/>
+        {% endfor %}
+    </div>
+    <div id="user_page">
+    </div>
+{#    {% for role in roles %}#}
+{#        <p>{{ role }}</p>#}
+{#    {% endfor %}#}
 
 {% endblock %}
