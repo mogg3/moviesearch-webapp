@@ -3,5 +3,5 @@ venv/
 __pycache__/
 app/data/omdb/api_settings/
 docker-compose.yml
-app/data/MongoDB_MongoEngine/db/db_settings
+app/data/MongoDB_MongoEngine/db_settings
 
