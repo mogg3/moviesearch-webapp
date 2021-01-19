@@ -1,6 +1,7 @@
 venv/
 .idea/
 __pycache__/
-app/views/api_settings/
+app/data/omdb/api_settings/
 docker-compose.yml
 app/data/MongoDB_MongoEngine/db/db_settings
+
