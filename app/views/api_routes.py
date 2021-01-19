@@ -1,18 +1,51 @@
-import requests
-from views.api_settings import API_KEY
+from flask import request
+from flask_login import current_user
+
+from controllers.omdb_controller import get_movies_by_title
+from controllers.user_controller import add_movie_to_users_watchlist
+from views import app
+
+import json
 
 
-def get_movie_by_title_first(input_title):
-    parameters = {'t': input_title, 'r': 'json', 'plot': 'short', 'apikey': API_KEY}
+@app.route('/search', methods=['POST'])
+def search():
+    search_term = request.values['search_term']
 
-    return requests.get(f'http://www.omdbapi.com/', params=parameters)
+    response = app.response_class(
+        response=json.dumps(get_movies_by_title(search_term)),
+        status=200,
+        mimetype="application/json"
+    )
+
+    return response
 
 
-def get_movies_by_title(input_title):
-    parameters = {'s': {input_title}, 'r': 'json', 'plot': 'short', 'page': 1, 'apikey': API_KEY}
+@app.route('/post_watchlist', methods=['POST'])
+def post_watchlist():
+    movie = json.loads(request.values['movie'])
 
-    return [movie for movie in requests.get(f'http://www.omdbapi.com/', params=parameters).json()['Search']]
+    response = True
 
+    if [m for m in current_user.watchlist if m['Title'] == movie['Title']]:
+        print("already added movie")
+        response = False
+    else:
+        add_movie_to_users_watchlist(current_user, movie)
 
+    response = app.response_class(
+        response=json.dumps(response),
+        status=200,
+        mimetype="application/json"
+    )
 
+    return response
 
+# @app.route('/admin/data/users', methods=['GET'])
+# def get_users():
+#     response = app.response_class(
+#         response=json.dumps([u.to_json() for u in get_all_users()]),
+#         status=200,
+#         mimetype="application/json"
+#     )
+#     return response

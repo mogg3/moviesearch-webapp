@@ -21,3 +21,5 @@ def get_all_users():
 
 def add_movie_to_users_watchlist(user, movie):
     rm.add_movie_to_users_watchlist(user, movie)
+
+
