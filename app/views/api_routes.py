@@ -7,7 +7,11 @@ from views import app
 
 import json
 
-# TODO: update the name of the routes
+"""
+ Update the name of the routes
+ Add endpoints for chat, friends
+"""
+
 
 @app.route('/search', methods=['POST'])
 def search():
