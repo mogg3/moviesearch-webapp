@@ -1,25 +1,17 @@
-import json
-
-from flask_login import login_required, current_user
-from flask_security.utils import login_user, logout_user, verify_password
-from flask_security import roles_required
 from flask import render_template, request, redirect, url_for, flash
+from flask_login import login_required, current_user
+from flask_security import roles_required
+from flask_security.utils import login_user, logout_user, verify_password
 
+from controllers.role_controller import get_all_roles
+from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email
 
-from controllers.role_controller import get_all_roles, get_role_by_name
-from controllers.user_controller import create_user, get_all_users, \
-    get_user_by_username, get_user_by_email, add_role_to_user, make_friends
-from controllers.chat_controller import initiate_chat
-
-from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 from views import app
+from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 
 
 @app.route("/")
 def index():
-    friend = get_user_by_username('q@m2123')
-    user = get_user_by_username('m@m2123')
-    make_friends(user, friend)
     return render_template("index.html")
 
 
@@ -27,15 +19,15 @@ def index():
 def signup():
     form = RegisterForm()
     if request.method == "POST":
-        create_user(
-            first_name=form.first_name.data,
-            last_name=form.last_name.data,
-            email=form.email.data,
-            password=form.password.data,
-            username=form.username.data
-        )
+        if form.validate_on_submit():
+            create_user(
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
+                email=form.email.data,
+                password=form.password.data,
+                username=form.username.data
+            )
 
-        return redirect(url_for('signin'))
     return render_template('signup.html', form=form)
 
 

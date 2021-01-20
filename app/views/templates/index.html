@@ -47,10 +47,15 @@
             $.each(movies, (i, movie)=> {
 
                 let title_element = "<p>" + movie['Title'] + "<p>";
-
                 let poster_element = "<input type='image' id=" + response[i]['imdbID'] + " src=" + response[i]['Poster'] + " onclick=\"show_movie(this)\" />";
                 let button = "<button id=" + response[i]['imdbID'] + " onclick ='add_movie_to_watchlist(this)'>Add movie to Watchlist</button>";
+
+                {% if current_user.is_authenticated %}
                 $('#result').append(title_element, poster_element, button);
+                {% else %}
+                 $('#result').append(title_element, poster_element);
+                {% endif %}
+
             });
         }
         function show_movie(element) {
