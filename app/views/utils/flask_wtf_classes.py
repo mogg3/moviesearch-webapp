@@ -3,6 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import InputRequired, Length, Email, EqualTo
 import flask_wtf
 
+
 class RegisterForm(FlaskForm):
     first_name = StringField('First Name', validators=[InputRequired(), Length(min=2, max=50)], )
     last_name = StringField('Last Name', validators=[InputRequired(), Length(min=2, max=50)])
@@ -12,6 +13,7 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', [InputRequired(), Length(min=8)])
     confirm = PasswordField('Repeat Password', [EqualTo('password', message='Did not match password')])
     submit = SubmitField('Submit')
+
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Length(min=4, max=40)])
