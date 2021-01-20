@@ -17,7 +17,6 @@ def index():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-
     form = RegisterForm()
     if request.method == "POST":
         if form.validate_on_submit():
