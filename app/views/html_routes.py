@@ -17,6 +17,7 @@ def index():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+
     form = RegisterForm()
     if request.method == "POST":
         if form.validate_on_submit():
@@ -28,9 +29,24 @@ def signup():
                 password=form.password.data,
                 username=form.username.data
             )
+            return redirect(url_for('signin'))
 
     return render_template('signup.html', form=form)
 
+@app.route('/signin', methods=['GET', 'POST'])
+def signin():
+    form = LoginForm()
+    if request.method == "POST":
+        if form.validate_on_submit():
+            user = get_user_by_email(email=form.email.data)
+            if user and verify_password(form.password.data, user.password):
+                login_user(user, remember=form.remember.data)
+                return redirect(url_for('profile'))
+            else:
+                # flash('Wrong email or password')
+                return redirect('signin')
+
+    return render_template('signin.html', form=form)
 
 @app.route('/profile')
 @login_required
@@ -39,20 +55,6 @@ def profile():
 
 
 @app.route('/signin', methods=['GET', 'POST'])
-
-
-def signin():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = get_user_by_email(email=form.email.data)
-        if user and verify_password(form.password.data, user.password):
-            login_user(user, remember=form.remember.data)
-            return redirect(url_for('profile'))
-        else:
-            # flash('Wrong email or password')
-            return redirect('signin')
-
-    return render_template('signin.html', form=form)
 
 
 @app.route("/signout")
