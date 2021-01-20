@@ -8,4 +8,4 @@ class Message(EmbeddedDocument):
     created_at = DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
-        return f"'{self.text}' (sent by {self.sent_by.first_name})"
+        return f"'{self.text}' - {self.sent_by} - {self.created_at}"
