@@ -20,6 +20,7 @@ def signup():
     form = RegisterForm()
     if request.method == "POST":
         if form.validate_on_submit():
+            # add check if user exists
             create_user(
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
@@ -38,6 +39,8 @@ def profile():
 
 
 @app.route('/signin', methods=['GET', 'POST'])
+
+
 def signin():
     form = LoginForm()
     if form.validate_on_submit():
@@ -46,23 +49,27 @@ def signin():
             login_user(user, remember=form.remember.data)
             return redirect(url_for('profile'))
         else:
-            flash('Wrong email or password')
+            # flash('Wrong email or password')
             return redirect('signin')
 
     return render_template('signin.html', form=form)
 
+
 @app.route("/signout")
+@login_required
 def signout():
     logout_user()
     return render_template('index.html')
 
 
 @app.route('/edit_account')
+@login_required
 def edit_account():
     return render_template('edit_account.html')
 
 
 @app.route('/friends')
+@login_required
 def friends():
     return render_template("friends.html")
 
@@ -88,8 +95,3 @@ def user(username):
 @login_required
 def watchlist():
     return render_template('watchlist.html', watchlist=current_user.watchlist)
-
-# @app.route('/movies/<title>')
-# def movie(title):
-#     movie_information = get_movie_by_title_first(title)
-#     return render_template('movie.html', movie_information=movie_information)

@@ -1,5 +1,5 @@
 from flask import request
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 from controllers.omdb_controller import get_movies_by_title
 from controllers.user_controller import add_movie_to_users_watchlist
@@ -7,6 +7,7 @@ from views import app
 
 import json
 
+# TODO: update the name of the routes
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -22,6 +23,7 @@ def search():
 
 
 @app.route('/post_watchlist', methods=['POST'])
+@login_required
 def post_watchlist():
     movie = json.loads(request.values['movie'])
 
