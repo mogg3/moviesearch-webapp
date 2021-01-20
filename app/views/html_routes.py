@@ -21,6 +21,8 @@ def signup():
     form = RegisterForm()
     if request.method == "POST":
         if form.validate_on_submit():
+            user = get_user_by_email(email=form.email.data)
+            user = get_user_by_email(email=form.email.data)
             # add check if user exists
             create_user(
                 first_name=form.first_name.data,
