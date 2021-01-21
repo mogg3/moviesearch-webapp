@@ -1,2 +1,19 @@
+{% extends "base.html" %}
 
-<p>{{ user.email }}</p>
+
+
+{% block  content %}
+{% include "menu.html" %}
+<div style="margin: 10px">
+    <h5 style="display:inline;">Firstname: </h5><p style="display:inline;">{{user.first_name}}</p><br>
+    <h5 style="display:inline;">Lastname: </h5><p style="display:inline;">{{user.last_name}}</p><br>
+    <h5 style="display:inline;">Username: </h5><p style="display:inline;">{{user.username}}</p><br>
+    <h5 style="display:inline;">Email: </h5><p style="display:inline;">{{user.email}}</p><br>
+    <h5 style="display:inline;">Roles: </h5>
+    {% if role %}
+        <p style="display:inline;"></p><button style="border-radius: 10px">Remove admin privileges</button><br>
+    {% else  %}
+        <p style="display:inline;">{{role.name}}</p><button style="border-radius: 10px">Add admin privileges</button>
+    {% endif %}
+</div>
+{% endblock %}
