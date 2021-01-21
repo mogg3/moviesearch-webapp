@@ -91,7 +91,11 @@ def admin():
 @app.route("/admin/users/<username>")
 @roles_required("admin")
 def user(username):
-    return render_template('user.html', user=get_user_by_username(username))
+    user=get_user_by_username(username)
+    if len(user.roles) == 0:
+        return render_template('user.html', user=user, role= False)
+    else:
+        return render_template('user.html', user=user, role= user.roles[0])
 
 
 @app.route('/watchlist')
