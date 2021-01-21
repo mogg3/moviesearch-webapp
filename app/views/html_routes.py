@@ -1,10 +1,12 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
+from werkzeug.utils import secure_filename
 
 from controllers.role_controller import get_all_roles
-from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email
+from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
+    add_profile_picture_to_user
 
 from views import app
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
@@ -12,13 +14,19 @@ from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 
 @app.route("/")
 def index():
+    # user = get_user_by_email('hanna@hanna.com')
+    # # with open('C:\\Github\\Project_Movie_Web_App\\app\\test.jpg', 'rb') as fd:
+    # #     user.profile_picture.put(fd, content_type='image/jpeg')
+    # # user.save()
+    #
+    # img = user.profile_picture
+
     return render_template("index.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
-
 
     if request.method == "POST":
         if form.validate_on_submit():
@@ -33,11 +41,10 @@ def signup():
                 username=form.username.data
             )
             return redirect(url_for('signin'))
-           # errors = {field.name: "\n".join(field.errors) for field in form}
-
-
+        # errors = {field.name: "\n".join(field.errors) for field in form}
 
     return render_template('signup.html', form=form)
+
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
@@ -54,13 +61,32 @@ def signin():
 
     return render_template('signin.html', form=form)
 
+
 @app.route('/profile')
 @login_required
 def profile():
     return render_template('profile.html', first_name=current_user.first_name, roles=current_user.roles)
 
 
-@app.route('/signin', methods=['GET', 'POST'])
+@app.route('/profile', methods=['POST'])
+@login_required
+def upload_profile_picture():
+    if request.method == "POST":
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+
+        file = request.files['file']
+
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+
+        if file.filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}:
+            add_profile_picture_to_user(current_user, file)
+            flash('wrong_file_format')
+
+    return redirect(url_for('profile'))
 
 
 @app.route("/signout")

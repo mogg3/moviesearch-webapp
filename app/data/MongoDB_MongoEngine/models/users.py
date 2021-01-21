@@ -1,5 +1,6 @@
 from flask_security import UserMixin
-from mongoengine import StringField, Document, BooleanField, DateTimeField, ListField, ReferenceField
+from mongoengine import StringField, Document, BooleanField, DateTimeField, ListField, ReferenceField, FileField, \
+    ImageField
 
 
 class User(Document, UserMixin):
@@ -10,14 +11,13 @@ class User(Document, UserMixin):
     password = StringField(max_length=255)
     active = BooleanField(default=True)
     confirmed_at = DateTimeField(nullable=True)
-
     watchlist = ListField()
     friends = ListField(ReferenceField('User'))
     roles = ListField(ReferenceField('Role'))
     chats = ListField(ReferenceField('Chat'))
+    profile_picture = FileField()
 
     def __str__(self):
         return f"{self.first_name}"
-
 
 

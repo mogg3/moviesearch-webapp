@@ -1,11 +1,17 @@
-from flask import request
+import base64
+import codecs
+from typing import io
+
+from flask import request, send_file
 from flask_login import current_user, login_required
+from pymongo import response
+from werkzeug.utils import secure_filename, redirect
 
 from controllers.chat_controller import initiate_chat
 from controllers.omdb_controller import get_movies_by_title
 from controllers.role_controller import get_role_by_name, add_admin_role_to_user
 from controllers.user_controller import add_movie_to_users_watchlist, get_user_by_email, add_role_to_user, \
-    add_friendship, delete_movie_from_users_watchlist
+    add_friendship, delete_movie_from_users_watchlist, add_profile_picture_to_user
 from views import app
 
 import json
@@ -22,7 +28,14 @@ Should we use post or put when updating an user?
  
  
 """
+@app.route('/api/users/<username>/profile_picture', methods=['GET'])
+@login_required
+def get_profile_picture(username):
+    image = current_user.profile_picture.read()
+    # if image:
+    #     with open('static/images/no_profile_picture.png', 'r') as no_profile_picture:
 
+    return image
 
 @app.route('/search', methods=['POST'])
 def search():
