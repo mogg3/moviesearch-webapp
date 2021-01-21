@@ -33,7 +33,8 @@ def add_movie_to_users_watchlist(user, movie):
     user.save()
 
 
-def make_friends(user, friend):
+
+def add_friendship(user, friend):
     #TODO Friend invitation
     user.friends.append(friend)
     friend.friends.append(user)
@@ -41,3 +42,6 @@ def make_friends(user, friend):
     user.save()
 
 
+def delete_movie_from_users_watchlist(user, movie):
+    user.watchlist.remove(movie)
+    user.save()

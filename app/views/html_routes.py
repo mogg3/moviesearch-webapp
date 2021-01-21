@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
@@ -18,6 +18,8 @@ def index():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
+
+
     if request.method == "POST":
         if form.validate_on_submit():
             user = get_user_by_email(email=form.email.data)
@@ -31,6 +33,9 @@ def signup():
                 username=form.username.data
             )
             return redirect(url_for('signin'))
+           # errors = {field.name: "\n".join(field.errors) for field in form}
+
+
 
     return render_template('signup.html', form=form)
 
