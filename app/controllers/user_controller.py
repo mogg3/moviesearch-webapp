@@ -31,3 +31,5 @@ def add_friendship(user, friend):
 def delete_movie_from_users_watchlist(user, movie):
     rm.delete_movie_from_users_watchlist(user, movie)
 
+def add_profile_picture_to_user(user, profile_picture):
+    rm.add_profile_picture_to_user(user, profile_picture)
