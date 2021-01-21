@@ -25,6 +25,9 @@ def add_movie_to_users_watchlist(user, movie):
     rm.add_movie_to_users_watchlist(user, movie)
 
 
-def make_friends(user, friend):
-    rm.make_friends(user, friend)
+def add_friendship(user, friend):
+    rm.add_friendship(user, friend)
+
+def delete_movie_from_users_watchlist(user, movie):
+    rm.delete_movie_from_users_watchlist(user, movie)
 

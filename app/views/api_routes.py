@@ -1,15 +1,26 @@
 from flask import request
 from flask_login import current_user, login_required
 
+from controllers.chat_controller import initiate_chat
 from controllers.omdb_controller import get_movies_by_title
-from controllers.user_controller import add_movie_to_users_watchlist
+from controllers.role_controller import get_role_by_name, add_admin_role_to_user
+from controllers.user_controller import add_movie_to_users_watchlist, get_user_by_email, add_role_to_user, \
+    add_friendship, delete_movie_from_users_watchlist
 from views import app
 
 import json
 
 """
+
+Should we use post or put when updating an user?
+
  Update the name of the routes
  Add endpoints for chat, friends
+ 
+ 
+ add role to user
+ 
+ 
 """
 
 
@@ -26,32 +37,88 @@ def search():
     return response
 
 
-@app.route('/post_watchlist', methods=['POST'])
+@app.route('/api/users/<username>/watchlist', methods=['PUT'])
 @login_required
-def post_watchlist():
+def put_watchlist(username):
     movie = json.loads(request.values['movie'])
+    resp = ""
 
-    response = True
-
-    if [m for m in current_user.watchlist if m['Title'] == movie['Title']]:
-        print("already added movie")
-        response = False
+    if movie in current_user.watchlist:
+        resp = f"Already added {movie['Title']} to your watchlist"
     else:
         add_movie_to_users_watchlist(current_user, movie)
+        resp = f"{movie['Title']} added"
 
     response = app.response_class(
-        response=json.dumps(response),
+        response=json.dumps(resp),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
+@app.route('/api/users/<username>/watchlist', methods=['DELETE'])
+@login_required
+def delete_watchlist(username):
+    movie = json.loads(request.values['movie'])
+    resp = ""
+
+    delete_movie_from_users_watchlist(current_user, movie)
+
+    if movie not in current_user.watchlist:
+        resp = f"You removed {movie['Title']} to your watchlist"
+    else:
+        resp = f"You failed to remove {movie['Title']} to your watchlist"
+
+    response = app.response_class(
+        response=json.dumps(resp),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
+@app.route('/api/user/roles', methods=['PUT'])
+@login_required
+def add_role():
+    user = get_user_by_email(json.loads(request.values['user_email']))
+    add_admin_role_to_user(user)
+
+    response = app.response_class(
+        status=200,
+    )
+    return response
+
+@app.route('/api/user/roles', methods=['DELETE'])
+@login_required
+def delete_role():
+    user = get_user_by_email(json.loads(request.values['user_email']))
+    response = app.response_class(
+        status=200,
+    )
+    return response
+
+
+@app.route('/user/friends', methods=['PUT'])
+@login_required
+def add_friendship():
+    #todo: add friendship request
+
+    friend = get_user_by_email(get_user_by_email(json.loads(request.values['friend_email'])))
+    add_friendship(user=current_user, friend=friend)
+
+    if friend in current_user.friends:
+        resp = f"you are already friend with {friend.username}"
+    else:
+        add_friendship(user=current_user, friend=friend)
+        resp = f"You are now friends with {friend.username}"
+
+    initiate_chat(user_1=current_user, user_2=friend)
+
+    response = app.response_class(
+        response=json.dumps(resp),
         status=200,
         mimetype="application/json"
     )
 
     return response
-
-# @app.route('/admin/data/users', methods=['GET'])
-# def get_users():
-#     response = app.response_class(
-#         response=json.dumps([u.to_json() for u in get_all_users()]),
-#         status=200,
-#         mimetype="application/json"
-#     )
-#     return response
