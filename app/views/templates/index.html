@@ -25,7 +25,7 @@
 
             $.ajax({
                 method: 'POST',
-                url: 'http://127.0.0.1:5000/search',
+                url: '{{ url_for('search') }}',
                 data: {'search_term': $(search).val()},
                 success: (response) => {
                     show_result(response);
@@ -83,8 +83,8 @@
             });
 
               $.ajax({
-                method: 'POST',
-                url: 'http://127.0.0.1:5000/post_watchlist',
+                method: 'PUT',
+                url: '{{ url_for('put_watchlist', username=current_user.username) }}',
                 data: {'movie': JSON.stringify(movie)},
                 success: (response) => {
                            console.log(response)

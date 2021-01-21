@@ -10,8 +10,6 @@
     <form class="sign_up_form" action="/signup" method="POST">
         {{ form.csrf_token }}
 
-{#       {{ "".join((form.firstname|selectattr(errors != None))) }}#}
-
         {{ form.first_name.label }}
         {% if form.first_name.errors %}
             {% for error in form.first_name.errors %}
