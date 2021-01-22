@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, g
 from flask_login import login_required, current_user
 from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
@@ -65,12 +65,13 @@ def signin():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', first_name=current_user.first_name, roles=current_user.roles)
+    return render_template('profile.html')
 
 
 @app.route('/profile', methods=['POST'])
 @login_required
 def upload_profile_picture():
+
     if request.method == "POST":
         if 'file' not in request.files:
             flash('No file part')

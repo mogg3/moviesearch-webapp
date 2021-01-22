@@ -8,7 +8,7 @@ from pymongo import response
 from werkzeug.utils import secure_filename, redirect
 
 from controllers.chat_controller import initiate_chat
-from controllers.omdb_controller import get_movies_by_title
+from controllers.omdb_controller import get_movies_by_title, get_movie_by_imdb_id
 from controllers.role_controller import get_role_by_name, add_admin_role_to_user
 from controllers.user_controller import add_movie_to_users_watchlist, get_user_by_email, add_role_to_user, \
     add_friendship, delete_movie_from_users_watchlist, add_profile_picture_to_user
@@ -36,6 +36,20 @@ def get_profile_picture(username):
     #     with open('static/images/no_profile_picture.png', 'r') as no_profile_picture:
 
     return image
+
+@app.route('/movie', methods=['POST'])
+def get_movie():
+    imdb_id = request.values['imdb_id']
+
+    print(get_movie_by_imdb_id("tt4415360"))
+
+    response = app.response_class(
+        response=get_movie_by_imdb_id(imdb_id),
+        status=200,
+        mimetype="application/json"
+    )
+
+    return response
 
 @app.route('/search', methods=['POST'])
 def search():

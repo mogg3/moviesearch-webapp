@@ -12,18 +12,34 @@
     flex-direction: column;
 }
 
-
-#site-navigation {
+#menu-header {
     display: flex;
-    list-style: none;
-    background-color: aqua;
-    border: solid black;
+    flex-direction: row;
+    width: 100%;
+    background-color: black;
+    align-items: center;
+
 }
 
-.site-navigation__link {
+h1 {
+    color: white;
+    margin-left: 20px;
+}
+
+#menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-top: 10px;
+    background-color: black;
+    list-style: none;
+    top: 0;
+    width: 100%;
+}
+
+.menu__link {
     font-size: x-large;
-    margin: auto;
-    border:solid rgb(0, 101, 253) 1px;
+    padding-right: 40px;
 }
 
 .footer {
