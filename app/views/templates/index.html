@@ -49,7 +49,7 @@
 
                 let add =  $("<button>")
                     .attr("id", response[i]['imdbID'])
-                    .attr("onClick", "add_movie_to_watchlist(movie)")
+                    .attr("onClick", "add_movie_to_watchlist(this)")
                     .text("Add movie to Watchlist");
 
                 {% if current_user.is_authenticated %}
@@ -86,7 +86,7 @@
             $.each(movies, (i, m)=> {
                 if (m['imdbID'] === element.id) {
                     movie = m;
-
+                    console.log(movie)
                 }
             });
 
