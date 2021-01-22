@@ -41,8 +41,6 @@ def get_profile_picture(username):
 def get_movie():
     imdb_id = request.values['imdb_id']
 
-    print(get_movie_by_imdb_id("tt4415360"))
-
     response = app.response_class(
         response=get_movie_by_imdb_id(imdb_id),
         status=200,

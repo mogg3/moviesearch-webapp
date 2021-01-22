@@ -38,7 +38,7 @@
 
 
             $.each(movies, (i, movie)=> {
-                console.log(movie)
+
 
                 let title =  $("<p>").text(movie['Title']);
                 let poster = $("<img>")
@@ -60,11 +60,6 @@
             });
         }
 
-        function show_movie(element) {
-            $(result).hide();
-            $('#movie_content').empty().append(element.id);
-        }
-
         function add_movie_to_watchlist(element) {
             let movie;
 
@@ -79,7 +74,7 @@
                 url: '{{ url_for('put_watchlist', username=current_user.username) }}',
                 data: {'movie': JSON.stringify(movie)},
                 success: (response) => {
-                           console.log(response)
+
                 },
                 datatype: 'json'
             })
@@ -107,20 +102,19 @@
         }
 
         function show_movie(element) {
-            console.log("test")
 
               $.ajax({
                   method: 'POST',
                   url: '{{ url_for('get_movie') }}',
-                  data: {'imdb_id': JSON.stringify(element.id)},
+                  data: {'imdb_id': element.id},
                   success: (response) => {
                       console.log(response)
+                       $(result).hide();
+                       $('#movie_content').empty().append(JSON.stringify(response));
                   },
                   datatype: 'json'
               });
         }
-
-
     </script>
 
 {% endblock %}
