@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
-
+import json
 from controllers.role_controller import get_all_roles
 from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email
 
@@ -12,6 +12,8 @@ from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 
 @app.route("/")
 def index():
+    user=get_user_by_username("marcus123")
+    print(user.to_json())
     return render_template("index.html")
 
 

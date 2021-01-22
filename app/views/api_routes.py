@@ -3,9 +3,9 @@ from flask_login import current_user, login_required
 
 from controllers.chat_controller import initiate_chat
 from controllers.omdb_controller import get_movies_by_title
-from controllers.role_controller import get_role_by_name, add_admin_role_to_user
+from controllers.role_controller import get_role_by_name, add_admin_role_to_user, delete_admin_role_from_user
 from controllers.user_controller import add_movie_to_users_watchlist, get_user_by_email, add_role_to_user, \
-    add_friendship, delete_movie_from_users_watchlist
+    add_friendship, delete_movie_from_users_watchlist, get_user_by_username
 from views import app
 
 import json
@@ -62,7 +62,6 @@ def put_watchlist(username):
 def delete_watchlist(username):
     movie = json.loads(request.values['movie'])
     resp = ""
-
     delete_movie_from_users_watchlist(current_user, movie)
 
     if movie not in current_user.watchlist:
@@ -78,23 +77,47 @@ def delete_watchlist(username):
     return response
 
 
+@app.route('/api/user/roles', methods=['GET'])
+@login_required
+def check_role():
+    user = get_user_by_username(json.loads(request.values['username']))
+    if len(user.roles) == 0:
+        resp = "noadmin"
+    else:
+        resp = "admin"
+    response = app.response_class(
+        response=json.dumps(resp),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
 @app.route('/api/user/roles', methods=['PUT'])
 @login_required
 def add_role():
-    user = get_user_by_email(json.loads(request.values['user_email']))
-    add_admin_role_to_user(user)
-
+    user = get_user_by_username(json.loads(request.values['username']))
+    admin_role = get_role_by_name("admin")
+    add_role_to_user(user=user, role=admin_role)
+    resp = f"added role to {user.username}"
     response = app.response_class(
+        response=json.dumps(resp),
         status=200,
+        mimetype="application/json"
     )
     return response
+
 
 @app.route('/api/user/roles', methods=['DELETE'])
 @login_required
 def delete_role():
-    user = get_user_by_email(json.loads(request.values['user_email']))
+    user = get_user_by_username(json.loads(request.values['username']))
+    delete_admin_role_from_user(user)
+    resp = f"removed role from {user.username}"
     response = app.response_class(
+        response=json.dumps(resp),
         status=200,
+        mimetype="application/json"
     )
     return response
 
