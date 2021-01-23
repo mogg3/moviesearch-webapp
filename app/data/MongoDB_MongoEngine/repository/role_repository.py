@@ -19,4 +19,4 @@ def add_admin_role_to_user(user):
 
 
 def delete_admin_role_from_user(user):
-    user_datastore.remove_role_from_user(user, user.role['admin'])
+    user_datastore.remove_role_from_user(user, user.roles[0])

@@ -3,7 +3,6 @@ from flask_login import login_required, current_user
 from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
 from werkzeug.utils import secure_filename
-
 from controllers.role_controller import get_all_roles
 from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
     add_profile_picture_to_user
@@ -20,7 +19,6 @@ def index():
     # # user.save()
     #
     # img = user.profile_picture
-
     return render_template("index.html")
 
 
