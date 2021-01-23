@@ -17,7 +17,6 @@
  <script>
      var username = "{{ user.username|safe }}"
      function get_role() {
-            console.log("get_role")
             $.ajax({
                 method: 'get',
                 url: '{{ url_for('check_role') }}',
@@ -30,18 +29,17 @@
         }
      function show_role_info(role_info) {
          $('#user_role_info').empty()
-         console.log("show_role_info")
-         let make_admin_button = "<button id=" + "make_admin" + " onclick ='add_role_to_user()'>Add admin priviliges</button>";
-         let remove_admin_button = "<button id=" + "remove_admin"  + " onclick ='remove_role_from_user()'>Remove admin priviliges</button>";
+         let make_admin_button = "<p style=\"display:inline; margin-right:10px\">(no roles)</p><button id=" + "make_admin" + " onclick ='add_role_to_user()'>Add admin priviliges</button>";
+         let remove_admin_button = "<p style=\"display:inline; margin-right:10px\">Admin</p><button id=" + "remove_admin"  + " onclick ='remove_role_from_user()'>Remove admin priviliges</button>";
          if (role_info === "admin") {
             $('#user_role_info').append(remove_admin_button);
          } else {
             $('#user_role_info').append(make_admin_button);
             }
-     }
+     }s
      function add_role_to_user() {
-         console.log("add_role_to_user")
-         $.ajax({
+         get_role()
+          $.ajax({
                 method: 'PUT',
                 url: '{{ url_for('add_role') }}',
                 data: {'username': JSON.stringify(username)},
@@ -51,10 +49,9 @@
                 datatype: 'json'
             })
          get_role()
-
      }
      function remove_role_from_user() {
-         console.log("remove_role_from_user")
+         get_role()
          $.ajax({
                 method: 'DELETE',
                 url: '{{ url_for('delete_role') }}',

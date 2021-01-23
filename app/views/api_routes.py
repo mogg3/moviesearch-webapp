@@ -99,7 +99,7 @@ def add_role():
     user = get_user_by_username(json.loads(request.values['username']))
     admin_role = get_role_by_name("admin")
     add_role_to_user(user=user, role=admin_role)
-    resp = f"added role to {user.username}"
+    resp = f"added role"
     response = app.response_class(
         response=json.dumps(resp),
         status=200,
@@ -113,7 +113,7 @@ def add_role():
 def delete_role():
     user = get_user_by_username(json.loads(request.values['username']))
     delete_admin_role_from_user(user)
-    resp = f"removed role from {user.username}"
+    resp = f"removed role"
     response = app.response_class(
         response=json.dumps(resp),
         status=200,
