@@ -7,7 +7,3 @@ class Chat(Document):
     members = ListField(ReferenceField('User'))
     messages = EmbeddedDocumentListField('Message')
 
-
-    def __str__(self):
-        return f"{self.messages}"
-

@@ -10,11 +10,7 @@
     <h5 style="display:inline;">Roles: </h5>
     <div id="user_role_info" style="display:inline;"></div>
 </div>
-<!--<p style="display:inline; margin-right:10px">{{role}}</p><button style="border-radius: 10px" onclick="remove_role_from_user("")">Remove admin privileges</button><br>-->
-
-<!--<p style="display:inline; margin-right:10px">(no roles)</p><button style="border-radius: 10px" onclick="add_role_to_user()">Add admin privileges</button>-->
-
- <script>
+<script>
      var username = "{{ user.username|safe }}"
      function get_role() {
             $.ajax({
@@ -36,7 +32,7 @@
          } else {
             $('#user_role_info').append(make_admin_button);
             }
-     }s
+     }
      function add_role_to_user() {
          get_role()
           $.ajax({
@@ -66,4 +62,3 @@
      get_role()
  </script>
 {% endblock %}
-

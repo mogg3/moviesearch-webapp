@@ -4,9 +4,67 @@
 {% endblock %}
 
 {% block  content %}
+{% include "menu.html" %}
 
-    {% include "menu.html" %}
+<h3>Chats:</h3>
+{% for chat in user.chats %}
+<div>{{chat.members}}</div>
+{% endfor %}
 
-    <h2> Friends </h2>
+<div id="chat" style="background-color:lightgray; width:500px; margin:50px; "> Chat<br></div>
+<div id="send-bar">
+    <form action="/" method="POST">
+        <input type="text" id="send" placeholder="Type message..." name="send">
+        <button type="submit" id="send_submit">Send</button>
+    </form>
+</div>
 
+<h3 style="display:inline;">Friends:</h3>
+{% for friend in user.friends %}
+<div>{{friends}}</div>
+{% endfor %}
+
+<script>
+    $("#send_submit").click((e) => {
+        e.preventDefault();
+
+        $.ajax({
+            method: 'POST',
+            url: '{{ url_for('send_message') }}',
+            data: {'message': $(send).val(), 'sent_by': '{{user.username}}'},
+            success: (response) => {
+                console.log(response)
+                get_chat();
+            },
+            datatype: 'json'
+        })
+    })
+
+    function show_chat(response) {
+        $('#chat').empty()
+        var i;
+        for (i = 0; i < response.messages.length; i++) {
+            console.log(response)
+            if (response.messages[i].sent_by["$oid"] === "{{user.id}}") {
+                let message_in_chat = "<i style='background-color:lightblue; margin-left: 375px;'>" + response.messages[i].text + "<i>" + "<br>";
+                $('#chat').append(message_in_chat);
+            } else {
+                let message_in_chat = "<i style='background-color:lightgreen; margin-left: 20px;'>" + response.messages[i].text + "<i>" + "<br>";
+                $('#chat').append(message_in_chat);
+            }
+        }
+    }
+
+    function get_chat() {
+        $.ajax({
+            method: 'GET',
+            url: '{{ url_for('get_chat') }}',
+            success: (response) => {
+                show_chat(JSON.parse(response))
+            }
+        })
+    }
+
+    get_chat()
+</script>
 {% endblock %}
