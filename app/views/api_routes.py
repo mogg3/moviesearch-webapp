@@ -1,12 +1,6 @@
-import base64
-import codecs
-from typing import io
 
-from flask import request, send_file
+from flask import request
 from flask_login import current_user, login_required
-from pymongo import response
-from werkzeug.utils import secure_filename, redirect
-
 from controllers.chat_controller import initiate_chat
 from controllers.omdb_controller import get_movies_by_title, get_movie_by_imdb_id
 from controllers.role_controller import get_role_by_name, add_admin_role_to_user
@@ -66,7 +60,6 @@ def search():
 @login_required
 def put_watchlist(username):
     movie = json.loads(request.values['movie'])
-    resp = ""
 
     if movie in current_user.watchlist:
         resp = f"Already added {movie['Title']} to your watchlist"
@@ -80,7 +73,6 @@ def put_watchlist(username):
         mimetype="application/json"
     )
     return response
-
 
 @app.route('/api/users/<username>/watchlist', methods=['DELETE'])
 @login_required
