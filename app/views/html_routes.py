@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 
 from controllers.role_controller import get_all_roles
 from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
-    add_profile_picture_to_user
+    add_profile_picture_to_user, delete_profile_picture_if_exists
 
 from views import app
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
@@ -74,6 +74,7 @@ def upload_profile_picture():
 
     if request.method == "POST":
         if 'file' not in request.files:
+
             flash('No file part')
             return redirect(request.url)
 
@@ -84,8 +85,10 @@ def upload_profile_picture():
             return redirect(request.url)
 
         if file.filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}:
+            delete_profile_picture_if_exists(current_user)
             add_profile_picture_to_user(current_user, file)
-            flash('wrong_file_format')
+        else:
+            flash('Wrong file format. Choose between png, jpg, jpeg and gif.')
 
     return redirect(url_for('profile'))
 
