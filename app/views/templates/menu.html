@@ -1,25 +1,31 @@
-<ul id="menu">
+<ul id="site-navigation">
 
      {% if current_user.is_authenticated %}
 
-         <li class="menu__link">
+         <li class="site-navigation__link">
             <a href="{{ url_for('index') }}">
                 Main
             </a>
          </li>
-        <li class="menu__link">
+        <li class="site-navigation__link">
             <a href="{{ url_for('profile') }}">
                 Profile
             </a>
         </li>
 
-         <li class="menu__link" >
+         <li class="site-navigation__link" >
              <a href="{{ url_for('watchlist') }}">
                 Watch List
             </a>
         </li>
 
-         <li class="menu__link">
+         <li class="site-navigation__link" >
+             <a href="{{ url_for('random_movie') }}">
+                Random movie
+            </a>
+        </li>
+
+         <li class="site-navigation__link">
             <a href="{{ url_for('friends') }}">
                 Friends
             </a>
@@ -27,7 +33,7 @@
 
          {% for role in current_user.roles %}
              {% if role['name'] == "admin" %}
-                <li class="menu__link">
+                <li class="site-navigation__link">
                     <a href="{{ url_for('admin') }}">
                         Admin
                     </a>
@@ -35,7 +41,7 @@
             {% endif %}
         {% endfor %}
 
-         <li class="menu__link">
+         <li class="site-navigation__link">
             <a href="{{ url_for('signout') }}">
                 Sign out
             </a>
@@ -43,13 +49,11 @@
 
      {% else %}
 
-
-         <li class="menu__link" >
+         <li class="site-navigation__link" >
             <a href="{{ url_for('signin') }}">
                 Sign in / Sign up
             </a>
          </li>
-
 
     {% endif %}
 
