@@ -30,9 +30,7 @@ def signup():
 
     if request.method == "POST":
         if form.validate_on_submit():
-            user = get_user_by_email(email=form.email.data)
-            user = get_user_by_email(email=form.email.data)
-            # add check if user exists
+            # add check if user email or username already exists
             create_user(
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
@@ -41,7 +39,7 @@ def signup():
                 username=form.username.data
             )
             return redirect(url_for('signin'))
-        # errors = {field.name: "\n".join(field.errors) for field in form}
+        # {field.name: "\n".join(field.errors) for field in form}
 
     return render_template('signup.html', form=form)
 
@@ -49,17 +47,19 @@ def signup():
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     form = LoginForm()
+    error = None
+
+
     if request.method == "POST":
         if form.validate_on_submit():
             user = get_user_by_email(email=form.email.data)
+
             if user and verify_password(form.password.data, user.password):
                 login_user(user, remember=form.remember.data)
                 return redirect(url_for('profile'))
             else:
-                # flash('Wrong email or password')
-                return redirect('signin')
-
-    return render_template('signin.html', form=form)
+                error = "wrong email or password"
+    return render_template('signin.html', form=form, errors=error)
 
 
 @app.route('/profile')

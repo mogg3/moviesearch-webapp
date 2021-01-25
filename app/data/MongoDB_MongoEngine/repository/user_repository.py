@@ -41,6 +41,7 @@ def add_friendship(user, friend):
     user.save()
 
 
+
 def delete_movie_from_users_watchlist(user, movie):
     user.watchlist.remove(movie)
     user.save()

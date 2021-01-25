@@ -74,21 +74,22 @@ def put_watchlist(username):
     )
     return response
 
+
 @app.route('/api/users/<username>/watchlist', methods=['DELETE'])
 @login_required
 def delete_watchlist(username):
     movie = json.loads(request.values['movie'])
-    resp = ""
+    response = ""
 
     delete_movie_from_users_watchlist(current_user, movie)
 
     if movie not in current_user.watchlist:
-        resp = f"You removed {movie['Title']} to your watchlist"
+        response = f"You removed {movie['Title']} to your watchlist"
     else:
-        resp = f"You failed to remove {movie['Title']} to your watchlist"
+        response = f"You failed to remove {movie['Title']} to your watchlist"
 
     response = app.response_class(
-        response=json.dumps(resp),
+        response=json.dumps(response),
         status=200,
         mimetype="application/json"
     )

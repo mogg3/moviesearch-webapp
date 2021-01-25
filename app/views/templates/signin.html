@@ -8,15 +8,9 @@
 
 
 <div class="login_box">
-{#        {% with messages = get_flashed_messages( ) %}#}
-{#          {% if get_flashed_messages() %}#}
-{#            <ul class=flashes>#}
-{#            {% for message in messages %}#}
-{#              <li>{{ message }}</li>#}
-{#            {% endfor %}#}
-{#            </ul>#}
-{#          {% endif %}#}
-{#        {% endwith %}#}
+{% if errors %}
+    <p>{{ errors }}</p>
+{% endif %}
 
     <form action="/signin" method="POST">
 
