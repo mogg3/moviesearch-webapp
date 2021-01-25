@@ -5,8 +5,6 @@
 
 {% block  content %}
 
-    {% include "menu.html" %}
-
     {% for movie in watchlist %}
     <p>{{ movie['Title'] }}</p>
     {% endfor %}
