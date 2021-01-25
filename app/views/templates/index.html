@@ -20,6 +20,8 @@
 
 <script>
 
+
+
     $("#search_submit").click((e) => {
         e.preventDefault();
         $('#movie-content').empty()
@@ -97,6 +99,11 @@
                 datatype: 'json'
             })
         }
+
+         $('#result').mousemove(function(e) {
+            console.log(e.pageX);
+            console.log(e.pageY);
+         });
 
         function show_movie_content(element) {
               $.ajax({
