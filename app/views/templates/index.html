@@ -28,7 +28,7 @@
             datatype: 'json'
         })
     })
-
+{#TODO: add alt picture om inte poster existerar#}
         function show_result(response) {
             $('#result').empty()
 
@@ -38,7 +38,11 @@
                 let poster = $("<img>")
                     .attr("src", response[i]['Poster'])
                     .attr("onClick",'show_movie(this)')
-                    .attr("id",response[i]['imdbID']);
+                    .attr("id",response[i]['imdbID'])
+                    .attr("class", "poster");
+
+
+
 
                 let add =  $("<button>")
                     .attr("id", response[i]['imdbID'])
@@ -51,8 +55,6 @@
 
                 let flex_br = $("<div>")
                     .attr("id", "break");
-
-
 
                 {% if current_user.is_authenticated %}
                     $(movie_box).append(title, poster, add);

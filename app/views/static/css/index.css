@@ -2,17 +2,24 @@
     width: 80%;
 }
 
-#movie-box {
-    background-color: green;
-    flex-basis: 20%;
-    align-items: center;
-}
-
 #result {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+#movie-box {
+    background-color: green;
+    flex-basis: 10%;
+    align-items: center;
+    margin: 0.5%;
+
+}
+
+.poster {
+    height: 80%;
+    width: 100%;
 }
 
 #break {
