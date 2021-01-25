@@ -1,6 +1,16 @@
+#search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
 #search {
     width: 80%;
 }
+
+
 
 #result {
     display: flex;
@@ -11,7 +21,8 @@
 
 #movie-box {
     background-color: green;
-    flex-basis: 10%;
+    flex-basis: 13%;
+
     align-items: center;
     margin: 0.5%;
 
