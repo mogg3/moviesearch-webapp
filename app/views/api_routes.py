@@ -17,6 +17,7 @@ from views import app
 
 import json
 
+
 @app.route('/api/users/<username>/profile_picture', methods=['GET'])
 @login_required
 def get_profile_picture(username):
@@ -25,6 +26,7 @@ def get_profile_picture(username):
     image = current_user.profile_picture.read()
 
     return image
+
 
 @app.route('/movie', methods=['POST'])
 def get_movie():

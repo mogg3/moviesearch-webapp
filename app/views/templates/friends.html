@@ -4,7 +4,6 @@
 {% endblock %}
 
 {% block  content %}
-{% include "menu.html" %}
 
 <h3>Chats:</h3>
 {% for chat in user.chats %}
@@ -61,6 +60,7 @@
             method: 'GET',
             url: '{{ url_for('get_chat') }}',
             success: (response) => {
+                console.log(JSON.parse(response))
                 show_chat(JSON.parse(response))
             }
         })
