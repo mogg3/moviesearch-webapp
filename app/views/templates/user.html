@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block  content %}
-{% include "menu.html" %}
 <div style="margin: 10px">
     <h5 style="display:inline;">Firstname: </h5><p style="display:inline;">{{user.first_name}}</p><br>
     <h5 style="display:inline;">Lastname: </h5><p style="display:inline;">{{user.last_name}}</p><br>
@@ -11,12 +10,11 @@
     <div id="user_role_info" style="display:inline;"></div>
 </div>
 <script>
-     var username = "{{ user.username|safe }}"
      function get_role() {
             $.ajax({
                 method: 'get',
                 url: '{{ url_for('check_role') }}',
-                data: {'username': JSON.stringify(username)},
+                data: {'username': JSON.stringify("{{user.username}}")},
                 success: (response) => {
                            show_role_info(response)
                 },

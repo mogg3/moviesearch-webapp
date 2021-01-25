@@ -4,9 +4,7 @@ from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
 from werkzeug.utils import secure_filename
 from controllers.role_controller import get_all_roles, get_role_by_name, add_admin_role_to_user
-from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
-
-add_profile_picture_to_user, delete_profile_picture_if_exists
+from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, add_profile_picture_to_user, delete_profile_picture_if_exists
 
 from controllers.chat_controller import initiate_chat
 

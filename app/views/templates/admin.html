@@ -3,10 +3,7 @@
 {% block  links %}
 {% endblock %}
 
-
-
 {% block  content %}
-    {% include "menu.html" %}
     <div id="users">
         <h1>Users</h1>
         {% for user in users %}
@@ -19,8 +16,4 @@
     </div>
     <div id="user_page">
     </div>
-{#    {% for role in roles %}#}
-{#        <p>{{ role }}</p>#}
-{#    {% endfor %}#}
-
 {% endblock %}
