@@ -49,13 +49,23 @@
                 let movie_box = $("<div>")
                     .attr("id", "movie-box");
 
+                let flex_br = $("<div>")
+                    .attr("id", "break");
+
+
+
                 {% if current_user.is_authenticated %}
                     $(movie_box).append(title, poster, add);
                 {% else %}
                     $(movie_box).append(title, poster);
                 {% endif %}
 
+            if (i === 5) {
+                $('#result').append(movie_box, flex_br);
+            }
+            else {
                 $('#result').append(movie_box);
+            }
             });
         }
 
