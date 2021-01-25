@@ -37,9 +37,9 @@
             $.each(response, (i, movie)=> {
 
                 let title = ()=> {
-                    title_max_length = 30;
+                    title_max_length = 20;
                     return (movie['Title'].length > title_max_length) ?
-                        $("<p>").attr("class", "title").text(movie['Title'].substring(0, 30) + "...") :
+                        $("<p>").attr("class", "title").text(movie['Title'].substring(0, 21) + "...") :
                         $("<p>").attr("class", "title").text(movie['Title']);
                 };
 
@@ -48,7 +48,6 @@
                     .attr("onClick",'show_movie(this)')
                     .attr("id",response[i]['imdbID'])
                     .attr("class", "poster");
-
                 let add =  $("<button>")
                     .attr("class", "add")
                     .attr("id", response[i]['imdbID'])
@@ -56,7 +55,9 @@
                     .attr("movie", JSON.stringify(movie));
               
                 let movie_box = $("<div>")
-                    .attr("id", "movie-box");
+                    .attr("id", "movie-box")
+                    .attr("onmouseover", "hoover_movie_on(this)")
+                    .attr("onmouseout", "hoover_movie_off(this)");
 
                 let flex_br = $("<div>")
                     .attr("id", "break");
@@ -74,6 +75,14 @@
                 $('#result').append(movie_box);
             }
             });
+        }
+
+        function hoover_movie_on (movie) {
+            $(movie).css("background-color", "");
+            console.log("works");
+        }
+          function hoover_movie_off (movie) {
+            $(movie).css("flex-basis", "13%");
         }
 
           function add_movie_to_watchlist(element) {
