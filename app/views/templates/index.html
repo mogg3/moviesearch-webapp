@@ -34,15 +34,22 @@
 
             $.each(response, (i, movie)=> {
 
-                let title =  $("<p>").text(movie['Title']);
+                let movie_box = $("<div>")
+                    .attr("id", "movie-box");
+
+                let title = ""
+
+                if (movie['Title'].length > 20) {
+                    title =  $("<p>").text(movie['Title'].substring(0,20) + "...");
+                } else {
+                    title =  $("<p>").text(movie['Title']);
+                }
+
                 let poster = $("<img>")
                     .attr("src", response[i]['Poster'])
                     .attr("onClick",'show_movie(this)')
                     .attr("id",response[i]['imdbID'])
                     .attr("class", "poster");
-
-
-
 
                 let add =  $("<button>")
                     .attr("id", response[i]['imdbID'])
@@ -50,8 +57,6 @@
                     .text("Add movie to Watchlist")
                     .attr("movie", JSON.stringify(movie));
 
-                let movie_box = $("<div>")
-                    .attr("id", "movie-box");
 
                 let flex_br = $("<div>")
                     .attr("id", "break");

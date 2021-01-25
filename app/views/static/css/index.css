@@ -10,8 +10,9 @@
 }
 
 #movie-box {
-    background-color: green;
-    flex-basis: 10%;
+    background-color: lightgray;
+    border: solid black 1px;
+    flex-basis: 15%;
     align-items: center;
     margin: 0.5%;
 
