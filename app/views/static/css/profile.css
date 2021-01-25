@@ -1,0 +1,25 @@
+
+
+.square {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+    margin-top: 40px;
+
+    background-color: green;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    align-items: center;
+}
+
+#profile_picture {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

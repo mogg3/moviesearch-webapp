@@ -22,5 +22,8 @@ def get_movie_by_imdb_id(imdb_id):
 
     result_decoded = result.decode('utf-8')
 
+
     return result_decoded
+
+
 

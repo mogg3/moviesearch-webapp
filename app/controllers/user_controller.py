@@ -33,3 +33,6 @@ def delete_movie_from_users_watchlist(user, movie):
 
 def add_profile_picture_to_user(user, profile_picture):
     rm.add_profile_picture_to_user(user, profile_picture)
+
+def delete_profile_picture_if_exists(user):
+   rm.delete_profile_picture_if_exists(user)
