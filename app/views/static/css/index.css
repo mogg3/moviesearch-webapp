@@ -20,7 +20,8 @@
 #movie-box {
     display: flex;
     flex-direction: column;
-    background-color: green;
+    background-color: lightgray;
+    border: solid black 1px;
     flex-basis: 13%;
     align-items: center;
     margin: 0.5%;
@@ -33,6 +34,11 @@
 .poster {
     height: 80%;
     width: 100%;
+}
+
+.add {
+    height: 20px;
+    width: 20px;
 }
 
 #break {
