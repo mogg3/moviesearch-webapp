@@ -5,7 +5,6 @@ from flask_security.utils import login_user, logout_user, verify_password
 from werkzeug.utils import secure_filename
 from controllers.role_controller import get_all_roles, get_role_by_name, add_admin_role_to_user
 from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
-
 add_profile_picture_to_user, delete_profile_picture_if_exists
 
 from controllers.chat_controller import initiate_chat
@@ -17,13 +16,6 @@ from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 
 @app.route("/")
 def index():
-    # user = get_user_by_email('hanna@hanna.com')
-    # # with open('C:\\Github\\Project_Movie_Web_App\\app\\test.jpg', 'rb') as fd:
-    # #     user.profile_picture.put(fd, content_type='image/jpeg')
-    # # user.save()
-    #
-    # img = user.profile_picture
-    #initiate_chat(get_user_by_username("ellica123"), get_user_by_username("marcus123"))
     return render_template("index.html")
 
 

@@ -6,7 +6,7 @@ from pymongo import response
 from werkzeug.utils import secure_filename, redirect
 
 from controllers.chat_controller import initiate_chat, get_all_chats, add_message_to_chat
-from controllers.omdb_controller import get_movies_by_title
+from controllers.omdb_controller import get_movies_by_title, get_movie_by_imdb_id
 from controllers.role_controller import get_role_by_name, add_admin_role_to_user, delete_admin_role_from_user
 
 from controllers.user_controller import add_movie_to_users_watchlist, get_user_by_email, add_role_to_user, \
@@ -20,9 +20,9 @@ import json
 @app.route('/api/users/<username>/profile_picture', methods=['GET'])
 @login_required
 def get_profile_picture(username):
+
+        #TODO: add check if picture do not exist
     image = current_user.profile_picture.read()
-    # if image:
-    #     with open('static/images/no_profile_picture.png', 'r') as no_profile_picture:
 
     return image
 
