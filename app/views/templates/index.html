@@ -104,8 +104,10 @@
                   url: '{{ url_for('get_movie') }}',
                   data: {'imdb_id': element.id},
                   success: (response) => {
+                      $('#movie-content').empty();
                       $('#movie-content-container').hide();
-                      $('#movie-content-container').fadeIn(300);
+                      $('#movie-content-container').fadeTo(300, 0.9, function() {
+                      });
 
                       let add =  $("<button>")
                         .attr("class", "add")
