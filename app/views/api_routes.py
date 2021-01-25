@@ -21,9 +21,9 @@ import json
 @app.route('/api/users/<username>/profile_picture', methods=['GET'])
 @login_required
 def get_profile_picture(username):
+
+        #TODO: add check if picture do not exist
     image = current_user.profile_picture.read()
-    # if image:
-    #     with open('static/images/no_profile_picture.png', 'r') as no_profile_picture:
 
     return image
 
