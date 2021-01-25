@@ -1,4 +1,13 @@
 #search {
     width: 80%;
-    background-color: lightgray;
+}
+
+#movie-box {
+    background-color: green;
+    margin: 10px;
+}
+
+#result {
+    display: flex;
+    flex-direction: row;
 }

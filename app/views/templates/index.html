@@ -8,7 +8,7 @@
             <button type="submit" id="search_submit">Submit</button>
         </form>
     </div>
-    <div id="result"></div>
+    <div id="result"><div id="movie"></div></div>
     <div id="movie_content"></div>
 
 <script>
@@ -45,11 +45,17 @@
                     .attr("onClick", "add_movie_to_watchlist(this)")
                     .text("Add movie to Watchlist")
                     .attr("movie", JSON.stringify(movie));
+
+                let movie_box = $("<div>")
+                    .attr("id", "movie-box");
+
                 {% if current_user.is_authenticated %}
-                    $('#result').append(title, poster, add);
+                    $(movie_box).append(title, poster, add);
                 {% else %}
-                    $('#result').append(title, poster);
+                    $(movie_box).append(title, poster);
                 {% endif %}
+
+                $('#result').append(movie_box);
             });
         }
 
