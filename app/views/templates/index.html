@@ -38,12 +38,11 @@
                 let title = "";
 
                 if (movie['Title'].length > title_max_length) {
-                    title =  $("<p>").text(movie['Title'].substring(0, 20));
+                    title =  $("<p>").text(movie['Title'].substring(0, 20) + "...");
                 }
                 else {
                     title =  $("<p>").text(movie['Title']);
                     }
-
 
                 let poster = $("<img>")
                     .attr("src", response[i]['Poster'])
@@ -57,13 +56,13 @@
                     .attr("onClick", "add_movie_to_watchlist(this)")
                     .text("Add movie to Watchlist")
                     .attr("movie", JSON.stringify(movie));
-
+              
                 let movie_box = $("<div>")
                     .attr("id", "movie-box");
 
                 let flex_br = $("<div>")
                     .attr("id", "break");
-
+  
 
                 {% if current_user.is_authenticated %}
                     $(movie_box).append(title, poster, add);
