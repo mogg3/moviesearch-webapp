@@ -10,8 +10,6 @@
     width: 80%;
 }
 
-
-
 #result {
     display: flex;
     flex-direction: row;
@@ -20,13 +18,17 @@
 }
 
 #movie-box {
+    display: flex;
+    flex-direction: column;
     background-color: green;
     flex-basis: 13%;
-
     align-items: center;
     margin: 0.5%;
-
 }
+
+ .title {
+
+   }
 
 .poster {
     height: 80%;
@@ -36,4 +38,11 @@
 #break {
   flex-basis: 100%;
   height: 0;
+}
+
+
+@media screen and (max-width: 900px) {
+   .title {
+       font-size: 0;
+   }
 }

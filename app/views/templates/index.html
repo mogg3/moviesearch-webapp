@@ -32,25 +32,22 @@
 {#TODO: add alt picture om inte poster existerar#}
         function show_result(response) {
             $('#result').empty()
-            title_max_length = 20;
+
 
             $.each(response, (i, movie)=> {
-                let title = "";
 
-                if (movie['Title'].length > title_max_length) {
-                    title =  $("<p>").text(movie['Title'].substring(0, 20));
-                }
-                else {
-                    title =  $("<p>").text(movie['Title']);
-                    }
-
+                let title = ()=> {
+                    title_max_length = 30;
+                    return (movie['Title'].length > title_max_length) ?
+                        $("<p>").attr("class", "title").text(movie['Title'].substring(0, 30) + "...") :
+                        $("<p>").attr("class", "title").text(movie['Title']);
+                };
 
                 let poster = $("<img>")
                     .attr("src", response[i]['Poster'])
                     .attr("onClick",'show_movie(this)')
                     .attr("id",response[i]['imdbID'])
                     .attr("class", "poster");
-
 
                 let add =  $("<button>")
                     .attr("id", response[i]['imdbID'])
@@ -63,7 +60,6 @@
 
                 let flex_br = $("<div>")
                     .attr("id", "break");
-
 
                 {% if current_user.is_authenticated %}
                     $(movie_box).append(title, poster, add);
