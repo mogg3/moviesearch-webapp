@@ -2,10 +2,10 @@
 
 {% block  content %}
 
-    <div id="search-bar">
-        <form action="/" method="POST">
+    <div>
+        <form action="/" method="POST" id="search-container">
             <input type="text" id="search" placeholder="Search.." name="search">
-            <button type="submit" id="search_submit">Submit</button>
+            <button type="submit" id="search_submit">Search</button>
         </form>
     </div>
     <div id="result"><div id="movie"></div></div>
@@ -15,6 +15,7 @@
 
     $("#search_submit").click((e) => {
         e.preventDefault();
+        $('#movie_content').empty()
 
         $('#result').show()
 
@@ -31,17 +32,24 @@
 {#TODO: add alt picture om inte poster existerar#}
         function show_result(response) {
             $('#result').empty()
+            title_max_length = 20;
 
             $.each(response, (i, movie)=> {
+                let title = "";
 
-                let title =  $("<p>").text(movie['Title']);
+                if (movie['Title'].length > title_max_length) {
+                    title =  $("<p>").text(movie['Title'].substring(0, 20));
+                }
+                else {
+                    title =  $("<p>").text(movie['Title']);
+                    }
+
+
                 let poster = $("<img>")
                     .attr("src", response[i]['Poster'])
                     .attr("onClick",'show_movie(this)')
                     .attr("id",response[i]['imdbID'])
                     .attr("class", "poster");
-
-
 
 
                 let add =  $("<button>")
@@ -55,6 +63,7 @@
 
                 let flex_br = $("<div>")
                     .attr("id", "break");
+
 
                 {% if current_user.is_authenticated %}
                     $(movie_box).append(title, poster, add);
