@@ -27,7 +27,7 @@
                 {% endif %}
             {% endwith %}
             </form>
-             <img src="{{url_for('get_profile_picture', username=current_user.username)}}" alt="static/images/no_profile_picture.png">
+             <img src="{{ url_for('get_profile_picture', username=current_user.username) }}" alt="static/images/no_profile_picture.png">
         </div>
         
         <lu>
