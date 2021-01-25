@@ -21,3 +21,5 @@ class User(Document, UserMixin):
         return f"{self.first_name}"
 
 
+    def __repr__(self):
+        return f"{self.first_name}"

@@ -11,23 +11,23 @@
     <div id="result"></div>
     <div id="movie_content"></div>
 
-    <script>
+<script>
 
-        $("#search_submit").click((e) => {
-            e.preventDefault();
+    $("#search_submit").click((e) => {
+        e.preventDefault();
 
-            $('#result').show()
+        $('#result').show()
 
-            $.ajax({
-                method: 'POST',
-                url: '{{ url_for('search') }}',
-                data: {'search_term': $(search).val()},
-                success: (response) => {
-                    show_result(response);
-                },
-                datatype: 'json'
-            })
+        $.ajax({
+            method: 'POST',
+            url: '{{ url_for('search') }}',
+            data: {'search_term': $(search).val()},
+            success: (response) => {
+                show_result(response);
+            },
+            datatype: 'json'
         })
+    })
 
         function show_result(response) {
             $('#result').empty()
@@ -86,5 +86,6 @@
         }
 
     </script>
+
 
 {% endblock %}

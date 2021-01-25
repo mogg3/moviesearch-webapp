@@ -1,27 +1,22 @@
 
 from flask import request
 from flask_login import current_user, login_required
-from controllers.chat_controller import initiate_chat
-from controllers.omdb_controller import get_movies_by_title, get_movie_by_imdb_id
-from controllers.role_controller import get_role_by_name, add_admin_role_to_user
+
+from pymongo import response
+from werkzeug.utils import secure_filename, redirect
+
+from controllers.chat_controller import initiate_chat, get_all_chats, add_message_to_chat
+from controllers.omdb_controller import get_movies_by_title
+from controllers.role_controller import get_role_by_name, add_admin_role_to_user, delete_admin_role_from_user
+
 from controllers.user_controller import add_movie_to_users_watchlist, get_user_by_email, add_role_to_user, \
-    add_friendship, delete_movie_from_users_watchlist, add_profile_picture_to_user
+    add_friendship, delete_movie_from_users_watchlist, add_profile_picture_to_user, get_user_by_username
+from data.MongoDB_MongoEngine.models.messages import Message
+
 from views import app
 
 import json
 
-"""
-
-Should we use post or put when updating an user?
-
- Update the name of the routes
- Add endpoints for chat, friends
- 
- 
- add role to user
- 
- 
-"""
 @app.route('/api/users/<username>/profile_picture', methods=['GET'])
 @login_required
 def get_profile_picture(username):
@@ -79,8 +74,9 @@ def put_watchlist(username):
 @login_required
 def delete_watchlist(username):
     movie = json.loads(request.values['movie'])
-    response = ""
 
+    response = ""
+    
     delete_movie_from_users_watchlist(current_user, movie)
 
     if movie not in current_user.watchlist:
@@ -96,23 +92,48 @@ def delete_watchlist(username):
     return response
 
 
+@app.route('/api/user/roles', methods=['GET'])
+@login_required
+def check_role():
+    user = get_user_by_username(json.loads(request.values['username']))
+    print("hello")
+    if len(user.roles) == 0:
+        resp = "noadmin"
+    else:
+        resp = "admin"
+    response = app.response_class(
+        response=json.dumps(resp),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
 @app.route('/api/user/roles', methods=['PUT'])
 @login_required
 def add_role():
-    user = get_user_by_email(json.loads(request.values['user_email']))
-    add_admin_role_to_user(user)
-
+    user = get_user_by_username(json.loads(request.values['username']))
+    admin_role = get_role_by_name("admin")
+    add_role_to_user(user=user, role=admin_role)
+    resp = f"added role"
     response = app.response_class(
+        response=json.dumps(resp),
         status=200,
+        mimetype="application/json"
     )
     return response
+
 
 @app.route('/api/user/roles', methods=['DELETE'])
 @login_required
 def delete_role():
-    user = get_user_by_email(json.loads(request.values['user_email']))
+    user = get_user_by_username(json.loads(request.values['username']))
+    delete_admin_role_from_user(user)
+    resp = f"removed role"
     response = app.response_class(
+        response=json.dumps(resp),
         status=200,
+        mimetype="application/json"
     )
     return response
 
@@ -123,7 +144,6 @@ def add_friendship():
     #todo: add friendship request
 
     friend = get_user_by_email(get_user_by_email(json.loads(request.values['friend_email'])))
-    add_friendship(user=current_user, friend=friend)
 
     if friend in current_user.friends:
         resp = f"you are already friend with {friend.username}"
@@ -139,4 +159,32 @@ def add_friendship():
         mimetype="application/json"
     )
 
+    return response
+
+
+@app.route('/api/friends/', methods=['GET'])
+@login_required
+def get_chat():
+    chat = get_all_chats()[0]
+    response = app.response_class(
+        response=json.dumps(chat.to_json()),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
+@app.route('/api/friends/', methods=['POST'])
+@login_required
+def send_message():
+    message = request.values['message']
+    sent_by = request.values['sent_by']
+    chat = get_all_chats()[0]
+    message = Message(sent_by=get_user_by_username(sent_by), text=message)
+    add_message_to_chat(chat, message)
+    response = app.response_class(
+        response=json.dumps("sent"),
+        status=200,
+        mimetype="application/json"
+    )
     return response

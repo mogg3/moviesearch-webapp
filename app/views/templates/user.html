@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-
-
 {% block  content %}
 {% include "menu.html" %}
 <div style="margin: 10px">
@@ -10,10 +8,57 @@
     <h5 style="display:inline;">Username: </h5><p style="display:inline;">{{user.username}}</p><br>
     <h5 style="display:inline;">Email: </h5><p style="display:inline;">{{user.email}}</p><br>
     <h5 style="display:inline;">Roles: </h5>
-    {% if role %}
-        <p style="display:inline;"></p><button style="border-radius: 10px">Remove admin privileges</button><br>
-    {% else  %}
-        <p style="display:inline;">{{role.name}}</p><button style="border-radius: 10px">Add admin privileges</button>
-    {% endif %}
+    <div id="user_role_info" style="display:inline;"></div>
 </div>
+<script>
+     var username = "{{ user.username|safe }}"
+     function get_role() {
+            $.ajax({
+                method: 'get',
+                url: '{{ url_for('check_role') }}',
+                data: {'username': JSON.stringify(username)},
+                success: (response) => {
+                           show_role_info(response)
+                },
+                datatype: 'json'
+            })
+        }
+     function show_role_info(role_info) {
+         $('#user_role_info').empty()
+         let make_admin_button = "<p style=\"display:inline; margin-right:10px\">(no roles)</p><button id=" + "make_admin" + " onclick ='add_role_to_user()'>Add admin priviliges</button>";
+         let remove_admin_button = "<p style=\"display:inline; margin-right:10px\">Admin</p><button id=" + "remove_admin"  + " onclick ='remove_role_from_user()'>Remove admin priviliges</button>";
+         if (role_info === "admin") {
+            $('#user_role_info').append(remove_admin_button);
+         } else {
+            $('#user_role_info').append(make_admin_button);
+            }
+     }
+     function add_role_to_user() {
+         get_role()
+          $.ajax({
+                method: 'PUT',
+                url: '{{ url_for('add_role') }}',
+                data: {'username': JSON.stringify(username)},
+                success: (response) => {
+                           console.log(response)
+                },
+                datatype: 'json'
+            })
+         get_role()
+     }
+     function remove_role_from_user() {
+         get_role()
+         $.ajax({
+                method: 'DELETE',
+                url: '{{ url_for('delete_role') }}',
+                data: {'username': JSON.stringify(username)},
+                success: (response) => {
+                           console.log(response)
+                },
+                datatype: 'json'
+            })
+         get_role()
+     }
+     get_role()
+ </script>
 {% endblock %}

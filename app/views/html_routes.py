@@ -3,10 +3,13 @@ from flask_login import login_required, current_user
 from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
 from werkzeug.utils import secure_filename
-
-from controllers.role_controller import get_all_roles
+from controllers.role_controller import get_all_roles, get_role_by_name, add_admin_role_to_user
 from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
-    add_profile_picture_to_user, delete_profile_picture_if_exists
+
+add_profile_picture_to_user, delete_profile_picture_if_exists
+
+from controllers.chat_controller import initiate_chat
+
 
 from views import app
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
@@ -20,7 +23,7 @@ def index():
     # # user.save()
     #
     # img = user.profile_picture
-
+    #initiate_chat(get_user_by_username("ellica123"), get_user_by_username("marcus123"))
     return render_template("index.html")
 
 
@@ -109,7 +112,7 @@ def edit_account():
 @app.route('/friends')
 @login_required
 def friends():
-    return render_template("friends.html")
+    return render_template("friends.html", user = current_user)
 
 
 @app.errorhandler(404)
