@@ -15,7 +15,7 @@ def get_all_roles():
 
 
 def add_admin_role_to_user(user):
-    user_datastore.add_role_to_user(name='admin')
+    user_datastore.add_role_to_user(user, role="admin")
 
 
 def delete_admin_role_from_user(user):

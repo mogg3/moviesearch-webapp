@@ -2,98 +2,99 @@
 
 {% block  content %}
 
-    {% include "menu.html" %}
+{% include "menu.html" %}
 
-    <h2>MovieBuff</h2>
+<h2>MovieBuff</h2>
 
-    <div id="search-bar">
-        <form action="/" method="POST">
-            <input type="text" id="search" placeholder="Search.." name="search">
-            <button type="submit" id="search_submit">Submit</button>
+<div id="search-bar">
+    <form action="/" method="POST">
+        <input type="text" id="search" placeholder="Search.." name="search">
+        <button type="submit" id="search_submit">Submit</button>
 
-        </form>
-    </div>
-    <div id="result"></div>
-    <div id="movie_content"></div>
+    </form>
+</div>
+<div id="result"></div>
+<div id="movie_content"></div>
 
-    <script>
+<script>
 
-        $("#search_submit").click((e) => {
-            e.preventDefault();
+    $("#search_submit").click((e) => {
+        e.preventDefault();
 
-            $('#result').show()
+        $('#result').show()
 
-            $.ajax({
-                method: 'POST',
-                url: '{{ url_for('search') }}',
-                data: {'search_term': $(search).val()},
-                success: (response) => {
-                    show_result(response);
-                },
-                datatype: 'json'
-            })
+        $.ajax({
+            method: 'POST',
+            url: '{{ url_for('search') }}',
+            data: {'search_term': $(search).val()},
+            success: (response) => {
+                show_result(response);
+            },
+            datatype: 'json'
         })
+    })
 
-        let movies = "";
+    let movies = "";
 
-        function show_result(response) {
+    function show_result(response) {
 
-            movies = response;
+        movies = response;
 
-            console.log(movies)
+        console.log(movies)
 
-            $('#result').empty()
+        $('#result').empty()
 
-            $.each(movies, (i, movie)=> {
+        $.each(movies, (i, movie) => {
 
-                let title_element = "<p>" + movie['Title'] + "<p>";
-                let poster_element = "<input type='image' id=" + response[i]['imdbID'] + " src=" + response[i]['Poster'] + " onclick=\"show_movie(this)\" />";
-                let button = "<button id=" + response[i]['imdbID'] + " onclick ='add_movie_to_watchlist(this)'>Add movie to Watchlist</button>";
+            let title_element = "<p>" + movie['Title'] + "<p>";
+            let poster_element = "<input type='image' id=" + response[i]['imdbID'] + " src=" + response[i]['Poster'] + " onclick=\"show_movie(this)\" />";
+            let button = "<button id=" + response[i]['imdbID'] + " onclick ='add_movie_to_watchlist(this)'>Add movie to Watchlist</button>";
 
-                {% if current_user.is_authenticated %}
-                $('#result').append(title_element, poster_element, button);
-                {% else %}
-                 $('#result').append(title_element, poster_element);
-                {% endif %}
+            {%if current_user.is_authenticated %}
+            $('#result').append(title_element, poster_element, button);
+            {% else %}
+            $('#result').append(title_element, poster_element);
+            {%endif %}
 
-            });
-        }
-        function show_movie(element) {
+        });
+    }
 
-            $(result).hide()
-            $('#movie_content').empty()
+    function show_movie(element) {
 
-            $.each(movies, (i, movie)=> {
-                if (movie['imdbID'] === element.id) {
-                    $('#movie_content').append("<img src='" + movies[i]['Poster'] + "'>");
-                    $('#movie_content').append(movies[i]['Title']);
-                    $('#movie_content').append(movies[i]['Type']);
-                    $('#movie_content').append(movies[i]['Year']);
-                }
-            });
-        }
+        $(result).hide()
+        $('#movie_content').empty()
 
-        function add_movie_to_watchlist(element) {
-            let movie;
+        $.each(movies, (i, movie) => {
+            if (movie['imdbID'] === element.id) {
+                $('#movie_content').append("<img src='" + movies[i]['Poster'] + "'>");
+                $('#movie_content').append(movies[i]['Title']);
+                $('#movie_content').append(movies[i]['Type']);
+                $('#movie_content').append(movies[i]['Year']);
+            }
+        });
+    }
 
-            $.each(movies, (i, m)=> {
-                if (m['imdbID'] === element.id) {
-                    movie = m;
-                }
-            });
+    function add_movie_to_watchlist(element) {
+        let movie;
 
-              $.ajax({
-                method: 'PUT',
-                url: '{{ url_for('put_watchlist', username=current_user.username) }}',
-                data: {'movie': JSON.stringify(movie)},
-                success: (response) => {
-                           console.log(response)
-                },
-                datatype: 'json'
-            })
-        }
+        $.each(movies, (i, m) => {
+            if (m['imdbID'] === element.id) {
+                movie = m;
+            }
+        });
 
-    </script>
+        $.ajax({
+            method: 'PUT',
+            url: '{{ url_for('put_watchlist', username=current_user.username) }}',
+            data: {'movie': JSON.stringify(movie)},
+            success: (response) => {
+                console.log(response)
+            },
+            datatype: 'json'
+        })
+    }
+
+</script>
 
 {% endblock %}
 
