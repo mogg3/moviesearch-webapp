@@ -52,9 +52,9 @@
                 };
 
                 let movie_box = $("<div>")
-                    .attr("id", "movie-box")
-                    .attr("onmouseover", "hoover_movie_on(this)")
-                    .attr("onmouseout", "hoover_movie_off(this)");
+                    .attr("id", "movie-box");
+                    {#.attr("onmouseover", "hoover_movie_on(this)")#}
+                    {#.attr("onmouseout", "hoover_movie_off(this)");#}
 
                 let poster = $("<img>")
                     .attr("src", response[i]['Poster'])
