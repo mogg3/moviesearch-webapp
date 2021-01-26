@@ -3,9 +3,11 @@
 .square {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     width: 50%;
     align-items: center;
     margin-top: 40px;
+
 
     background-color: green;
 }
@@ -17,9 +19,15 @@ body {
     align-items: center;
 }
 
-#profile_picture {
+#profile-picture-container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+
 }
+
+#profile-picture {
+    height: 400px;
+    width: 300px;
