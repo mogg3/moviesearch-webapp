@@ -31,5 +31,3 @@ body {
 #profile-picture {
     height: 400px;
     width: 300px;
-    background-image: "{{url_for('get_profile_picture', username=current_user.username)}}";
-}
