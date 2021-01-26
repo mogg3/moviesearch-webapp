@@ -20,8 +20,6 @@
 
 <script>
 
-
-
     $("#search_submit").click((e) => {
         e.preventDefault();
         $('#movie-content').empty()
@@ -74,15 +72,6 @@
             });
         }
 
-        {# function hoover_movie_on (movie) {#}
-            {#$(movie).css("animation", "larger-movie-animation 2s").stop(true);#}
-             {#setTimeout(()=> 1000);#}
-        {#}#}
-        {#  function hoover_movie_off (movie) {#}
-            {#console.log("Thrinks");#}
-            {#  await $(movie).animate({marginTop : '10px'});#}
-        {#}#}
-
           function add_movie_to_watchlist(element) {
 
             $(element).each( function () {
@@ -100,10 +89,6 @@
             })
         }
 
-         $('#result').mousemove(function(e) {
-            console.log(e.pageX);
-            console.log(e.pageY);
-         });
 
         function show_movie_content(element) {
               $.ajax({
@@ -111,11 +96,14 @@
                   url: '{{ url_for('get_movie') }}',
                   data: {'imdb_id': element.id},
                   success: (response) => {
+                        $('.poster').each(function(i) {
+                                $(this).attr('onclick', '');
+                            });
                       $('#movie-content').empty();
                       $('#movie-content-container').hide();
+
                       $('#movie-content-container').fadeTo(300, 0.9, function() {
                       });
-
                       let add =  $("<button>")
                         .attr("class", "add")
                         .attr("onClick", "add_movie_to_watchlist(this)")
@@ -137,23 +125,36 @@
               });
         }
 
-        function go_back(element) {
-            $('#movie-content').empty();
+    function go_back(element) {
+        $('#movie-content').empty();
+        $('#movie-content-container').fadeOut(300);
+        $('#result').fadeIn(300);
 
-            $('#movie-content-container').fadeOut(300);
-            $('#result').fadeIn(300);
-
-        }
-
+        $('.poster').each(function(i) {
+            $(this).attr("onClick",'show_movie_content(this)')
+            console.log(this);
+        });
+    }
 
     </script>
 
 
 {% endblock %}
 
+        {# function hoover_movie_on (movie) {#}
+            {#$(movie).css("animation", "larger-movie-animation 2s").stop(true);#}
+             {#setTimeout(()=> 1000);#}
+        {#}#}
+        {#  function hoover_movie_off (movie) {#}
+            {#console.log("Thrinks");#}
+            {#  await $(movie).animate({marginTop : '10px'});#}
+        {#}#}
 
-document.addEventListener('click', printMousePos, true);
-function getMousePosition(e){
-
-      return [e.pageX, e.pageY]
-}
+        {#$(('#result').mousedown(function(e) {#}
+        {#    return false;#}
+        {#}));#}
+        {##}
+        {# $('#movie-content-container').mousemove(function(e) {#}
+        {#    console.log(e.pageX);#}
+        {#    console.log(e.pageY);#}
+        {# });#}
