@@ -8,10 +8,10 @@
     <div class="square">
         <h2>Hello {{ current_user.username }}</h2> <br/>
         
-        <div id="profile_picture">
+        <div id="profile-picture-container">
             <form action="{{ url_for('upload_profile_picture') }}" method="POST" enctype="multipart/form-data">
                   <label for="profile_picture">Select a profile picture:</label>
-                  <input type="file" id="profile_picture" name="file"><br>
+                  <input type="file" name="file"><br>
                   <input type="submit">
 
                 {% with messages = get_flashed_messages() %}
@@ -27,7 +27,9 @@
                 {% endif %}
             {% endwith %}
             </form>
-             <img src="{{ url_for('get_profile_picture', username=current_user.username) }}" alt="static/images/no_profile_picture.png">
+
+        <img src="{{url_for('get_profile_picture', username=current_user.username)}}" onerror="this.onerror=null;this.src='static/images/profile.png';" />
+
         </div>
         
         <lu>
