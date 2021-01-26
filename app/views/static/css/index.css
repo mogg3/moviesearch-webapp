@@ -35,6 +35,7 @@
     flex-direction: column;
     background-color: black;
     flex-basis: 8%;
+    align-items: center;
     margin: 0.5%;
     border: 3px solid;
     color: white;
