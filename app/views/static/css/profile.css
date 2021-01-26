@@ -28,6 +28,9 @@ body {
 }
 
 #profile-picture {
-    height: 400px;
+    border: 3px solid white;
+    object-fit: cover;
+    /*object-position: center; det är relativt till parent?*/
+    height: 300px;
     width: 300px;
 }
