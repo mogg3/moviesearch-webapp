@@ -2,21 +2,27 @@
 
 {% block  content %}
 
+
     <div>
         <form action="/" method="POST" id="search-container">
             <input type="text" id="search" placeholder="Search.." name="search">
             <button type="submit" id="search_submit">Search</button>
         </form>
     </div>
-    <div id="result"><div id="movie"></div></div>
-    <div id="movie_content"></div>
+
+
+    <div id="result"></div>
+
+    <div id="movie-content-container">
+        <div id="movie-content"></div>
+    </div>
+
 
 <script>
 
     $("#search_submit").click((e) => {
         e.preventDefault();
-        $('#movie_content').empty()
-
+        $('#movie-content').empty()
         $('#result').show()
 
         $.ajax({
@@ -30,49 +36,39 @@
         })
     })
 {#TODO: add alt picture om inte poster existerar#}
-        function show_result(response) {
-            $('#result').empty()
 
+        function show_result(response) {
+            $('#result').empty();
+            $('#result').hide();
+            $('#result').fadeIn(300);
 
             $.each(response, (i, movie)=> {
 
                 let title = ()=> {
-                    title_max_length = 30;
+                    title_max_length = 20;
                     return (movie['Title'].length > title_max_length) ?
-                        $("<p>").attr("class", "title").text(movie['Title'].substring(0, 30) + "...") :
+                        $("<p>").attr("class", "title").text(movie['Title'].substring(0, 21) + "...") :
                         $("<p>").attr("class", "title").text(movie['Title']);
                 };
 
+                let movie_box = $("<div>")
+                    .attr("id", "movie-box");
+                    {#.attr("onmouseover", "hoover_movie_on(this)")#}
+                    {#.attr("onmouseout", "hoover_movie_off(this)");#}
+
                 let poster = $("<img>")
                     .attr("src", response[i]['Poster'])
-                    .attr("onClick",'show_movie(this)')
+                    .attr("onClick",'show_movie_content(this)')
                     .attr("id",response[i]['imdbID'])
                     .attr("class", "poster");
 
-                let add =  $("<button>")
-                    .attr("class", "add")
-                    .attr("id", response[i]['imdbID'])
-                    .attr("onClick", "add_movie_to_watchlist(this)")
-                    .attr("movie", JSON.stringify(movie));
-              
-                let movie_box = $("<div>")
-                    .attr("id", "movie-box");
-
-                let flex_br = $("<div>")
+                let flex_break = $("<div>")
                     .attr("id", "break");
 
-                {% if current_user.is_authenticated %}
-                    $(movie_box).append(title, poster, add);
-                {% else %}
-                    $(movie_box).append(title, poster);
-                {% endif %}
+                $(movie_box).append(title, poster);
 
-            if (i === 5) {
-                $('#result').append(movie_box, flex_br);
-            }
-            else {
-                $('#result').append(movie_box);
-            }
+            i === 5 ? $('#result').append(movie_box, flex_break) : $('#result').append(movie_box);
+
             });
         }
 
@@ -93,21 +89,72 @@
             })
         }
 
-        function show_movie(element) {
+
+        function show_movie_content(element) {
               $.ajax({
                   method: 'POST',
                   url: '{{ url_for('get_movie') }}',
                   data: {'imdb_id': element.id},
                   success: (response) => {
-                      console.log(response)
-                       $(result).hide();
-                       $('#movie_content').empty().append(JSON.stringify(response));
+                        $('.poster').each(function(i) {
+                                $(this).attr('onclick', '');
+                            });
+                      $('#movie-content').empty();
+                      $('#movie-content-container').hide();
+
+                      $('#movie-content-container').fadeTo(300, 0.9, function() {
+                      });
+                      let add =  $("<button>")
+                        .attr("class", "add")
+                        .attr("onClick", "add_movie_to_watchlist(this)")
+                        .attr("movie", JSON.stringify(response));
+
+                      let back =  $("<button>")
+                        .attr("id", "back")
+                        .attr("onClick", "go_back(this)")
+                        .append("Back");
+
+                       $('#movie-content')
+                           .append(JSON.stringify(response), back)
+
+                     {% if current_user.is_authenticated %}
+                            $('#movie-content').append(add);
+                     {% endif %}
                   },
                   datatype: 'json'
               });
         }
 
+    function go_back(element) {
+        $('#movie-content').empty();
+        $('#movie-content-container').fadeOut(300);
+        $('#result').fadeIn(300);
+
+        $('.poster').each(function(i) {
+            $(this).attr("onClick",'show_movie_content(this)')
+            console.log(this);
+        });
+    }
+
     </script>
 
 
 {% endblock %}
+
+        {# function hoover_movie_on (movie) {#}
+            {#$(movie).css("animation", "larger-movie-animation 2s").stop(true);#}
+             {#setTimeout(()=> 1000);#}
+        {#}#}
+        {#  function hoover_movie_off (movie) {#}
+            {#console.log("Thrinks");#}
+            {#  await $(movie).animate({marginTop : '10px'});#}
+        {#}#}
+
+        {#$(('#result').mousedown(function(e) {#}
+        {#    return false;#}
+        {#}));#}
+        {##}
+        {# $('#movie-content-container').mousemove(function(e) {#}
+        {#    console.log(e.pageX);#}
+        {#    console.log(e.pageY);#}
+        {# });#}
