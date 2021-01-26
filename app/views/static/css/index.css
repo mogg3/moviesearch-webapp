@@ -1,12 +1,13 @@
-@font-face {
-    font-family: 'Netflix Sans';
-    font-weight: 100;
-    font-display: optional;
-    src: url('/views/static/fonts/NetflixSans_W_Th.woff2') format('woff2')
-}
+/*@font-face {*/
+/*    font-family: 'Netflix Sans';*/
+/*    font-weight: 100;*/
+/*    font-display: optional;*/
+/*    src: url('/views/static/fonts/NetflixSans_W_Th.woff2') format('woff2')*/
+/*}*/
 
  .title {
-     font-family: 'Netflix Sans';
+     /*font-family: 'Netflix Sans';*/
+     font-size: x-large;
    }
 
 #search-container {
@@ -39,11 +40,6 @@
 }
 
 #movie-content-container {
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*flex-wrap: wrap;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
     display: none;
     width : 900px;
     height : 450px;
