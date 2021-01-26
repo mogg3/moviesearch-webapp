@@ -12,7 +12,6 @@
 
 
     <div id="result"></div>
-
     <div id="movie-content-container">
         <div id="movie-content"></div>
     </div>
@@ -101,21 +100,45 @@
                             });
                       $('#movie-content').empty();
                       $('#movie-content-container').hide();
-
+                      document.getElementById("result").style.opacity = 0.3;
                       $('#movie-content-container').fadeTo(300, 0.9, function() {
                       });
-                      let add =  $("<button>")
-                        .attr("class", "add")
-                        .attr("onClick", "add_movie_to_watchlist(this)")
-                        .attr("movie", JSON.stringify(response));
 
-                      let back =  $("<button>")
+                      let add =  $("<input>")
+                        .attr("id", "add")
+                        .attr("onClick", "add_movie_to_watchlist(this)")
+                        .attr("movie", JSON.stringify(response))
+                        .attr("type", "image")
+                        .attr("src", "static/images/add_btn.png")
+
+                      let back =  $("<input>")
                         .attr("id", "back")
                         .attr("onClick", "go_back(this)")
-                        .append("Back");
+                        .attr("type", "image")
+                        .attr("src", "static/images/back_btn.png")
 
-                       $('#movie-content')
-                           .append(JSON.stringify(response), back)
+                      let title = $("<h1>")
+                        .text(response["Title"]);
+
+                      let runtime = $("<p>")
+                        .text(response["Runtime"]);
+
+                      let year = $("<p>")
+                        .text(response["Year"]);
+
+                      let genre = $("<p>")
+                        .text(response["Genre"]);
+
+                      let director = $("<p>")
+                        .text(response["Director"]);
+
+                      let actor = $("<p>")
+                        .text(response["Actors"]);
+
+                      let plot = $("<p>")
+                        .text(response["Plot"]);
+
+                      $("#movie-content").append(title, runtime, year, genre, director, actor, plot, back );
 
                      {% if current_user.is_authenticated %}
                             $('#movie-content').append(add);
@@ -131,7 +154,8 @@
         $('#result').fadeIn(300);
 
         $('.poster').each(function(i) {
-            $(this).attr("onClick",'show_movie_content(this)')
+            document.getElementById("result").style.opacity = 1;
+            $(this).attr("onClick",'show_movie_content(this)');
             console.log(this);
         });
     }
