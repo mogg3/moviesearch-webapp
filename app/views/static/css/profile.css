@@ -4,12 +4,8 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    width: 50%;
-    align-items: center;
+    width: 45%;
     margin-top: 40px;
-
-
-    background-color: green;
 }
 
 body {
@@ -19,18 +15,32 @@ body {
 }
 
 #profile-picture-container {
+    margin: 50px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
 
+}
+
+.user_info {
+    margin-left: 100px;
 }
 
 #profile-picture {
     border: 3px solid white;
     object-fit: cover;
     /*object-position: center; det är relativt till parent?*/
-    height: 300px;
-    width: 300px;
+    height: 250px;
+    width: 250px;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }
