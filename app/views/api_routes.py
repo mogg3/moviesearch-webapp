@@ -15,6 +15,17 @@ from controllers.user_controller import add_movie_to_users_watchlist, get_user_b
 from views import app
 
 
+@app.route('/search', methods=['POST'])
+def search():
+    search_term = request.values['search_term']
+
+    response = app.response_class(
+        response=json.dumps(get_movies_by_title(search_term)),
+        status=200,
+        mimetype="application/json"
+    )
+
+    return response
 
 @app.route('/api/users/<username>/profile_picture', methods=['GET'])
 @login_required
@@ -38,17 +49,6 @@ def get_movie():
 
     return response
 
-@app.route('/search', methods=['POST'])
-def search():
-    search_term = request.values['search_term']
-
-    response = app.response_class(
-        response=json.dumps(get_movies_by_title(search_term)),
-        status=200,
-        mimetype="application/json"
-    )
-
-    return response
 
 
 @app.route('/api/users/<username>/watchlist', methods=['PUT'])
@@ -92,50 +92,6 @@ def delete_watchlist(username):
     return response
 
 
-@app.route('/api/user/roles', methods=['GET'])
-@login_required
-def check_role():
-    user = get_user_by_username(json.loads(request.values['username']))
-    print("hello")
-    if len(user.roles) == 0:
-        resp = "noadmin"
-    else:
-        resp = "admin"
-    response = app.response_class(
-        response=json.dumps(resp),
-        status=200,
-        mimetype="application/json"
-    )
-    return response
-
-
-@app.route('/api/user/roles', methods=['PUT'])
-@login_required
-def add_role():
-    user = get_user_by_username(json.loads(request.values['username']))
-    admin_role = get_role_by_name("admin")
-    add_role_to_user(user=user, role=admin_role)
-    resp = f"added role"
-    response = app.response_class(
-        response=json.dumps(resp),
-        status=200,
-        mimetype="application/json"
-    )
-    return response
-
-
-@app.route('/api/user/roles', methods=['DELETE'])
-@login_required
-def delete_role():
-    user = get_user_by_username(json.loads(request.values['username']))
-    delete_admin_role_from_user(user)
-    resp = f"removed role"
-    response = app.response_class(
-        response=json.dumps(resp),
-        status=200,
-        mimetype="application/json"
-    )
-    return response
 
 
 @app.route('/user/friends', methods=['PUT'])
@@ -184,6 +140,52 @@ def send_message():
     add_message_to_chat(chat, message)
     response = app.response_class(
         response=json.dumps("sent"),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
+@app.route('/api/user/roles', methods=['GET'])
+@login_required
+def check_role():
+    user = get_user_by_username(json.loads(request.values['username']))
+    print("hello")
+    if len(user.roles) == 0:
+        resp = "noadmin"
+    else:
+        resp = "admin"
+    response = app.response_class(
+        response=json.dumps(resp),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
+@app.route('/api/user/roles', methods=['PUT'])
+@login_required
+def add_role():
+    user = get_user_by_username(json.loads(request.values['username']))
+    admin_role = get_role_by_name("admin")
+    add_role_to_user(user=user, role=admin_role)
+    resp = f"added role"
+    response = app.response_class(
+        response=json.dumps(resp),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
+@app.route('/api/user/roles', methods=['DELETE'])
+@login_required
+def delete_role():
+    user = get_user_by_username(json.loads(request.values['username']))
+    delete_admin_role_from_user(user)
+    resp = f"removed role"
+    response = app.response_class(
+        response=json.dumps(resp),
         status=200,
         mimetype="application/json"
     )
