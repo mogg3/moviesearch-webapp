@@ -1,7 +1,7 @@
 from data.MongoDB_MongoEngine.repository import user_repository as ur
 
 
-def create_user(first_name, last_name, email, password, username):
+def create_user(first_name: str, last_name: str, email: str, password: str, username: str):
     ur.create_user(first_name, last_name, email, password, username)
 
 

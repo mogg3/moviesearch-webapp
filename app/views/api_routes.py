@@ -18,6 +18,18 @@ from views import app
 # har gjort det på watchlist men det funkar ju på att jinja2 har tillgång till flasks current_user..
 # man behöver inte alltid ha data på jquery requests? när man använder sig av current user så går det ju att skicka infon i konstruktorn?
 
+"""
+1. Om man kan skicka in i konstruktorn, kan man skippa data?
+            url: '{{ url_for('delete_from_watchlist', username=current_user.username) }}',
+                data: {'movie': $(element).val()},
+2. Hur ska man göra /api/movies/movie' på ett bra sätt. eller är den ok?
+
+3. /api/users/<username>/watchlist' ser den strukturen bra ut?
+
+4. Lägga om koden så att den har fler funktioner istället ( kolla med läraren så att det inte krockar med testning. 
+
+5. Lägga till font (hur gör man det?)
+"""
 
 @app.route('/api/search', methods=['POST'])
 def post_search():
@@ -32,10 +44,9 @@ def post_search():
     return response
 
 
-
 @app.route('/api/movies/movie', methods=['POST'])
-def get_movie():
-    imdb_id = request.values['imdb_id']
+def get_movie(imdb_id):
+    # imdb_id = request.values['imdb_id']
     response = app.response_class(
         response=get_movie_by_imdb_id(imdb_id),
         status=200,
@@ -134,7 +145,7 @@ def get_chat(username):
 
 
 # Not done
-@app.route('/api/users/<username>/friends/chats/user_name_for_reciever/post', methods=['POST'])
+@app.route('/api/users/<username>/friends/user_name_for_friend/chat', methods=['POST'])
 @login_required
 def post_message(username):
     message = request.values['message']

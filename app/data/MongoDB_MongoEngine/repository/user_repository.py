@@ -4,7 +4,7 @@ from data.MongoDB_MongoEngine.models.users import User
 from data.MongoDB_MongoEngine.db.db_user_role_security import user_datastore
 
 
-def create_user(first_name, last_name, email, password, username):
+def create_user(first_name: str, last_name: str, email: str, password: str, username: str):
     user_datastore.create_user(
         first_name=first_name,
         last_name=last_name,
@@ -13,11 +13,11 @@ def create_user(first_name, last_name, email, password, username):
         username=username)
 
 
-def get_user_by_email(email):
+def get_user_by_email(email: str):
     return user_datastore.find_user(email=email)
 
 
-def get_user_by_username(username):
+def get_user_by_username(username: str):
     return user_datastore.find_user(username=username)
 
 
