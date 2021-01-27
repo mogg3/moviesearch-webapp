@@ -1,5 +1,6 @@
-from data.MongoDB_MongoEngine.db.db_user_role_security import user_datastore
 from data.MongoDB_MongoEngine.models.roles import Role
+from data.MongoDB_MongoEngine.db.db_user_role_security import user_datastore
+
 
 
 def create_role(name):

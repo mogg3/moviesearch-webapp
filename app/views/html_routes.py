@@ -1,14 +1,11 @@
-from flask import render_template, request, redirect, url_for, flash, g
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
-from werkzeug.utils import secure_filename
-from controllers.role_controller import get_all_roles, get_role_by_name, add_admin_role_to_user
+
+from controllers.role_controller import get_all_roles
 from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
-add_profile_picture_to_user, delete_profile_picture_if_exists
-
-from controllers.chat_controller import initiate_chat
-
+    add_profile_picture_to_user, delete_profile_picture_if_exists
 
 from views import app
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
@@ -25,7 +22,7 @@ def signup():
 
     if request.method == "POST":
         if form.validate_on_submit():
-            # add check if user email or username already exists
+
             create_user(
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
@@ -34,7 +31,6 @@ def signup():
                 username=form.username.data
             )
             return redirect(url_for('signin'))
-        # {field.name: "\n".join(field.errors) for field in form}
 
     return render_template('signup.html', form=form)
 
@@ -44,7 +40,6 @@ def signin():
     form = LoginForm()
     error = None
 
-
     if request.method == "POST":
         if form.validate_on_submit():
             user = get_user_by_email(email=form.email.data)
@@ -53,7 +48,7 @@ def signin():
                 login_user(user, remember=form.remember.data)
                 return redirect(url_for('profile'))
             else:
-                error = "wrong email or password"
+                error = "Wrong email or password"
     return render_template('signin.html', form=form, errors=error)
 
 
@@ -66,10 +61,8 @@ def profile():
 @app.route('/profile', methods=['POST'])
 @login_required
 def upload_profile_picture():
-
     if request.method == "POST":
         if 'file' not in request.files:
-
             flash('No file part')
             return redirect(request.url)
 
@@ -104,7 +97,7 @@ def edit_account():
 @app.route('/friends')
 @login_required
 def friends():
-    return render_template("friends.html", user = current_user)
+    return render_template("friends.html", user=current_user)
 
 
 @app.errorhandler(404)
@@ -121,11 +114,11 @@ def admin():
 @app.route("/admin/users/<username>")
 @roles_required("admin")
 def user(username):
-    user=get_user_by_username(username)
+    user = get_user_by_username(username)
     if len(user.roles) == 0:
-        return render_template('user.html', user=user, role= False)
+        return render_template('user.html', user=user, role=False)
     else:
-        return render_template('user.html', user=user, role= user.roles[0])
+        return render_template('user.html', user=user, role=user.roles[0])
 
 
 @app.route('/watchlist')

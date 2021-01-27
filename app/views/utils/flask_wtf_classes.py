@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
+
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import InputRequired, Length, Email, EqualTo
-import flask_wtf
+
 
 # TODO: add regular expression for password
 class RegisterForm(FlaskForm):

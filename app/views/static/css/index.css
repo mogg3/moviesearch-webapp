@@ -13,12 +13,21 @@
      color: white;
    }
 
+
 #main-container {
     margin-left: 10%;
     width: 80%;
     height: 100vh;
     background-color: #111111;
     justify-content: center;
+}
+
+#search_submit {
+     position: absolute;
+     top: -999px;
+     left: -999px;
+     width: 0px;
+     height: 0px;
 }
 
 #search-container {
@@ -45,6 +54,7 @@
     flex-direction: column;
     background-color: black;
     flex-basis: 8%;
+    align-items: center;
     margin: 0.5%;
     border: 3px solid;
     color: white;

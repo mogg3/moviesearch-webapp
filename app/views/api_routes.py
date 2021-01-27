@@ -2,20 +2,18 @@
 from flask import request
 from flask_login import current_user, login_required
 
-from pymongo import response
-from werkzeug.utils import secure_filename, redirect
+import json
+
+from data.MongoDB_MongoEngine.models.messages import Message
 
 from controllers.chat_controller import initiate_chat, get_all_chats, add_message_to_chat
 from controllers.omdb_controller import get_movies_by_title, get_movie_by_imdb_id
-from controllers.role_controller import get_role_by_name, add_admin_role_to_user, delete_admin_role_from_user
-
+from controllers.role_controller import get_role_by_name, delete_admin_role_from_user
 from controllers.user_controller import add_movie_to_users_watchlist, get_user_by_email, add_role_to_user, \
-    add_friendship, delete_movie_from_users_watchlist, add_profile_picture_to_user, get_user_by_username
-from data.MongoDB_MongoEngine.models.messages import Message
+    add_friendship, delete_movie_from_users_watchlist, get_user_by_username
 
 from views import app
 
-import json
 
 
 @app.route('/api/users/<username>/profile_picture', methods=['GET'])

@@ -1,6 +1,7 @@
 from flask_security.utils import hash_password
-from data.MongoDB_MongoEngine.db.db_user_role_security import user_datastore
+
 from data.MongoDB_MongoEngine.models.users import User
+from data.MongoDB_MongoEngine.db.db_user_role_security import user_datastore
 
 
 def get_user_by_email(email):
