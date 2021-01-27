@@ -17,7 +17,7 @@ def index():
 
 
 @app.route('/signup', methods=['GET', 'POST'])
-def signup():
+def sign_up():
     form = RegisterForm()
 
     if request.method == "POST":
@@ -30,13 +30,13 @@ def signup():
                 password=form.password.data,
                 username=form.username.data
             )
-            return redirect(url_for('signin'))
+            return redirect(url_for('sign_in'))
 
     return render_template('signup.html', form=form)
 
 
 @app.route('/signin', methods=['GET', 'POST'])
-def signin():
+def sign_in():
     form = LoginForm()
     error = None
 
@@ -54,12 +54,12 @@ def signin():
 
 @app.route("/signout")
 @login_required
-def signout():
+def sign_out():
     logout_user()
     return render_template('index.html')
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET'])
 @login_required
 def profile():
     if len(current_user.roles) == 0:
@@ -91,19 +91,25 @@ def upload_profile_picture():
     return redirect(url_for('profile'))
 
 
-@app.route('/friends')
+@app.route('/watchlist', methods=['GET'])
+@login_required
+def watchlist():
+    return render_template('watchlist.html', watchlist=current_user.watchlist)
+
+
+@app.route('/friends', methods=['GET'])
 @login_required
 def friends():
     return render_template("friends.html", user=current_user)
 
 
-@app.route("/admin")
+@app.route("/admin", methods=['GET'])
 @roles_required("admin")
 def admin():
     return render_template('admin.html', users=get_all_users(), roles=get_all_roles())
 
 
-@app.route("/admin/users/<username>")
+@app.route("/admin/users/<username>", methods=['GET'])
 @roles_required("admin")
 def user(username):
     user = get_user_by_username(username)
@@ -111,12 +117,6 @@ def user(username):
         return render_template('user.html', user=user, role=False)
     else:
         return render_template('user.html', user=user, role=user.roles[0])
-
-
-@app.route('/watchlist')
-@login_required
-def watchlist():
-    return render_template('watchlist.html', watchlist=current_user.watchlist)
 
 
 @app.errorhandler(404)
