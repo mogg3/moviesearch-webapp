@@ -1,4 +1,5 @@
 from flask_security import RoleMixin
+
 from mongoengine import StringField, Document
 
 

@@ -1,6 +1,6 @@
 from flask_security import UserMixin
-from mongoengine import StringField, Document, BooleanField, DateTimeField, ListField, ReferenceField, FileField, \
-    ImageField
+
+from mongoengine import StringField, Document, BooleanField, DateTimeField, ListField, ReferenceField, FileField
 
 
 class User(Document, UserMixin):
