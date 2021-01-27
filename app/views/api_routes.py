@@ -14,23 +14,6 @@ from controllers.user_controller import add_movie_to_users_watchlist, get_user_b
 from views import app
 
 
-# ska man försöka skapa så att routen blir /api/search?=imdb_id (exempelvis 2134384)
-# har gjort det på watchlist men det funkar ju på att jinja2 har tillgång till flasks current_user..
-# man behöver inte alltid ha data på jquery requests? när man använder sig av current user så går det ju att skicka infon i konstruktorn?
-
-"""
-1. Om man kan skicka in i konstruktorn, kan man skippa data?
-            url: '{{ url_for('delete_from_watchlist', username=current_user.username) }}',
-                data: {'movie': $(element).val()},
-2. Hur ska man göra /api/movies/movie' på ett bra sätt. eller är den ok?
-
-3. /api/users/<username>/watchlist' ser den strukturen bra ut?
-
-4. Lägga om koden så att den har fler funktioner istället ( kolla med läraren så att det inte krockar med testning. 
-
-5. Lägga till font (hur gör man det?)
-"""
-
 @app.route('/api/search', methods=['POST'])
 def post_search():
     search_term = request.values['search_term']
@@ -45,8 +28,8 @@ def post_search():
 
 
 @app.route('/api/movies/movie', methods=['POST'])
-def get_movie(imdb_id):
-    # imdb_id = request.values['imdb_id']
+def get_movie():
+    imdb_id = request.values['imdb_id']
     response = app.response_class(
         response=get_movie_by_imdb_id(imdb_id),
         status=200,
