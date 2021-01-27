@@ -11,6 +11,14 @@
      color: white;
    }
 
+
+#search_submit {
+     position: absolute;
+     top: -999px;
+     left: -999px;
+     width: 0px;
+     height: 0px;
+}
 #search-container {
     display: flex;
     flex-direction: row;
@@ -35,6 +43,7 @@
     flex-direction: column;
     background-color: black;
     flex-basis: 8%;
+    align-items: center;
     margin: 0.5%;
     border: 3px solid;
     color: white;
