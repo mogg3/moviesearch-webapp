@@ -1,14 +1,15 @@
-/*@font-face {*/
-/*    font-family: 'Netflix Sans';*/
-/*    font-weight: 100;*/
-/*    font-display: optional;*/
-/*    src: url('/views/static/fonts/NetflixSans_W_Th.woff2') format('woff2')*/
-/*}*/
+@font-face {
+    font-family: 'Netflix Sans';
+    font-weight: 100;
+    font-display: optional;
+    src: url('/views/static/fonts/NetflixSans_W_Th.woff2') format('woff2')
+}
 
 
 
- .title {
-     /*font-family: 'Netflix Sans';*/
+ .title p {
+
+     font-family: 'Netflix Sans';
      font-size: medium;
      color: white;
    }
