@@ -5,7 +5,8 @@
 {% endblock %}
 
 {%  block content %}
-    <div class="square">
+<div id="parent">
+    <div id="square">
         <div class="row" id="row1">
             <div class="column" id="row1-col1" style="background-color:lightcoral;">
                 <div id="profile-picture-container">
@@ -30,13 +31,18 @@
                 </div>
             </div>
             <div class="column" id="row1-col2" style="background-color:lightsalmon;">
-                <h1 style="display: inline">{{user}}</h1><h1 style="display: inline">{{role}}</h1><br>
-                <h2 style="display: inline">Firstame</h2><p style="display: inline">{{user.first_name}}</p><br>
-                <h2 style="display: inline">Lastname</h2><p style="display: inline">{{user.last_name}}</p><br>
-                <h2 style="display: inline">Username</h2><p style="display: inline">{{user.username}}</p><br>
-                <h2 style="display: inline">Email</h2><p style="display: inline">{{user.email}}</p><br>
+                <h1 style="display: inline" id ="name-h">{{user}}</h1>
+                {% if role %}
+                    <h3 style="display: inline">({{role}})</h3><br>
+                {% endif %}
+                <div id="user-info">
+                    <h2 style="display: inline">Firstame</h2><p style="display: inline">{{user.first_name}}</p><br>
+                    <h2 style="display: inline">Lastname</h2><p style="display: inline">{{user.last_name}}</p><br>
+                    <h2 style="display: inline">Username</h2><p style="display: inline">{{user.username}}</p><br>
+                    <h2 style="display: inline">Email</h2><p style="display: inline">{{user.email}}</p><br>
+                </div>
             </div>
         </div>
     </div>
-
+</div>
 {% endblock %}

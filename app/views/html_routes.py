@@ -55,7 +55,10 @@ def signin():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', user=current_user, role = current_user.roles[0])
+    if len(current_user.roles) == 0:
+        return render_template('profile.html', user=current_user, role=False)
+    else:
+        return render_template('profile.html', user=current_user, role=current_user.roles[0])
 
 
 @app.route('/profile', methods=['POST'])
