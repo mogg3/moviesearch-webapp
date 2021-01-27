@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block  content %}
-
     <div>
         <form action="/" method="POST" id="search-container">
             <input type="text" id="search" placeholder="Search.." name="search">
@@ -15,6 +14,23 @@
     </div>
 
 <script>
+    function remove_movie_from_watchlist(element) {
+            $(element).each( function () {
+                $(this).val( $(this).attr("movie") );
+            });
+
+              $.ajax({
+                method: 'DELETE',
+                url: '{{ url_for('delete_from_watchlist', username=current_user.username) }}',
+                data: {'movie': $(element).val()},
+                success: (response) => {
+                    console.log(response)
+                    go_back(element);
+                    get_watchlist();
+                },
+                datatype: 'json'
+            })
+        }
 
     $("#search_submit").click((e) => {
         e.preventDefault();
@@ -76,7 +92,7 @@
 
               $.ajax({
                 method: 'PUT',
-                url: '{{ url_for('put_watchlist', username=current_user.username) }}',
+                url: '{{ url_for('delete_from_watchlist', username=current_user.username) }}',
                 data: {'movie': $(element).val()},
                 success: (response) => {
                            console.log(response);
@@ -84,7 +100,6 @@
                 datatype: 'json'
             })
         }
-
 
         function show_movie_content(element) {
               $.ajax({
@@ -107,6 +122,13 @@
                         .attr("movie", JSON.stringify(response))
                         .attr("type", "image")
                         .attr("src", "static/images/add_btn.png")
+
+                      let remove =  $("<input>")
+                        .attr("id", "add")
+                        .attr("onClick", "remove_movie_from_watchlist(this)")
+                        .attr("movie", JSON.stringify(response))
+                        .attr("type", "image")
+                        .attr("src", "static/images/remove_btn.png")
 
                       let back =  $("<input>")
                         .attr("id", "back")
@@ -138,7 +160,7 @@
                       $("#movie-content").append(title, runtime, year, genre, director, actor, plot, back );
 
                      {% if current_user.is_authenticated %}
-                            $('#movie-content').append(add);
+                        $('#movie-content').append(add);
                      {% endif %}
                   },
                   datatype: 'json'

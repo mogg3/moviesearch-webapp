@@ -15,12 +15,10 @@ from controllers.user_controller import add_movie_to_users_watchlist, get_user_b
 from views import app
 
 
-
 @app.route('/api/users/<username>/profile_picture', methods=['GET'])
 @login_required
 def get_profile_picture(username):
-
-        #TODO: add check if picture do not exist
+    #TODO: add check if picture do not exist
     image = current_user.profile_picture.read()
 
     return image
@@ -37,6 +35,7 @@ def get_movie():
     )
 
     return response
+
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -70,13 +69,23 @@ def put_watchlist(username):
     return response
 
 
+@app.route('/api/users/<username>/watchlist', methods=['GET'])
+@login_required
+def get_watchlist(username):
+    watchlist = current_user.watchlist
+    print(watchlist)
+    response = app.response_class(
+        response=json.dumps(watchlist),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
 @app.route('/api/users/<username>/watchlist', methods=['DELETE'])
 @login_required
-def delete_watchlist(username):
+def delete_from_watchlist(username):
     movie = json.loads(request.values['movie'])
-
-    response = ""
-    
     delete_movie_from_users_watchlist(current_user, movie)
 
     if movie not in current_user.watchlist:
@@ -90,6 +99,7 @@ def delete_watchlist(username):
         mimetype="application/json"
     )
     return response
+
 
 
 @app.route('/api/user/roles', methods=['GET'])
