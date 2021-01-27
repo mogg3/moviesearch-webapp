@@ -25,7 +25,7 @@
 
         $.ajax({
             method: 'POST',
-            url: '{{ url_for('search') }}',
+            url: '{{ url_for('post_search') }}',
             data: {'search_term': $(search).val()},
             success: (response) => {
                 show_result(response);

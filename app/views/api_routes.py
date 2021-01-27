@@ -16,7 +16,7 @@ from views import app
 
 
 @app.route('/search', methods=['POST'])
-def search():
+def post_search():
     search_term = request.values['search_term']
 
     response = app.response_class(
@@ -93,10 +93,9 @@ def delete_watchlist(username):
 
 
 
-
 @app.route('/user/friends', methods=['PUT'])
 @login_required
-def add_friendship():
+def post_friendship():
     #todo: add friendship request
 
     friend = get_user_by_email(get_user_by_email(json.loads(request.values['friend_email'])))
@@ -132,7 +131,7 @@ def get_chat():
 
 @app.route('/api/friends/', methods=['POST'])
 @login_required
-def send_message():
+def post_message():
     message = request.values['message']
     sent_by = request.values['sent_by']
     chat = get_all_chats()[0]
@@ -140,23 +139,6 @@ def send_message():
     add_message_to_chat(chat, message)
     response = app.response_class(
         response=json.dumps("sent"),
-        status=200,
-        mimetype="application/json"
-    )
-    return response
-
-
-@app.route('/api/user/roles', methods=['GET'])
-@login_required
-def check_role():
-    user = get_user_by_username(json.loads(request.values['username']))
-    print("hello")
-    if len(user.roles) == 0:
-        resp = "noadmin"
-    else:
-        resp = "admin"
-    response = app.response_class(
-        response=json.dumps(resp),
         status=200,
         mimetype="application/json"
     )
@@ -184,6 +166,24 @@ def delete_role():
     user = get_user_by_username(json.loads(request.values['username']))
     delete_admin_role_from_user(user)
     resp = f"removed role"
+    response = app.response_class(
+        response=json.dumps(resp),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
+@app.route('/api/user/roles', methods=['GET'])
+@login_required
+def get_if_admin_role():
+    user = get_user_by_username(json.loads(request.values['username']))
+    print("hello")
+    # ändra så att det är true or false tillbaka
+    if len(user.roles) == 0:
+        resp = "noadmin"
+    else:
+        resp = "admin"
     response = app.response_class(
         response=json.dumps(resp),
         status=200,
