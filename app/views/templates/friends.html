@@ -30,7 +30,7 @@
 
         $.ajax({
             method: 'POST',
-            url: '{{ url_for('send_message') }}',
+            url: '{{ url_for('post_message') }}',
             data: {'message': $(send).val(), 'sent_by': '{{user.username}}'},
             success: (response) => {
                 console.log(response)

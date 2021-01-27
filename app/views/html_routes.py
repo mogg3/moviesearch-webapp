@@ -52,6 +52,13 @@ def signin():
     return render_template('signin.html', form=form, errors=error)
 
 
+@app.route("/signout")
+@login_required
+def signout():
+    logout_user()
+    return render_template('index.html')
+
+
 @app.route('/profile')
 @login_required
 def profile():
@@ -84,28 +91,10 @@ def upload_profile_picture():
     return redirect(url_for('profile'))
 
 
-@app.route("/signout")
-@login_required
-def signout():
-    logout_user()
-    return render_template('index.html')
-
-
-@app.route('/edit_account')
-@login_required
-def edit_account():
-    return render_template('edit_account.html')
-
-
 @app.route('/friends')
 @login_required
 def friends():
     return render_template("friends.html", user=current_user)
-
-
-@app.errorhandler(404)
-def handler404(_):
-    return render_template('404.html')
 
 
 @app.route("/admin")
@@ -128,3 +117,8 @@ def user(username):
 @login_required
 def watchlist():
     return render_template('watchlist.html', watchlist=current_user.watchlist)
+
+
+@app.errorhandler(404)
+def handler404(_):
+    return render_template('404.html')
