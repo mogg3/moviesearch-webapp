@@ -70,7 +70,7 @@ def profile():
 
 @app.route('/profile', methods=['POST'])
 @login_required
-def upload_profile_picture(): #change name
+def profile(): #change name
     if request.method == "POST":
         if 'file' not in request.files:
             flash('No file part')
