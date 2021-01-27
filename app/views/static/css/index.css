@@ -14,14 +14,6 @@
    }
 
 
-#main-container {
-    margin-left: 10%;
-    width: 80%;
-    height: 100vh;
-    background-color: #111111;
-    justify-content: center;
-}
-
 #search_submit {
      position: absolute;
      top: -999px;
