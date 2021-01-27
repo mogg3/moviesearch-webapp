@@ -1,4 +1,3 @@
-
 from flask import request
 from flask_login import current_user, login_required
 
@@ -15,7 +14,12 @@ from controllers.user_controller import add_movie_to_users_watchlist, get_user_b
 from views import app
 
 
-@app.route('/search', methods=['POST'])
+# ska man försöka skapa så att routen blir /api/search?=imdb_id (exempelvis 2134384)
+# har gjort det på watchlist men det funkar ju på att jinja2 har tillgång till flasks current_user..
+# man behöver inte alltid ha data på jquery requests? när man använder sig av current user så går det ju att skicka infon i konstruktorn?
+
+
+@app.route('/api/search', methods=['POST'])
 def post_search():
     search_term = request.values['search_term']
 
@@ -27,17 +31,8 @@ def post_search():
 
     return response
 
-@app.route('/api/users/<username>/profile_picture', methods=['GET'])
-@login_required
-def get_profile_picture(username):
 
-        #TODO: add check if picture do not exist
-    image = current_user.profile_picture.read()
-
-    return image
-
-
-@app.route('/movie', methods=['POST'])
+@app.route('/api/movies/movie', methods=['POST'])
 def get_movie():
     imdb_id = request.values['imdb_id']
 
@@ -48,7 +43,6 @@ def get_movie():
     )
 
     return response
-
 
 
 @app.route('/api/users/<username>/watchlist', methods=['PUT'])
@@ -75,28 +69,27 @@ def put_watchlist(username):
 def delete_watchlist(username):
     movie = json.loads(request.values['movie'])
 
-    response = ""
-    
+    resp = ""
+
     delete_movie_from_users_watchlist(current_user, movie)
 
     if movie not in current_user.watchlist:
-        response = f"You removed {movie['Title']} to your watchlist"
+        resp = f"You removed {movie['Title']} to your watchlist"
     else:
-        response = f"You failed to remove {movie['Title']} to your watchlist"
+        resp = f"You failed to remove {movie['Title']} to your watchlist"
 
     response = app.response_class(
-        response=json.dumps(response),
+        response=json.dumps(resp),
         status=200,
         mimetype="application/json"
     )
     return response
 
 
-
-@app.route('/user/friends', methods=['PUT'])
+@app.route('/api/users/<username>/friends', methods=['PUT'])
 @login_required
-def post_friendship():
-    #todo: add friendship request
+def post_friendship(username):
+    # todo: add friendship request
 
     friend = get_user_by_email(get_user_by_email(json.loads(request.values['friend_email'])))
 
@@ -117,9 +110,9 @@ def post_friendship():
     return response
 
 
-@app.route('/api/friends/', methods=['GET'])
+@app.route('/api/users/<username>/friends/chats', methods=['GET'])
 @login_required
-def get_chat():
+def get_chat(username):
     chat = get_all_chats()[0]
     response = app.response_class(
         response=json.dumps(chat.to_json()),
@@ -129,9 +122,10 @@ def get_chat():
     return response
 
 
-@app.route('/api/friends/', methods=['POST'])
+# Not done
+@app.route('/api/users/<username>/friends/chats/user_name_for_reciever/post', methods=['POST'])
 @login_required
-def post_message():
+def post_message(username):
     message = request.values['message']
     sent_by = request.values['sent_by']
     chat = get_all_chats()[0]
@@ -145,9 +139,9 @@ def post_message():
     return response
 
 
-@app.route('/api/user/roles', methods=['PUT'])
+@app.route('/api/users/<username>/roles', methods=['PUT'])
 @login_required
-def add_role():
+def add_role(username):
     user = get_user_by_username(json.loads(request.values['username']))
     admin_role = get_role_by_name("admin")
     add_role_to_user(user=user, role=admin_role)
@@ -160,9 +154,9 @@ def add_role():
     return response
 
 
-@app.route('/api/user/roles', methods=['DELETE'])
+@app.route('/api/users/<username>/roles', methods=['DELETE'])
 @login_required
-def delete_role():
+def delete_role(username):
     user = get_user_by_username(json.loads(request.values['username']))
     delete_admin_role_from_user(user)
     resp = f"removed role"
@@ -174,7 +168,7 @@ def delete_role():
     return response
 
 
-@app.route('/api/user/roles', methods=['GET'])
+@app.route('/api/users/<username>/roles/admin', methods=['GET'])
 @login_required
 def get_if_admin_role():
     user = get_user_by_username(json.loads(request.values['username']))
@@ -190,3 +184,13 @@ def get_if_admin_role():
         mimetype="application/json"
     )
     return response
+
+
+@app.route('/api/users/<username>/profile_picture', methods=['GET'])
+@login_required
+def get_profile_picture(username):
+    # TODO: add check if picture do not exist
+    response = current_user.profile_picture.read()
+
+    return response
+

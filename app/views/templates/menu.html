@@ -36,7 +36,7 @@
         {% endfor %}
 
          <li class="menu__link">
-            <a href="{{ url_for('signout') }}">
+            <a href="{{ url_for('sign_out') }}">
                 Sign out
             </a>
         </li>
@@ -44,7 +44,7 @@
      {% else %}
 
          <li class="menu__link" >
-            <a href="{{ url_for('signin') }}">
+            <a href="{{ url_for('sign_in') }}">
                 Sign in / Sign up
             </a>
          </li>
