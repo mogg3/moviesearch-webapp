@@ -31,6 +31,12 @@ body {
     width: 270px;
 }
 
+
+p {
+    font-size: 25px;
+    margin: 40px
+}
+
 .column {
     float: left;
     width: 50%;
@@ -39,24 +45,18 @@ body {
 #row1-col1{
     width: 40%;
 }
-#row2-col1{
-    width: 40%;
-}
 
+#row1-col2-row2 {
+    width: 100%;
+}
 
 #row1-col2{
     width: 60%;
 }
 
-p {
-    font-size: 25px;
-    margin: 40px
+#row2-col1{
+    width: 40%;
 }
-
 #row2-col2{
     width: 60%;
-}
-
-#row1-col2-row2 {
-    width: 100%;
 }

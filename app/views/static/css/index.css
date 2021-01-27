@@ -5,18 +5,28 @@
 /*    src: url('/views/static/fonts/NetflixSans_W_Th.woff2') format('woff2')*/
 /*}*/
 
+
+
  .title {
      /*font-family: 'Netflix Sans';*/
      font-size: medium;
      color: white;
    }
 
+#main-container {
+    margin-left: 10%;
+    width: 80%;
+    height: 100vh;
+    background-color: #111111;
+    justify-content: center;
+}
+
 #search-container {
+    padding-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     margin-top: 20px;
-    margin-bottom : 20px;
 }
 
 #search {
