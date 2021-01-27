@@ -17,16 +17,19 @@
     </script>
 </head>
 
-<body style = "background-color: #181818">
+<body style = "background-color: #222222; height:100%">
 
     <div id="menu-header">
         <h1>MovieBuff</h1>
         {% include "menu.html" %}
     </div>
 
-    {% block content %}
+    <div id = "main-container">
+        {% block content %}
 
-    {% endblock %}
+        {% endblock %}
+    </div>
+
 
 <!--    <footer class="footer">-->
 <!--        <p>MovieBuff , copyright © 2020</p>-->

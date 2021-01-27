@@ -10,11 +10,12 @@
     <div id="user_role_info" style="display:inline;"></div>
 </div>
 <script>
+    let username = "{{user.username}}"
      function get_role() {
             $.ajax({
                 method: 'get',
                 url: '{{ url_for('check_role') }}',
-                data: {'username': JSON.stringify("{{user.username}}")},
+                data: {'username': JSON.stringify(username)},
                 success: (response) => {
                            show_role_info(response)
                 },

@@ -16,22 +16,25 @@ body {
 
 #profile-picture-container {
     margin: 50px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
 
 }
 
-.user_info {
-    margin-left: 100px;
+#file {
+    width: 190px;
 }
 
 #profile-picture {
     border: 3px solid white;
     object-fit: cover;
     /*object-position: center; det är relativt till parent?*/
-    height: 250px;
-    width: 250px;
+    height: 270px;
+    width: 270px;
+}
+
+
+p {
+    font-size: 25px;
+    margin: 40px
 }
 
 .column {
@@ -39,8 +42,21 @@ body {
     width: 50%;
 }
 
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
+#row1-col1{
+    width: 40%;
+}
+
+#row1-col2-row2 {
+    width: 100%;
+}
+
+#row1-col2{
+    width: 60%;
+}
+
+#row2-col1{
+    width: 40%;
+}
+#row2-col2{
+    width: 60%;
 }
