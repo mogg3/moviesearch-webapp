@@ -32,10 +32,10 @@ def post_search():
     return response
 
 
+
 @app.route('/api/movies/movie', methods=['POST'])
 def get_movie():
     imdb_id = request.values['imdb_id']
-
     response = app.response_class(
         response=get_movie_by_imdb_id(imdb_id),
         status=200,
@@ -64,13 +64,24 @@ def put_watchlist(username):
     return response
 
 
+@app.route('/api/users/<username>/watchlist', methods=['GET'])
+@login_required
+def get_watchlist(username):
+    watchlist = current_user.watchlist
+    print(watchlist)
+    response = app.response_class(
+        response=json.dumps(watchlist),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
 @app.route('/api/users/<username>/watchlist', methods=['DELETE'])
 @login_required
-def delete_watchlist(username):
+def delete_from_watchlist(username):
     movie = json.loads(request.values['movie'])
-
     resp = ""
-
     delete_movie_from_users_watchlist(current_user, movie)
 
     if movie not in current_user.watchlist:
