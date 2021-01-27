@@ -30,7 +30,7 @@
 
         $.ajax({
             method: 'POST',
-            url: '{{ url_for('send_message') }}',
+            url: '{{ url_for('post_message', username=current_user.username) }}',
             data: {'message': $(send).val(), 'sent_by': '{{user.username}}'},
             success: (response) => {
                 console.log(response)
@@ -58,7 +58,7 @@
     function get_chat() {
         $.ajax({
             method: 'GET',
-            url: '{{ url_for('get_chat') }}',
+            url: '{{ url_for('get_chat', username=current_user.username) }}',
             success: (response) => {
                 console.log(JSON.parse(response))
                 show_chat(JSON.parse(response))

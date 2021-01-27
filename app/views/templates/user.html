@@ -14,7 +14,7 @@
      function get_role() {
             $.ajax({
                 method: 'get',
-                url: '{{ url_for('check_role') }}',
+                url: '{{ url_for('get_if_admin_role', username=current_user.username) }}',
                 data: {'username': JSON.stringify(username)},
                 success: (response) => {
                            show_role_info(response)
@@ -36,7 +36,7 @@
          get_role()
           $.ajax({
                 method: 'PUT',
-                url: '{{ url_for('add_role') }}',
+                url: '{{ url_for('add_role', username=current_user.username) }}',
                 data: {'username': JSON.stringify(username)},
                 success: (response) => {
                            console.log(response)
@@ -49,7 +49,7 @@
          get_role()
          $.ajax({
                 method: 'DELETE',
-                url: '{{ url_for('delete_role') }}',
+                url: '{{ url_for('delete_role', username=current_user.username) }}',
                 data: {'username': JSON.stringify(username)},
                 success: (response) => {
                            console.log(response)
