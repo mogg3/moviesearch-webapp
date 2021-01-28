@@ -11,6 +11,9 @@
     </form>
 </div>
 
+{% for friend in friends %}
+    <h4>{{friend}}</h4>
+{% endfor %}
 
 <script>
     $("#search_submit").click((e) => {

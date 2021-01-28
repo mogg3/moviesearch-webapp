@@ -95,17 +95,17 @@ def delete_from_watchlist(username):
 @login_required
 def post_friendship(username):
     # todo: add friendship request
-    print("hej")
-    friend = get_user_by_username(json.loads(request.values['username']))
-    if friend:
-        if friend in current_user.friends:
-            resp = f"you are already friend with {friend.username}"
+    found_friend = get_user_by_username(request.values['username'])
+    logged_in_user = get_user_by_username(current_user.username)
+    if found_friend:
+        if found_friend in logged_in_user.friends:
+            resp = f"you are already friend with {found_friend.username}"
         else:
-            add_friendship(user=current_user, friend=friend)
-            resp = f"You are now friends with {friend.username}"
-            #initiate_chat(user_1=current_user, user_2=friend)
+            add_friendship(user=logged_in_user, friend=found_friend)
+            resp = f"You are now friends with {found_friend.username}"
+            initiate_chat(user_1=logged_in_user, user_2=found_friend)
     else:
-        resp = f"Found no user with username {friend.username}"
+        resp = f"Found no user with username {request.values['username']}"
 
     response = app.response_class(
         response=json.dumps(resp),
