@@ -31,10 +31,10 @@
                 </div>
             </div>
             <div class="column" id="row1-col2">
-                <h1 id ="name-h">{{user}}</h1>
-                {% if role %}
-                    <h3>({{role}})</h3><br>
-                {% endif %}
+                <h1 id ="name-h">{{current_user.username}}</h1>
+
+                    <h3>{{current_user.roles[0] if current_user.roles| length > 0}}</h3><br>
+
                 <div id="user-info">
                     <h2 style="display: inline">Firstame</h2><p style="display: inline">{{user.first_name}}</p><br>
                     <h2 style="display: inline">Lastname</h2><p style="display: inline">{{user.last_name}}</p><br>

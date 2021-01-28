@@ -55,10 +55,7 @@ def sign_out():
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile():
-    if len(current_user.roles) == 0:
-        return render_template('profile.html', user=current_user, role=False)
-    else:
-        return render_template('profile.html', user=current_user, role=current_user.roles[0])
+    return render_template('profile.html', user=current_user)
 
 
 @app.route('/profile', methods=['POST'])
@@ -96,7 +93,6 @@ def friends():
     return render_template("friends.html", user=current_user, friends=current_user.friends)
 
 
-
 @app.route("/admin", methods=['GET'])
 @roles_required("admin")
 def admin():
@@ -106,10 +102,7 @@ def admin():
 @app.route("/admin/users/<username>", methods=['GET'])
 @roles_required("admin")
 def user(username):
-    if len(user.roles) == 0:
-        return render_template('user.html', user=user, role=False)
-    else:
-        return render_template('user.html', user=user, role=user.roles[0])
+    return render_template('user.html', user=get_user_by_username(username))
 
 
 @app.errorhandler(404)
