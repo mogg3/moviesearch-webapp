@@ -11,10 +11,15 @@ from views import app
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 
 
-@app.route("/", methods =['GET', 'POST'])
+@app.route("/", methods =['GET'])
 def index():
+    return render_template("index.html", form=LoginForm())
+
+
+@app.route("/", methods=['POST'])
+def sign_in():
     form = LoginForm()
-    error = None
+
     if request.method == "POST":
         if form.validate_on_submit():
             user = get_user_by_email(email=form.email.data)
@@ -22,8 +27,7 @@ def index():
                 login_user(user, remember=form.remember.data)
                 return redirect(url_for('profile'))
             else:
-                error = "Wrong email or password"
-    return render_template("index.html", form=form, errors=error)
+                return render_template("index.html", form=LoginForm(), errors="Wrong email or password")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -45,6 +49,7 @@ def sign_up():
     return render_template('signup.html', form=form)
 
 
+
 @app.route("/signout")
 @login_required
 def sign_out():
@@ -55,15 +60,12 @@ def sign_out():
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile():
-    if len(current_user.roles) == 0:
-        return render_template('profile.html', user=current_user, role=False)
-    else:
-        return render_template('profile.html', user=current_user, role=current_user.roles[0])
+    return render_template('profile.html')
 
 
 @app.route('/profile', methods=['POST'])
 @login_required
-def post_profile_picture(): #change name
+def post_profile_picture():
     if request.method == "POST":
         if 'file' not in request.files:
             flash('No file part')
@@ -71,7 +73,7 @@ def post_profile_picture(): #change name
 
         file = request.files['file']
 
-        if file.filename == '':
+        if not file.filename:
             flash('No selected file')
             return redirect(request.url)
 
@@ -87,29 +89,25 @@ def post_profile_picture(): #change name
 @app.route('/watchlist', methods=['GET'])
 @login_required
 def watchlist():
-    return render_template('watchlist.html', watchlist=current_user.watchlist)
+    return render_template('watchlist.html')
 
 
-@app.route('/friends', methods=['GET','POST'])
+@app.route('/friends', methods=['GET', 'POST'])
 @login_required
 def friends():
     return render_template("friends.html", user=current_user, friends=current_user.friends)
 
 
-
 @app.route("/admin", methods=['GET'])
 @roles_required("admin")
 def admin():
-    return render_template('admin.html', users=get_all_users(), roles=get_all_roles())
+    return render_template('admin.html', users=get_all_users())
 
 
 @app.route("/admin/users/<username>", methods=['GET'])
 @roles_required("admin")
 def user(username):
-    if len(user.roles) == 0:
-        return render_template('user.html', user=user, role=False)
-    else:
-        return render_template('user.html', user=user, role=user.roles[0])
+    return render_template('user.html', user=get_user_by_username(username))
 
 
 @app.errorhandler(404)

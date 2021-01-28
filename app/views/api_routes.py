@@ -132,10 +132,8 @@ def get_chat(username):
 @app.route('/api/users/<username>/friends/user_name_for_friend/chat', methods=['POST'])
 @login_required
 def post_message(username):
-    message = request.values['message']
-    sent_by = request.values['sent_by']
     chat = get_all_chats()[0]
-    message = Message(sent_by=get_user_by_username(sent_by), text=message)
+    message = Message(sent_by=get_user_by_username(request.values['sent_by']), text=request.values['message'])
     add_message_to_chat(chat, message)
     response = app.response_class(
         response=json.dumps("sent"),

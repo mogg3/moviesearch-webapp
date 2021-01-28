@@ -36,7 +36,7 @@
         </ul>
      {% else %}
         <div id="login_box">
-            {% if errors %}
+            {% if errors is defined %}
                 <p>{{ errors }}</p>
             {% endif %}
             <div id="signup-signin">
