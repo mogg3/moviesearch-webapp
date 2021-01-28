@@ -175,7 +175,7 @@ def delete_role(username):
 
 @app.route('/api/users/<username>/roles/admin', methods=['GET'])
 @login_required
-def get_if_admin_role():
+def get_if_admin_role(username):
     user = get_user_by_username(json.loads(request.values['username']))
     print("hello")
     # ändra så att det är true or false tillbaka
