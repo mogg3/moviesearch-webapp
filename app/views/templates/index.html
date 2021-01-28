@@ -4,12 +4,11 @@
 {% endblock %}
 {% block  content %}
     <div>
-        <form action="/" method="POST" id="search-container">
+        <form id="search-container">
             <input type="text" id="search" placeholder="Search.." name="search">
             <button type="submit" id="search_submit">Search</button>
         </form>
     </div>
-
     <div id="result"></div>
     <div id="movie-content-container">
         <div id="movie-content"></div>
@@ -161,11 +160,11 @@
                       let plot = $("<p>")
                         .text(response["Plot"]);
 
-                      $("#movie-content").append(title, runtime, year, genre, director, actor, plot, back );
+                      $("#movie-content").append(title, runtime, year, genre, director, actor, plot, back);
 
-                     {% if current_user.is_authenticated %}
+                      {% if current_user.is_authenticated %}
                         $('#movie-content').append(add);
-                     {% endif %}
+                      {% endif %}
                   },
                   datatype: 'json'
               });
