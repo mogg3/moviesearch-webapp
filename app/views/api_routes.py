@@ -96,20 +96,21 @@ def delete_from_watchlist(username):
     return response
 
 
-@app.route('/api/users/<username>/friends', methods=['PUT'])
+@app.route('/api/users/<username>/friends', methods=['POST'])
 @login_required
 def post_friendship(username):
     # todo: add friendship request
-
-    friend = get_user_by_email(get_user_by_email(json.loads(request.values['friend_email'])))
-
-    if friend in current_user.friends:
-        resp = f"you are already friend with {friend.username}"
+    print("hej")
+    friend = get_user_by_username(json.loads(request.values['username']))
+    if friend:
+        if friend in current_user.friends:
+            resp = f"you are already friend with {friend.username}"
+        else:
+            add_friendship(user=current_user, friend=friend)
+            resp = f"You are now friends with {friend.username}"
+            #initiate_chat(user_1=current_user, user_2=friend)
     else:
-        add_friendship(user=current_user, friend=friend)
-        resp = f"You are now friends with {friend.username}"
-
-    initiate_chat(user_1=current_user, user_2=friend)
+        resp = f"Found no user with username {friend.username}"
 
     response = app.response_class(
         response=json.dumps(resp),

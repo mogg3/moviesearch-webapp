@@ -38,4 +38,4 @@ def add_profile_picture_to_user(user, profile_picture):
 
 
 def delete_profile_picture_if_exists(user):
-   ur.delete_profile_picture_if_exists(user)
+    ur.delete_profile_picture_if_exists(user)

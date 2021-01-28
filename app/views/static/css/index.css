@@ -50,9 +50,7 @@
     flex-basis: 15%;
     align-items: center;
     margin: 0.5%;
-    border: 3px solid;
     color: white;
-    border-image: linear-gradient(to bottom,gray, rgba(0, 0, 0, 0)) 1 100%;
 }
 
 .poster {

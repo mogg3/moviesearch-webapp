@@ -26,22 +26,6 @@ def index():
     return render_template("index.html", form=form, errors=error)
 
 
-# @app.route('/', methods=['POST'])
-# def sign_in():
-#     form = LoginForm()
-#     error = None
-#     if request.method == "POST":
-#         if form.validate_on_submit():
-#             user = get_user_by_email(email=form.email.data)
-#
-#             if user and verify_password(form.password.data, user.password):
-#                 login_user(user, remember=form.remember.data)
-#                 return redirect(url_for('profile'))
-#             else:
-#                 error = "Wrong email or password"
-#     return render_template('signin.html', form=form, errors=error)
-
-
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     form = RegisterForm()
@@ -106,10 +90,11 @@ def watchlist():
     return render_template('watchlist.html', watchlist=current_user.watchlist)
 
 
-@app.route('/friends', methods=['GET'])
+@app.route('/friends', methods=['GET','POST'])
 @login_required
 def friends():
-    return render_template("friends.html", user=current_user)
+    return render_template("friends.html", user=current_user, friends=current_user.friends)
+
 
 
 @app.route("/admin", methods=['GET'])
@@ -121,7 +106,6 @@ def admin():
 @app.route("/admin/users/<username>", methods=['GET'])
 @roles_required("admin")
 def user(username):
-    user = get_user_by_username(username)
     if len(user.roles) == 0:
         return render_template('user.html', user=user, role=False)
     else:
