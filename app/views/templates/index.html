@@ -48,127 +48,131 @@
             },
             datatype: 'json'
         })
-    })
-{#TODO: add alt picture om inte poster existerar#}
+    });
 
-        function show_result(response) {
-            $('#result').empty();
-            $('#result').hide();
-            $('#result').fadeIn(300);
+    function show_result(response) {
+        $('#result').empty();
+        $('#result').hide();
+        $('#result').fadeIn(300);
 
-            $.each(response, (i, movie)=> {
-                let title = ()=> {
-                    title_max_length = 20;
-                    return (movie['Title'].length > title_max_length) ?
-                        $("<p>").attr("class", "title").text(movie['Title'].substring(0, 21) + "...") :
-                        $("<p>").attr("class", "title").text(movie['Title']);
-                };
+        $.each(response, (i, movie)=> {
 
-                let movie_box = $("<div>")
-                    .attr("id", "movie-box");
-                    {#.attr("onmouseover", "hoover_movie_on(this)")#}
-                    {#.attr("onmouseout", "hoover_movie_off(this)");#}
+            let title = ()=> {
+                title_max_length = 20;
+                return (movie['Title'].length > title_max_length) ?
+                    $("<p>").attr("class", "title").text(movie['Title'].substring(0, 21) + "...") :
+                    $("<p>").attr("class", "title").text(movie['Title']);
+            };
 
-                let poster = $("<img>")
-                    .attr("src", response[i]['Poster'])
-                    .attr("onClick",'show_movie_content(this)')
-                    .attr("id",response[i]['imdbID'])
-                    .attr("class", "poster");
+            let movie_box = $("<div>")
+                .attr("id", "movie-box");
+                {#.attr("onmouseover", "hoover_movie_on(this)")#}
+                {#.attr("onmouseout", "hoover_movie_off(this)");#}
 
-                let flex_break = $("<div>")
-                    .attr("id", "break");
+            let poster = $("<img>")
+                .attr("src", response[i]['Poster'])
+                .attr("onClick",'get_movie_details(this)')
+                .attr("id",response[i]['imdbID'])
+                .attr("class", "poster");
 
-                $(movie_box).append(title, poster);
+            let flex_break = $("<div>")
+                .attr("id", "break");
 
-                i === 4 ? $('#result').append(movie_box, flex_break) : $('#result').append(movie_box);
+            $(movie_box).append(title, poster);
 
-            });
-        }
+            i === 4 ? $('#result').append(movie_box, flex_break) : $('#result').append(movie_box);
 
-          function add_movie_to_watchlist(element) {
+        });
+    }
 
-            $(element).each( function () {
-                $(this).val( $(this).attr("movie") );
-            });
+    function add_movie_to_watchlist(element) {
 
-              $.ajax({
-                method: 'POST',
-                url: '{{ url_for('post_watchlist', username=current_user.username) }}',
-                data: {'movie': $(element).val()},
-                success: (response) => {
-                           console.log(response);
-                },
-                datatype: 'json'
-            })
-        }
+        $(element).each( function () {
+            $(this).val( $(this).attr("movie") );
+        });
 
-        function show_movie_content(element) {
-              $.ajax({
-                  method: 'POST',
-                  url: '{{ url_for('get_movie') }}',
-                  data: {'imdb_id': element.id},
-                  success: (response) => {
-                        $('.poster').each(function(i) {
-                                $(this).attr('onclick', '');
-                            });
-                      $('#movie-content').empty();
-                      $('#movie-content-container').hide();
-                      document.getElementById("result").style.opacity = 0.3;
-                      $('#movie-content-container').fadeTo(300, 0.9, function() {
-                      });
-                      $('#movie-content').fadeTo(300, 0.9, function() {
-                      });
+        $.ajax({
+            method: 'POST',
+            url: '{{ url_for('post_watchlist', username=current_user.username) }}',
+            data: {'movie': $(element).val()},
+            success: (response) => {
+                       console.log(response);
+            },
+            datatype: 'json'
+        });
+    }
 
-                      let add =  $("<input>")
-                        .attr("id", "add")
-                        .attr("onClick", "add_movie_to_watchlist(this)")
-                        .attr("movie", JSON.stringify(response))
-                        .attr("type", "image")
-                        .attr("src", "static/images/add_btn.png")
+    function get_movie_details(element) {
+          $.ajax({
+              method: 'POST',
+              url: '{{ url_for('get_movie') }}',
+              data: {'imdb_id': element.id},
+              success: (response) => {
+                  show_movie_content(response);
+              },
+              datatype: 'json'
+          });
+    }
 
-                      let remove =  $("<input>")
-                        .attr("id", "add")
-                        .attr("onClick", "remove_movie_from_watchlist(this)")
-                        .attr("movie", JSON.stringify(response))
-                        .attr("type", "image")
-                        .attr("src", "static/images/remove_btn.png")
+    function show_movie_content(movie) {
+        $('.poster').each(function (i) {
+            $(this).attr('onclick', '');
+        });
+        $('#movie-content').empty();
+        $('#movie-content-container').hide();
+        document.getElementById("result").style.opacity = 0.3;
+        $('#movie-content-container').fadeTo(300, 0.9, function () {
+        });
+        $('#movie-content').fadeTo(300, 0.9, function () {
+        });
 
-                      let back =  $("<input>")
-                        .attr("id", "back")
-                        .attr("onClick", "go_back(this)")
-                        .attr("type", "image")
-                        .attr("src", "static/images/back_btn.png")
+        let add = $("<input>")
+            .attr("id", "add")
+            .attr("onClick", "add_movie_to_watchlist(this)")
+            .attr("movie", JSON.stringify(movie))
+            .attr("type", "image")
+            .attr("src", "static/images/add_btn.png")
 
-                      let title = $("<h1>")
-                        .text(response["Title"]);
+        let remove = $("<input>")
+            .attr("id", "add")
+            .attr("onClick", "remove_movie_from_watchlist(this)")
+            .attr("movie", JSON.stringify(movie))
+            .attr("type", "image")
+            .attr("src", "static/images/remove_btn.png")
 
-                      let runtime = $("<p>")
-                        .text(response["Runtime"]);
+        let back = $("<input>")
+            .attr("id", "back")
+            .attr("onClick", "go_back(this)")
+            .attr("type", "image")
+            .attr("src", "static/images/back_btn.png")
 
-                      let year = $("<p>")
-                        .text(response["Year"]);
+        let title = $("<h1>")
+            .text(movie["Title"]);
 
-                      let genre = $("<p>")
-                        .text(response["Genre"]);
+        let runtime = $("<p>")
+            .text(movie["Runtime"]);
 
-                      let director = $("<p>")
-                        .text(response["Director"]);
+        let year = $("<p>")
+            .text(movie["Year"]);
 
-                      let actor = $("<p>")
-                        .text(response["Actors"]);
+        let genre = $("<p>")
+            .text(movie["Genre"]);
 
-                      let plot = $("<p>")
-                        .text(response["Plot"]);
+        let director = $("<p>")
+            .text(movie["Director"]);
 
-                      $("#movie-content").append(title, runtime, year, genre, director, actor, plot, back);
+        let actor = $("<p>")
+            .text(movie["Actors"]);
 
-                      {% if current_user.is_authenticated %}
-                        $('#movie-content').append(add);
-                      {% endif %}
-                  },
-                  datatype: 'json'
-              });
-        }
+        let plot = $("<p>")
+            .text(movie["Plot"]);
+
+        $("#movie-content").append(title, runtime, year, genre, director, actor, plot, back);
+
+        {% if current_user.is_authenticated %}
+            $('#movie-content').append(add);
+        {% endif %}
+    }
 
     function go_back(element) {
         $('#movie-content-container').fadeOut(300);
@@ -177,7 +181,7 @@
 
         $('.poster').each(function(i) {
             document.getElementById("result").style.opacity = 1;
-            $(this).attr("onClick",'show_movie_content(this)');
+            $(this).attr("onClick",'get_movie_details(this)');
             console.log(this);
         });
     }

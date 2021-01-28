@@ -3,7 +3,6 @@ from flask_login import login_required, current_user
 from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
 
-from controllers.role_controller import get_all_roles
 from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
     add_profile_picture_to_user, delete_profile_picture_if_exists
 
@@ -49,7 +48,6 @@ def sign_up():
     return render_template('signup.html', form=form)
 
 
-
 @app.route("/signout")
 @login_required
 def sign_out():
@@ -66,22 +64,21 @@ def profile():
 @app.route('/profile', methods=['POST'])
 @login_required
 def post_profile_picture():
-    if request.method == "POST":
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
 
-        file = request.files['file']
+    file = request.files['file']
 
-        if not file.filename:
-            flash('No selected file')
-            return redirect(request.url)
+    if not file.filename:
+        flash('No selected file')
+        return redirect(request.url)
 
-        if file.filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}:
-            delete_profile_picture_if_exists(current_user)
-            add_profile_picture_to_user(current_user, file)
-        else:
-            flash('Wrong file format. Choose between png, jpg, jpeg and gif.')
+    if file.filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}:
+        delete_profile_picture_if_exists(current_user)
+        add_profile_picture_to_user(current_user, file)
+    else:
+        flash('Wrong file format. Choose between png, jpg, jpeg and gif.')
 
     return redirect(url_for('profile'))
 
