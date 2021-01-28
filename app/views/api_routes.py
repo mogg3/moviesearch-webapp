@@ -41,7 +41,7 @@ def get_movie():
 
 @app.route('/api/users/<username>/watchlist', methods=['POST'])
 @login_required
-def put_watchlist(username):
+def post_watchlist(username):
     movie = json.loads(request.values['movie'])
 
     if movie in current_user.watchlist:
@@ -177,14 +177,9 @@ def delete_role(username):
 @login_required
 def get_if_admin_role(username):
     user = get_user_by_username(json.loads(request.values['username']))
-    print("hello")
-    # ändra så att det är true or false tillbaka
-    if len(user.roles) == 0:
-        resp = "noadmin"
-    else:
-        resp = "admin"
+
     response = app.response_class(
-        response=json.dumps(resp),
+        response=json.dumps(True if len(user.roles) > 0 else False),
         status=200,
         mimetype="application/json"
     )

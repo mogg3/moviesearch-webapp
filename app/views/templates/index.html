@@ -81,7 +81,7 @@
 
                 $(movie_box).append(title, poster);
 
-            i === 4 ? $('#result').append(movie_box, flex_break) : $('#result').append(movie_box);
+                i === 4 ? $('#result').append(movie_box, flex_break) : $('#result').append(movie_box);
 
             });
         }
@@ -93,8 +93,8 @@
             });
 
               $.ajax({
-                method: 'PUT',
-                url: '{{ url_for('delete_from_watchlist', username=current_user.username) }}',
+                method: 'POST',
+                url: '{{ url_for('post_watchlist', username=current_user.username) }}',
                 data: {'movie': $(element).val()},
                 success: (response) => {
                            console.log(response);
