@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-
+{% block links %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"/>
+{% endblock %}
 {% block  content %}
     <div>
         <form action="/" method="POST" id="search-container">
@@ -42,6 +44,7 @@
             url: '{{ url_for('post_search') }}',
             data: {'search_term': $(search).val()},
             success: (response) => {
+                console.log(response)
                 show_result(response);
             },
             datatype: 'json'
@@ -55,7 +58,6 @@
             $('#result').fadeIn(300);
 
             $.each(response, (i, movie)=> {
-
                 let title = ()=> {
                     title_max_length = 20;
                     return (movie['Title'].length > title_max_length) ?
@@ -79,7 +81,7 @@
 
                 $(movie_box).append(title, poster);
 
-            i === 5 ? $('#result').append(movie_box, flex_break) : $('#result').append(movie_box);
+            i === 4 ? $('#result').append(movie_box, flex_break) : $('#result').append(movie_box);
 
             });
         }
@@ -114,6 +116,8 @@
                       $('#movie-content-container').hide();
                       document.getElementById("result").style.opacity = 0.3;
                       $('#movie-content-container').fadeTo(300, 0.9, function() {
+                      });
+                      $('#movie-content').fadeTo(300, 0.9, function() {
                       });
 
                       let add =  $("<input>")
@@ -168,8 +172,8 @@
         }
 
     function go_back(element) {
-        $('#movie-content').empty();
         $('#movie-content-container').fadeOut(300);
+        $('#movie-content').fadeOut(300);
         $('#result').fadeIn(300);
 
         $('.poster').each(function(i) {
