@@ -9,3 +9,4 @@ app.config.from_object(config)
 
 import views.html_routes
 import views.api_routes
+

@@ -14,11 +14,6 @@ from controllers.user_controller import add_movie_to_users_watchlist, get_user_b
 from views import app
 
 
-# ska man försöka skapa så att routen blir /api/search?=imdb_id (exempelvis 2134384)
-# har gjort det på watchlist men det funkar ju på att jinja2 har tillgång till flasks current_user..
-# man behöver inte alltid ha data på jquery requests? när man använder sig av current user så går det ju att skicka infon i konstruktorn?
-
-
 @app.route('/api/search', methods=['POST'])
 def post_search():
     search_term = request.values['search_term']
@@ -44,7 +39,7 @@ def get_movie():
     return response
 
 
-@app.route('/api/users/<username>/watchlist', methods=['PUT'])
+@app.route('/api/users/<username>/watchlist', methods=['POST'])
 @login_required
 def put_watchlist(username):
     movie = json.loads(request.values['movie'])
@@ -134,7 +129,7 @@ def get_chat(username):
 
 
 # Not done
-@app.route('/api/users/<username>/friends/chats/user_name_for_reciever/post', methods=['POST'])
+@app.route('/api/users/<username>/friends/user_name_for_friend/chat', methods=['POST'])
 @login_required
 def post_message(username):
     message = request.values['message']
@@ -150,7 +145,7 @@ def post_message(username):
     return response
 
 
-@app.route('/api/users/<username>/roles', methods=['PUT'])
+@app.route('/api/users/<username>/roles', methods=['POST'])
 @login_required
 def add_role(username):
     user = get_user_by_username(json.loads(request.values['username']))
