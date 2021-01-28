@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>MovieBuff</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mainstyles.css') }}"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"/>
     <link rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mainstyles.css') }}"/>
     {% block links %}
     {% endblock %}
     <script src="https://code.jquery.com/jquery-3.5.1.js"
@@ -20,7 +19,9 @@
 <body>
 
     <div id="menu-header">
-        <h1>MovieBuff</h1>
+        <div id="menu-title">
+            <a href="{{ url_for('index') }}" class = menu__link>MovieBuff</a>
+        </div>
         {% include "menu.html" %}
     </div>
 

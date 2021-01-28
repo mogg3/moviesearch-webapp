@@ -8,7 +8,7 @@
 <div id="parent">
     <div id="square">
         <div class="row" id="row1">
-            <div class="column" id="row1-col1" style="background-color:lightcoral;">
+            <div class="column" id="row1-col1">
                 <div id="profile-picture-container">
                     <img id="profile-picture" src="{{url_for('get_profile_picture', username=current_user.username)}}" onerror="this.onerror=null;this.src='static/images/profile.png';" /><br>
                     <form action="{{ url_for('post_profile_picture') }}" method="POST" enctype="multipart/form-data">
@@ -30,10 +30,10 @@
                     </form>
                 </div>
             </div>
-            <div class="column" id="row1-col2" style="background-color:lightsalmon;">
-                <h1 style="display: inline" id ="name-h">{{user}}</h1>
+            <div class="column" id="row1-col2">
+                <h1 id ="name-h">{{user}}</h1>
                 {% if role %}
-                    <h3 style="display: inline">({{role}})</h3><br>
+                    <h3>({{role}})</h3><br>
                 {% endif %}
                 <div id="user-info">
                     <h2 style="display: inline">Firstame</h2><p style="display: inline">{{user.first_name}}</p><br>
