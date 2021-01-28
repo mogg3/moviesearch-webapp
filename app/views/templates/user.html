@@ -35,7 +35,7 @@
      function add_role_to_user() {
          get_role()
           $.ajax({
-                method: 'PUT',
+                method: 'POST',
                 url: '{{ url_for('add_role', username=current_user.username) }}',
                 data: {'username': JSON.stringify(username)},
                 success: (response) => {

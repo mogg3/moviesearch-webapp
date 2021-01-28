@@ -39,7 +39,7 @@ def get_movie():
     return response
 
 
-@app.route('/api/users/<username>/watchlist', methods=['PUT'])
+@app.route('/api/users/<username>/watchlist', methods=['POST'])
 @login_required
 def put_watchlist(username):
     movie = json.loads(request.values['movie'])
@@ -91,7 +91,7 @@ def delete_from_watchlist(username):
     return response
 
 
-@app.route('/api/users/<username>/friends', methods=['PUT'])
+@app.route('/api/users/<username>/friends', methods=['POST'])
 @login_required
 def post_friendship(username):
     # todo: add friendship request
@@ -144,7 +144,7 @@ def post_message(username):
     return response
 
 
-@app.route('/api/users/<username>/roles', methods=['PUT'])
+@app.route('/api/users/<username>/roles', methods=['POST'])
 @login_required
 def add_role(username):
     user = get_user_by_username(json.loads(request.values['username']))
