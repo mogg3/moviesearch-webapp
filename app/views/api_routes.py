@@ -32,7 +32,6 @@ def post_search():
     return response
 
 
-
 @app.route('/api/movies/movie', methods=['POST'])
 def get_movie():
     imdb_id = request.values['imdb_id']

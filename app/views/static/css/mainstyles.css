@@ -3,30 +3,18 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #222222;
     height:100%;
+    background-position: center;
+    background-color: #222222;
 }
 
 #main-container {
     margin-top: 20px;
     width: 80%;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     background-color: #111111;
     justify-content: center;
-}
-
-.sign-container__box {
-    width: 400px;
-    height: 550px;
-    background: #000;
-    color: #fff;
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
 }
 
 #menu-header {
@@ -35,28 +23,83 @@ body {
     width: 100%;
     background-color: black;
     align-items: center;
-
 }
 
-h1 {
-    color: white;
-    margin-left: 20px;
+#login_box {
+    padding-top:20px;
+    padding-right:20px;
+    padding-bottom:0;
+}
+
+#signup-signin {
+    display: flex;
+    flex-direction: row;
+}
+
+#signin {
+    margin-top:7px;
+    display: flex;
+    flex-direction: row;
 }
 
 #menu {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    padding-top: 10px;
     background-color: black;
     list-style: none;
-    top: 0;
     width: 100%;
 }
 
 .menu__link {
-    font-size: x-large;
+    color: gray;
+    font-size: 25px;
     padding-right: 40px;
+}
+
+.menu__link:hover {
+    text-decoration: none;
+    color:white;
+}
+
+#menu-title{
+    margin-left: 20px;
+    padding-bottom: 10px;
+}
+
+#menu-title a{
+    font-size: 50px;
+    text-align: center;
+    padding: 0;
+}
+
+#signup {
+    border: solid white 1px;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 10px;
+}
+
+#signup a {
+    color: gray;
+    font-size:25px;
+}
+
+#signup a:hover {
+    text-decoration: none;
+    color:white;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
 }
 
 .footer {

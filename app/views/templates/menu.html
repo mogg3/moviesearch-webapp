@@ -1,54 +1,57 @@
 <ul id="menu">
 
      {% if current_user.is_authenticated %}
-
-         <li class="menu__link">
-            <a href="{{ url_for('index') }}">
-                Main
-            </a>
-         </li>
-        <li class="menu__link">
-            <a href="{{ url_for('profile') }}">
+        <li>
+            <a href="{{ url_for('profile') }}" class="menu__link" >
                 Profile
             </a>
         </li>
 
-         <li class="menu__link" >
-             <a href="{{ url_for('watchlist') }}">
+         <li>
+             <a href="{{ url_for('watchlist') }}" class="menu__link" >
                 Watch List
             </a>
         </li>
 
-         <li class="menu__link">
-            <a href="{{ url_for('friends') }}">
+         <li>
+            <a href="{{ url_for('friends') }}" class="menu__link" >
                 Friends
             </a>
         </li>
 
          {% for role in current_user.roles %}
              {% if role['name'] == "admin" %}
-                <li class="menu__link">
-                    <a href="{{ url_for('admin') }}">
+                <li>
+                    <a href="{{ url_for('admin') }}" class="menu__link" >
                         Admin
                     </a>
                 </li>
             {% endif %}
         {% endfor %}
-
-         <li class="menu__link">
-            <a href="{{ url_for('sign_out') }}">
+         <li>
+            <a href="{{ url_for('sign_out') }}" class="menu__link" >
                 Sign out
             </a>
         </li>
-
+        </ul>
      {% else %}
-
-         <li class="menu__link" >
-            <a href="{{ url_for('sign_in') }}">
-                Sign in / Sign up
-            </a>
-         </li>
-
+        <div id="login_box">
+            {% if errors %}
+                <p>{{ errors }}</p>
+            {% endif %}
+            <div id="signup-signin">
+                <form action="/" method="POST">
+                    <div id="signin">
+                        {{ form.csrf_token }}
+                        <div style="margin-right:5px;">{{ form.email() }}</div>
+                        <div style="margin-left:5px;">{{ form.password() }}</div>
+                        <div style="margin-left:5px;">{{ form.submit() }}</div><br>
+                    </div>
+                </form>
+                <div id="signup">
+                    <a href="{{url_for('sign_up')}}">Sign up</a>
+                </div>
+            </div>
+            <div>{{ form.remember() }} {{ form.remember.label }} </div>
+        </div>
     {% endif %}
-
-</ul>

@@ -1,6 +1,8 @@
 #square {
-    height: 800px;
-    width: 70%;
+    border: 2px solid gray;
+    margin-top: 70px;
+    height: auto;
+    width: auto;
 }
 
 #parent {
@@ -17,7 +19,7 @@
 }
 
 #file {
-    width: 190px;
+    width: auto;
 }
 
 #user-info {
@@ -32,22 +34,26 @@
 
 p {
     font-size: 25px;
-    margin: 40px
+    margin: 40px;
+    color: white;
 }
 
-#name-h{
-    margin-top: 30px;
+h1,h2,h3 {
+    color: gray;
 }
 
 #row1-col1{
+    background-color: #111111;
     width: 40%;
 }
 
 #row1-col2{
+    background-color: #111111;
     display: flex;
     align-items: center;
     flex-direction: column;
     width: 60%;
+    padding-top: 40px;
 }
 
 #row1-col2 h3{
