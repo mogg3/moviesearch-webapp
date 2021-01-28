@@ -1,7 +1,7 @@
 .sign_up_box{
     width: 400px;
     height: 550px;
-    background: #000;
+    background: #111111;
     color: #fff;
     top: 50%;
     left: 50%;
@@ -42,12 +42,4 @@
 .content {
     margin-top: auto;
     margin-bottom: auto;
-}
-
-
-body{
-    margin: 0;
-    padding: 0;
-    background-position: center;
-    background-color: pink;
 }

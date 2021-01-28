@@ -16,10 +16,10 @@ class RegisterForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired(), Length(min=4, max=40)])
-    password = PasswordField('Password', validators=[InputRequired(), Length(min=4)])
+    email = StringField('Email', validators=[InputRequired(), Length(min=4, max=40)], render_kw={"placeholder": "Email address"})
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=4)], render_kw={"placeholder": "Password"})
     remember = BooleanField('Remember me')
-    submit = SubmitField('Submit')
+    submit = SubmitField('Sign in')
 
 
 

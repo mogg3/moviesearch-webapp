@@ -1,33 +1,29 @@
-{% extends "base.html" %}
+<!--{% extends "base.html" %}-->
 
-{% block links %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}"/>
-{% endblock %}
+<!--{% block links %}-->
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}"/>-->
+<!--{% endblock %}-->
 
-{% block content %}
+<!--{% block content %}-->
 
 
-<div class="login_box">
-{% if errors %}
-    <p>{{ errors }}</p>
-{% endif %}
+<!--<div class="login_box">-->
+<!--{% if errors %}-->
+<!--    <p>{{ errors }}</p>-->
+<!--{% endif %}-->
+<!--    <form action="/signin" method="POST">-->
+<!--        {{ form.csrf_token }}-->
+<!--        {{ form.email.label }} {{ form.email() }} <br />-->
+<!--        {{ form.password.label }} {{ form.password() }} <br />-->
+<!--        {{ form.remember.label }} {{ form.remember() }} <br />-->
+<!--        {{ form.submit() }}-->
+<!--    </form>-->
 
-    <form action="/signin" method="POST">
 
-{#    TODO: Add validation    #}
-            {{ form.csrf_token }}
-            {{ form.email.label }} {{ form.email() }} <br />
-            {{ form.password.label }} {{ form.password() }} <br />
-            {{ form.remember.label }} {{ form.remember() }} <br />
-            {{ form.submit() }}
-    </form>
+<!--    <div class="sign_up">-->
+<!--        <a>Dont have an account?</a>-->
+<!--        <a href={{ url_for('sign_up')}}> Sign up here.</a>-->
+<!--    </div>-->
+<!--</div>-->
 
-        <a href="" id="forgot_password">Forgot password?</a>
-
-    <div class="sign_up">
-        <a>Dont have an account?</a>
-        <a href={{ url_for('sign_up')}}> Sign up here.</a>
-    </div>
-</div>
-
-{% endblock %}
+<!--{% endblock %}-->

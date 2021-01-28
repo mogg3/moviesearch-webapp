@@ -11,9 +11,35 @@ from views import app
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 
 
-@app.route("/")
+@app.route("/", methods =['GET', 'POST'])
 def index():
-    return render_template("index.html")
+    form = LoginForm()
+    error = None
+    if request.method == "POST":
+        if form.validate_on_submit():
+            user = get_user_by_email(email=form.email.data)
+            if user and verify_password(form.password.data, user.password):
+                login_user(user, remember=form.remember.data)
+                return redirect(url_for('profile'))
+            else:
+                error = "Wrong email or password"
+    return render_template("index.html", form=form, errors=error)
+
+
+# @app.route('/', methods=['POST'])
+# def sign_in():
+#     form = LoginForm()
+#     error = None
+#     if request.method == "POST":
+#         if form.validate_on_submit():
+#             user = get_user_by_email(email=form.email.data)
+#
+#             if user and verify_password(form.password.data, user.password):
+#                 login_user(user, remember=form.remember.data)
+#                 return redirect(url_for('profile'))
+#             else:
+#                 error = "Wrong email or password"
+#     return render_template('signin.html', form=form, errors=error)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -35,28 +61,11 @@ def sign_up():
     return render_template('signup.html', form=form)
 
 
-@app.route('/signin', methods=['GET', 'POST'])
-def sign_in():
-    form = LoginForm()
-    error = None
-
-    if request.method == "POST":
-        if form.validate_on_submit():
-            user = get_user_by_email(email=form.email.data)
-
-            if user and verify_password(form.password.data, user.password):
-                login_user(user, remember=form.remember.data)
-                return redirect(url_for('profile'))
-            else:
-                error = "Wrong email or password"
-    return render_template('signin.html', form=form, errors=error)
-
-
 @app.route("/signout")
 @login_required
 def sign_out():
     logout_user()
-    return render_template('index.html')
+    return redirect(url_for('index'))
 
 
 @app.route('/profile', methods=['GET'])
