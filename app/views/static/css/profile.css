@@ -20,7 +20,8 @@
 }
 
 #file {
-    width: auto;
+    color:transparent;
+    width:70px;
 }
 
 #profile-picture {

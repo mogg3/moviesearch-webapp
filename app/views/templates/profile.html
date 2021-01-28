@@ -13,7 +13,7 @@
                     <img id="profile-picture" src="{{url_for('get_profile_picture', username=current_user.username)}}" onerror="this.onerror=null;this.src='static/images/profile.png';" /><br>
                     <form action="{{ url_for('post_profile_picture') }}" method="POST" enctype="multipart/form-data">
                       <label for="profile_picture"></label>
-                      <input type="file" name="file" id="file">
+                      <input type="file" name="file" id="file" title="&nbsp;"><br/>
                       <input type="submit">
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
@@ -36,10 +36,10 @@
                     <h3>{{current_user.roles[0] if current_user.roles| length > 0}}</h3><br>
 
                 <div id="user-info">
-                    <h2 style="display: inline">Firstame</h2><p style="display: inline">{{user.first_name}}</p><br>
-                    <h2 style="display: inline">Lastname</h2><p style="display: inline">{{user.last_name}}</p><br>
-                    <h2 style="display: inline">Username</h2><p style="display: inline">{{user.username}}</p><br>
-                    <h2 style="display: inline">Email</h2><p style="display: inline">{{user.email}}</p><br>
+                    <h2 style="display: inline">First name</h2><p style="display: inline">{{current_user.first_name}}</p><br>
+                    <h2 style="display: inline">Last name</h2><p style="display: inline">{{current_user.last_name}}</p><br>
+                    <h2 style="display: inline">Username</h2><p style="display: inline">{{current_user.username}}</p><br>
+                    <h2 style="display: inline">Email</h2><p style="display: inline">{{current_user.email}}</p><br>
                 </div>
             </div>
         </div>
