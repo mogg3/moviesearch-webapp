@@ -12,21 +12,21 @@ from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 
 @app.route("/", methods =['GET'])
 def index():
-    return render_template("index.html", form=LoginForm())
+    login_form = LoginForm()
+    return render_template("index.html", login_form=login_form)
 
 
 @app.route("/", methods=['POST'])
 def sign_in():
-    form = LoginForm()
+    login_form = LoginForm()
 
-    if request.method == "POST":
-        if form.validate_on_submit():
-            user = get_user_by_email(email=form.email.data)
-            if user and verify_password(form.password.data, user.password):
-                login_user(user, remember=form.remember.data)
-                return redirect(url_for('profile'))
-            else:
-                return render_template("index.html", form=LoginForm(), errors="Wrong email or password")
+    if login_form.validate_on_submit():
+        user = get_user_by_email(email=login_form.email.data)
+        if user and verify_password(login_form.password.data, user.password):
+            login_user(user, remember=login_form.remember.data)
+            return redirect(url_for('profile'))
+        else:
+            return render_template("index.html", login_form=login_form, errors="Wrong email or password")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -110,5 +110,5 @@ def user(username):
 
 
 @app.errorhandler(404)
-def handler404(_):
-    return render_template('404.html')
+def handler404(e):
+    return render_template('404.html', error=e)

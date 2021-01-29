@@ -35,6 +35,8 @@
         </li>
         </ul>
      {% else %}
+         {% if login_form is defined %}
+
         <div id="login_box">
             {% if errors is defined %}
                 <p>{{ errors }}</p>
@@ -42,16 +44,17 @@
             <div id="signup-signin">
                 <form action="/" method="POST">
                     <div id="signin">
-                        {{ form.csrf_token }}
-                        <div style="margin-right:5px;">{{ form.email() }}</div>
-                        <div style="margin-left:5px;">{{ form.password() }}</div>
-                        <div style="margin-left:5px;">{{ form.submit() }}</div><br>
-                        <div>{{ form.remember() }} {{ form.remember.label }} </div>
+                        {{ login_form.csrf_token }}
+                        <div style="margin-right:5px;">{{ login_form.email() }}</div>
+                        <div style="margin-left:5px;">{{ login_form.password() }}</div>
+                        <div style="margin-left:5px;">{{ login_form.submit() }}</div>
                     </div>
+                    <div>{{ login_form.remember() }} {{ login_form.remember.label }} </div>
                 </form>
                 <div id="signup">
                     <a href="{{url_for('sign_up')}}">Sign up</a>
                 </div>
             </div>
         </div>
+         {% endif %}
     {% endif %}
