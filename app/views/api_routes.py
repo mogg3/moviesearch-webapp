@@ -5,7 +5,7 @@ import json
 
 from data.MongoDB_MongoEngine.models.messages import Message
 
-from controllers.chat_controller import initiate_chat, get_all_chats, add_message_to_chat, get_chat_between_users
+from controllers.chat_controller import initiate_chat, get_all_chats, add_message_to_chat, get_chat_between_users, get_chat_by_id
 from controllers.omdb_controller import get_movies_by_title, get_movie_by_imdb_id
 from controllers.role_controller import get_role_by_name, delete_admin_role_from_user
 from controllers.user_controller import add_movie_to_users_watchlist, get_user_by_email, add_role_to_user, \
@@ -119,26 +119,21 @@ def post_friendship(username):
 @app.route('/api/users/<username>/friends/chats', methods=['GET'])
 @login_required
 def get_chat(username):
-    chat = get_chat_between_users(get_user_by_username(request.values['user']), get_user_by_username(request.values['friend']))
+    friend = get_user_by_username(request.values['friend'])
+    chat = get_chat_between_users(get_user_by_username(current_user.username), friend)
     response = app.response_class(
         response=json.dumps(chat.to_json()),
         status=200,
         mimetype="application/json"
     )
     return response
-    # response = app.response_class(
-    #     response=json.dumps(chat.to_json()),
-    #     status=200,
-    #     mimetype="application/json"
-    # )
-    # return response
 
 
 # Not done
 @app.route('/api/users/<username>/friends/user_name_for_friend/chat', methods=['POST'])
 @login_required
 def post_message(username):
-    chat = get_all_chats()[0]
+    chat = get_chat_by_id(request.values['chat'])
     message = Message(sent_by=get_user_by_username(request.values['sent_by']), text=request.values['message'])
     add_message_to_chat(chat, message)
     response = app.response_class(
