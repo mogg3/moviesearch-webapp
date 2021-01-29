@@ -41,7 +41,7 @@ def get_movie():
 
 @app.route('/api/users/<username>/watchlist', methods=['POST'])
 @login_required
-def put_watchlist(username):
+def post_watchlist(username):
     movie = json.loads(request.values['movie'])
 
     if movie in current_user.watchlist:
@@ -132,10 +132,8 @@ def get_chat(username):
 @app.route('/api/users/<username>/friends/user_name_for_friend/chat', methods=['POST'])
 @login_required
 def post_message(username):
-    message = request.values['message']
-    sent_by = request.values['sent_by']
     chat = get_all_chats()[0]
-    message = Message(sent_by=get_user_by_username(sent_by), text=message)
+    message = Message(sent_by=get_user_by_username(request.values['sent_by']), text=request.values['message'])
     add_message_to_chat(chat, message)
     response = app.response_class(
         response=json.dumps("sent"),
@@ -176,16 +174,11 @@ def delete_role(username):
 
 @app.route('/api/users/<username>/roles/admin', methods=['GET'])
 @login_required
-def get_if_admin_role():
+def get_if_admin_role(username):
     user = get_user_by_username(json.loads(request.values['username']))
-    print("hello")
-    # ändra så att det är true or false tillbaka
-    if len(user.roles) == 0:
-        resp = "noadmin"
-    else:
-        resp = "admin"
+
     response = app.response_class(
-        response=json.dumps(resp),
+        response=json.dumps(True if len(user.roles) > 0 else False),
         status=200,
         mimetype="application/json"
     )

@@ -4,4 +4,3 @@ from mongoengine import ListField, Document, EmbeddedDocumentListField, Referenc
 class Chat(Document):
     members = ListField(ReferenceField('User'))
     messages = EmbeddedDocumentListField('Message')
-

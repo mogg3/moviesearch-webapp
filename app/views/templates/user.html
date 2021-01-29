@@ -17,7 +17,7 @@
                 url: '{{ url_for('get_if_admin_role', username=current_user.username) }}',
                 data: {'username': JSON.stringify(username)},
                 success: (response) => {
-                           show_role_info(response)
+                           show_role_info(JSON.parse(response));
                 },
                 datatype: 'json'
             })
@@ -26,11 +26,8 @@
          $('#user_role_info').empty()
          let make_admin_button = "<p style=\"display:inline; margin-right:10px\">(no roles)</p><button id=" + "make_admin" + " onclick ='add_role_to_user()'>Add admin priviliges</button>";
          let remove_admin_button = "<p style=\"display:inline; margin-right:10px\">Admin</p><button id=" + "remove_admin"  + " onclick ='remove_role_from_user()'>Remove admin priviliges</button>";
-         if (role_info === "admin") {
-            $('#user_role_info').append(remove_admin_button);
-         } else {
-            $('#user_role_info').append(make_admin_button);
-            }
+
+         $('#user_role_info').append(role_info ? remove_admin_button : make_admin_button);
      }
      function add_role_to_user() {
          get_role()
