@@ -108,5 +108,5 @@ def user(username):
 
 
 @app.errorhandler(404)
-def handler404(_):
-    return render_template('404.html')
+def handler404(e):
+    return render_template('404.html', error=e)
