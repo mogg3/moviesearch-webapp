@@ -5,7 +5,7 @@ import json
 
 from data.MongoDB_MongoEngine.models.messages import Message
 
-from controllers.chat_controller import initiate_chat, get_all_chats, add_message_to_chat
+from controllers.chat_controller import initiate_chat, get_all_chats, add_message_to_chat, get_chat_between_users, get_chat_by_id
 from controllers.omdb_controller import get_movies_by_title, get_movie_by_imdb_id
 from controllers.role_controller import get_role_by_name, delete_admin_role_from_user
 from controllers.user_controller import add_movie_to_users_watchlist, get_user_by_email, add_role_to_user, \
@@ -95,17 +95,17 @@ def delete_from_watchlist(username):
 @login_required
 def post_friendship(username):
     # todo: add friendship request
-    print("hej")
-    friend = get_user_by_username(json.loads(request.values['username']))
-    if friend:
-        if friend in current_user.friends:
-            resp = f"you are already friend with {friend.username}"
+    found_friend = get_user_by_username(request.values['username'])
+    logged_in_user = get_user_by_username(current_user.username)
+    if found_friend:
+        if found_friend in logged_in_user.friends:
+            resp = f"you are already friend with {found_friend.username}"
         else:
-            add_friendship(user=current_user, friend=friend)
-            resp = f"You are now friends with {friend.username}"
-            #initiate_chat(user_1=current_user, user_2=friend)
+            add_friendship(user=logged_in_user, friend=found_friend)
+            resp = f"You are now friends with {found_friend.username}"
+            initiate_chat(user_1=logged_in_user, user_2=found_friend)
     else:
-        resp = f"Found no user with username {friend.username}"
+        resp = f"Found no user with username {request.values['username']}"
 
     response = app.response_class(
         response=json.dumps(resp),
@@ -119,7 +119,8 @@ def post_friendship(username):
 @app.route('/api/users/<username>/friends/chats', methods=['GET'])
 @login_required
 def get_chat(username):
-    chat = get_all_chats()[0]
+    friend = get_user_by_username(request.values['friend'])
+    chat = get_chat_between_users(get_user_by_username(current_user.username), friend)
     response = app.response_class(
         response=json.dumps(chat.to_json()),
         status=200,
@@ -132,7 +133,7 @@ def get_chat(username):
 @app.route('/api/users/<username>/friends/user_name_for_friend/chat', methods=['POST'])
 @login_required
 def post_message(username):
-    chat = get_all_chats()[0]
+    chat = get_chat_by_id(request.values['chat'])
     message = Message(sent_by=get_user_by_username(request.values['sent_by']), text=request.values['message'])
     add_message_to_chat(chat, message)
     response = app.response_class(

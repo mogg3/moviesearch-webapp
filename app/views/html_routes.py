@@ -32,10 +32,8 @@ def sign_in():
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     form = RegisterForm()
-
     if request.method == "POST":
         if form.validate_on_submit():
-
             create_user(
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
@@ -45,7 +43,7 @@ def sign_up():
             )
             return redirect(url_for('sign_in'))
 
-    return render_template('signup.html', form=form)
+    return render_template('signup.html', register_form=form)
 
 
 @app.route("/signout")
@@ -94,6 +92,10 @@ def watchlist():
 def friends():
     return render_template("friends.html", user=current_user, friends=current_user.friends)
 
+@app.route('/friends/<username>', methods=['GET', 'POST'])
+@login_required
+def friend(username):
+    return render_template("friend.html", user=current_user, friend=get_user_by_username(username))
 
 @app.route("/admin", methods=['GET'])
 @roles_required("admin")

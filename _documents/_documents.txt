@@ -1,84 +1,72 @@
-{% extends "base.html" %}
 
-{% block  links %}
-{% endblock %}
+<!--{% extends "base.html" %}-->
 
-{% block  content %}
+<!--{% block  links %}-->
+<!--{% endblock %}-->
 
-    {% for movie in watchlist %}
-    <p>{{ movie['Title'] }}</p>
-    {% endfor %}
+<!--{% block  content %}-->
 
-{#    <h2> Your watchlist </h2>#}
-{##}
-{#    <p>Click to sort runtime:</p>#}
-{##}
-{#    <button onclick="sortListDir()">Sort</button>#}
-{##}
-{##}
-{#    //example movie runtimes#}
-{##}
-{#    <ul id="id01">#}
-{#        <li>43</li>#}
-{#        <li>77</li>#}
-{#        <li>0.1</li>#}
-{#        <li>6</li>#}
-{#        <li>4</li>#}
-{#        <li>1</li>#}
-{#    </ul>#}
-{##}
-{#    <script>#}
-{#    function sortListDir() {#}
-{#      var list, i, switching, b, shouldSwitch, dir, switchcount = 0;#}
-{#      list = document.getElementById("id01");#}
-{#      switching = true;#}
-{#      // Set the sorting direction to ascending:#}
-{#      dir = "asc";#}
-{#      // Make a loop that will continue until no switching has been done:#}
-{#      while (switching) {#}
-{#        // Start by saying: no switching is done:#}
-{#        switching = false;#}
-{#        b = list.getElementsByTagName("LI");#}
-{#        // Loop through all list-items:#}
-{#        for (i = 0; i < (b.length - 1); i++) {#}
-{#          // Start by saying there should be no switching:#}
-{#          shouldSwitch = false;#}
-{#          /* Check if the next item should switch place with the current item,#}
-{#          based on the sorting direction (asc or desc): */#}
-{#          if (dir == "asc") {#}
-{#            if (Number(b[i].innerHTML) > Number(b[i + 1].innerHTML)) {#}
-{#              /* If next item is numerically lower than current item,#}
-{#              mark as a switch and break the loop: */#}
-{#              shouldSwitch = true;#}
-{#              break;#}
-{#            }#}
-{#          } else if (dir == "desc") {#}
-{#            if (Number(b[i].innerHTML) < Number(b[i + 1].innerHTML)) {#}
-{##}
-{##}
-{#              /* If next item is numerically higher than current item,#}
-{#              mark as a switch and break the loop: */#}
-{#              shouldSwitch= true;#}
-{#              break;#}
-{#            }#}
-{#          }#}
-{#        }#}
-{#        if (shouldSwitch) {#}
-{#          /* If a switch has been marked, make the switch#}
-{#          and mark that a switch has been done: */#}
-{#          b[i].parentNode.insertBefore(b[i + 1], b[i]);#}
-{#          switching = true;#}
-{#          // Each time a switch is done, increase switchcount by 1:#}
-{#          switchcount ++;#}
-{#        } else {#}
-{#          /* If no switching has been done AND the direction is "asc",#}
-{#          set the direction to "desc" and run the while loop again. */#}
-{#          if (switchcount == 0 && dir == "asc") {#}
-{#            dir = "desc";#}
-{#            switching = true;#}
-{#          }#}
-{#        }#}
-{#      }#}
-{#    }#}
-{#    </script>#}
-{% endblock %}
+<!--<h3>Chats:</h3>-->
+<!--{% for chat in user.chats %}-->
+<!--<div>{{chat.members}}</div>-->
+<!--{% endfor %}-->
+
+<!--<div id="chat" style="background-color:lightgray; width:500px; margin:50px; "> Chat<br></div>-->
+<!--<div id="send-bar">-->
+<!--    <form action="/" method="POST">-->
+<!--        <input type="text" id="send" placeholder="Type message..." name="send">-->
+<!--        <button type="submit" id="send_submit">Send</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+
+<!--<h3 style="display:inline;">Friends:</h3>-->
+<!--{% for friend in user.friends %}-->
+<!--<div>{{friends}}</div>-->
+<!--{% endfor %}-->
+
+<!--<script>-->
+<!--    $("#send_submit").click((e) => {-->
+<!--        e.preventDefault();-->
+
+<!--        $.ajax({-->
+<!--            method: 'POST',-->
+<!--            url: '{{ url_for('post_message', username=current_user.username) }}',-->
+<!--            data: {'message': $(send).val(), 'sent_by': '{{user.username}}'},-->
+<!--            success: (response) => {-->
+<!--                console.log(response)-->
+<!--                get_chat();-->
+<!--            },-->
+<!--            datatype: 'json'-->
+<!--        })-->
+<!--    })-->
+
+<!--    function show_chat(response) {-->
+<!--        $('#chat').empty()-->
+<!--        var i;-->
+<!--        for (i = 0; i < response.messages.length; i++) {-->
+<!--            console.log(response)-->
+<!--            if (response.messages[i].sent_by["$oid"] === "{{user.id}}") {-->
+<!--                let message_in_chat = "<i style='background-color:lightblue; margin-left: 375px;'>" + response.messages[i].text + "<i>" + "<br>";-->
+<!--                $('#chat').append(message_in_chat);-->
+<!--            } else {-->
+<!--                let message_in_chat = "<i style='background-color:lightgreen; margin-left: 20px;'>" + response.messages[i].text + "<i>" + "<br>";-->
+<!--                $('#chat').append(message_in_chat);-->
+<!--            }-->
+<!--        }-->
+<!--    }-->
+
+<!--    function get_chat() {-->
+<!--        $.ajax({-->
+<!--            method: 'GET',-->
+<!--            url: '{{ url_for('get_chat', username=current_user.username) }}',-->
+<!--            success: (response) => {-->
+<!--                console.log(JSON.parse(response))-->
+<!--                show_chat(JSON.parse(response))-->
+<!--            }-->
+<!--        })-->
+<!--    }-->
+
+<!--    get_chat()-->
+<!--</script>-->
+<!--{% endblock %}-->

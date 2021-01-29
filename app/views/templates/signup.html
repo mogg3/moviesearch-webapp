@@ -8,62 +8,62 @@
 
 <div class="sign_up_box">
     <form class="sign_up_form" action="/signup" method="POST">
-        {{ form.csrf_token }}
+        {{ register_form.csrf_token }}
 
-        {{ form.first_name.label }}
-        {% if form.first_name.errors %}
-            {% for error in form.first_name.errors %}
+        {{ register_form.first_name.label }}
+        {% if register_form.first_name.errors %}
+            {% for error in register_form.first_name.errors %}
                 {{ error }}
             {% endfor %}
         {% endif %}
-        {{ form.first_name(size=1) }} <br />
+        {{ register_form.first_name(size=1) }} <br />
 
-        {{ form.last_name.label }}
-        {% if form.last_name.errors %}
-            {% for error in form.last_name.errors %}
+        {{ register_form.last_name.label }}
+        {% if register_form.last_name.errors %}
+            {% for error in register_form.last_name.errors %}
                 {{ error }}
             {% endfor %}
         {% endif %}
-        {{ form.last_name(size=20) }} <br />
+        {{ register_form.last_name(size=20) }} <br />
 
-        {{ form.email.label }}
+        {{ register_form.email.label }}
 
-        {% if form.email.errors %}
-            {% for error in form.email.errors %}
+        {% if register_form.email.errors %}
+            {% for error in register_form.email.errors %}
                 {{ error }}
             {% endfor %}
         {% endif %}
-        {{ form.email() }} <br />
+        {{ register_form.email() }} <br />
 
-        {{ form.username.label }}
-         {% if form.username.errors %}
-                {% for error in form.email.errors %}
+        {{ register_form.username.label }}
+         {% if register_form.username.errors %}
+                {% for error in register_form.email.errors %}
                     {{ error }}
                 {% endfor %}
             {% endif %}
-        {{ form.username() }} <br />
+        {{ register_form.username() }} <br />
 
-        {{ form.password.label }}
-         {% if form.password.errors %}
-                {% for error in form.password.errors %}
+        {{ register_form.password.label }}
+         {% if register_form.password.errors %}
+                {% for error in register_form.password.errors %}
                     {{ error }}
                 {% endfor %}
             {% endif %}
 
-        {{ form.password() }} <br />
+        {{ register_form.password() }} <br />
 
-        {{ form.confirm.label }}
+        {{ register_form.confirm.label }}
 
-         {% if form.confirm.errors %}
-            {% for error in form.confirm.errors %}
+         {% if register_form.confirm.errors %}
+            {% for error in register_form.confirm.errors %}
                 {{ error }}
             {% endfor %}
         {% endif %}
 
-        {{ form.confirm() }} <br />
+        {{ register_form.confirm() }} <br />
 
         <div class="create_account">
-             {{ form.submit() }}
+             {{ register_form.submit() }}
         </div>
     </form>
     <div class="sign-in">
