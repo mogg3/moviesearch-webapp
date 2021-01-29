@@ -47,14 +47,15 @@
                         {{ login_form.csrf_token }}
                         <div style="margin-right:5px;">{{ login_form.email() }}</div>
                         <div style="margin-left:5px;">{{ login_form.password() }}</div>
-                        <div style="margin-left:5px;">{{ login_form.submit() }}</div><br>
-                        <div>{{ login_form.remember() }} {{ login_form.remember.label }} </div>
+                        <div style="margin-left:5px;">{{ login_form.submit() }}</div>
                     </div>
+                    <div>{{ login_form.remember() }} {{ login_form.remember.label }} </div>
                 </form>
                 <div id="signup">
                     <a href="{{url_for('sign_up')}}">Sign up</a>
                 </div>
             </div>
+
         </div>
          {% endif %}
     {% endif %}
