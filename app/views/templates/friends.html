@@ -1,20 +1,26 @@
 {% extends "base.html" %}
 
 {% block  links %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}"/>
 {% endblock %}
 
 {% block  content %}
-<div>
-    <form id="search-container">
-        <input type="text" id="search" placeholder="Search.." name="search">
-        <button type="submit" id="search_submit">Search</button>
-    </form>
+<div id="friends-container">
+    <div id="add-friend">
+        <h4 style="color:white;">Add friend</h4>
+        <form id="search-container">
+            <input type="text" id="search" placeholder="Search.." name="search">
+            <button type="submit" id="search_submit">Search</button>
+        </form>
+    </div>
+
+    <div id="friends">
+        <h3 style="color:white;">Friends</h3>
+        {% for friend in friends %}
+            <a class="friend-link" href="{{url_for('friend', username=friend.username)}}">{{friend}}<a><br>
+        {% endfor %}
+    </div>
 </div>
-
-{% for friend in friends %}
-    <h4>{{friend}}</h4>
-{% endfor %}
-
 <script>
     $("#search_submit").click((e) => {
         e.preventDefault();

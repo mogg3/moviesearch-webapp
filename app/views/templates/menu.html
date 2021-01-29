@@ -46,12 +46,12 @@
                         <div style="margin-right:5px;">{{ form.email() }}</div>
                         <div style="margin-left:5px;">{{ form.password() }}</div>
                         <div style="margin-left:5px;">{{ form.submit() }}</div><br>
+                        <div>{{ form.remember() }} {{ form.remember.label }} </div>
                     </div>
                 </form>
                 <div id="signup">
                     <a href="{{url_for('sign_up')}}">Sign up</a>
                 </div>
             </div>
-            <div>{{ form.remember() }} {{ form.remember.label }} </div>
         </div>
     {% endif %}

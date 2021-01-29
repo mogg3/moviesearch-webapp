@@ -1,0 +1,33 @@
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10%;
+    padding-right: 0;
+}
+
+#chat {
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    width: 100%;
+    padding: 20px;
+    border: solid white 2px;
+    border-radius: 20px;
+}
+
+.message {
+    background-color: white;
+    padding: 5px;
+    width: fit-content;
+    border: 1px solid;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+#message-from-you {
+    color: blue;
+}
+
+#message-from-friend {
+    color: black;
+}
