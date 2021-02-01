@@ -33,8 +33,16 @@ def sign_in():
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     form = RegisterForm()
+    errors = []
     if request.method == "POST":
-        if form.validate_on_submit():
+
+        if get_user_by_email(form.email.data):
+            errors.append("Email is already in use")
+
+        if get_user_by_username(form.username.data):
+            errors.append("Username is already taken")
+
+        if form.validate_on_submit() and len(errors) == 0:
             create_user(
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
@@ -44,8 +52,7 @@ def sign_up():
             )
             return redirect(url_for('sign_in'))
 
-    return render_template('signup.html', register_form=form)
-
+    return render_template('signup.html', register_form=form, errors=errors)
 
 @app.route("/signout")
 @login_required
