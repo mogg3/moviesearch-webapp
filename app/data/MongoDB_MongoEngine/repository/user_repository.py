@@ -42,6 +42,9 @@ def add_friendship(user, friend):
     friend.save()
     user.save()
 
+def get_all_friends(user):
+    return [friend.username for friend in user.friends]
+
 
 def add_movie_to_users_watchlist(user, movie):
     user.watchlist.append(movie)

@@ -1,24 +1,22 @@
 {% extends "base.html" %}
 
 {% block  links %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}"/>
 {% endblock %}
 
 {% block  content %}
+
 <div id="friends-container">
     <div id="add-friend">
         <h4 style="color:white;">Add friend</h4>
         <form id="search-container">
             <input type="text" id="search" placeholder="Search.." name="search">
-            <button type="submit" id="search_submit">Search</button>
+            <button type="submit" id="search_submit">Add</button>
         </form>
     </div>
-
     <div id="friends">
         <h3 style="color:white;">Friends</h3>
-        {% for friend in friends %}
-            <a class="friend-link" href="{{url_for('friend', username=friend.username)}}">{{friend}}<a><br>
-        {% endfor %}
+        <div id="friends-list"></div>
     </div>
 </div>
 <script>
@@ -29,10 +27,34 @@
             url: '{{ url_for('post_friendship', username=current_user.username) }}',
             data: {'username': $(search).val()},
             success: (response) => {
-                console.log(response);
+                get_friends();
             },
             datatype: 'json'
         })
     })
+
+    function show_friends(friends) {
+        $('#friends-list').empty()
+        for (var i = 0; i < friends.length; i++) {
+            let link = "friends/" + friends[i]
+            let friend = $("<a>")
+                .attr("class", "friend-link")
+                .attr("href", link)
+                .text(friends[i])
+            $('#friends-list').append(friend);
+        }
+    }
+
+    function get_friends() {
+        $.ajax({
+            method: 'GET',
+            url: '{{ url_for('get_friends', username=user.username) }}',
+            success: (response) => {
+                show_friends(response)
+            }
+        })
+    }
+
+    get_friends()
 </script>
 {% endblock %}

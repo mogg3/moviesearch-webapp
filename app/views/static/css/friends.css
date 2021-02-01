@@ -1,3 +1,17 @@
+
+#friends-container {
+    margin: 40px;
+}
+
+#friends-list{
+    display: flex;
+    flex-direction: column;
+}
 .friend-link {
+    color:lightgrey;
+}
+
+.friend-link:hover {
+    text-decoration: none;
     color:white;
 }
