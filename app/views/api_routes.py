@@ -9,7 +9,7 @@ from controllers.chat_controller import initiate_chat, get_all_chats, add_messag
 from controllers.omdb_controller import get_movies_by_title, get_movie_by_imdb_id
 from controllers.role_controller import get_role_by_name, delete_admin_role_from_user
 from controllers.user_controller import add_movie_to_users_watchlist, get_user_by_email, add_role_to_user, \
-    add_friendship, delete_movie_from_users_watchlist, get_user_by_username
+    add_friendship, delete_movie_from_users_watchlist, get_user_by_username, get_all_friends
 
 from views import app
 
@@ -85,6 +85,18 @@ def delete_from_watchlist(username):
 
     response = app.response_class(
         response=json.dumps(resp),
+        status=200,
+        mimetype="application/json"
+    )
+    return response
+
+
+@app.route('/api/users/<username>/friends', methods=['GET'])
+@login_required
+def get_friends(username):
+    friends = get_all_friends(current_user)
+    response = app.response_class(
+        response=json.dumps(friends),
         status=200,
         mimetype="application/json"
     )

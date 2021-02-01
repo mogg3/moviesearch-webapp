@@ -30,6 +30,10 @@ def add_friendship(user, friend):
     ur.add_friendship(user, friend)
 
 
+def get_all_friends(user):
+    return ur.get_all_friends(user)
+
+
 def add_movie_to_users_watchlist(user, movie):
     ur.add_movie_to_users_watchlist(user, movie)
 

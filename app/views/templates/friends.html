@@ -13,12 +13,9 @@
             <button type="submit" id="search_submit">Search</button>
         </form>
     </div>
-
     <div id="friends">
         <h3 style="color:white;">Friends</h3>
-        {% for friend in friends %}
-            <a class="friend-link" href="{{url_for('friend', username=friend.username)}}">{{friend}}<a><br>
-        {% endfor %}
+        <div id="friends-list"></div>
     </div>
 </div>
 <script>
@@ -34,5 +31,26 @@
             datatype: 'json'
         })
     })
+    function show_friends(friends) {
+        $('#friends-list').empty()
+        var i = 0;
+        var len = friends.length;
+        for (; i < len; ) {
+          let friend = $("<p>")
+            .attr("class","friend")
+            .text(friends[i])
+          $('#friends-list').append(friend);
+        }
+    }
+    function get_friends() {
+        $.ajax({
+            method: 'GET',
+            url: '{{ url_for('get_friends', username=user.username) }}',
+            success: (response) => {
+                show_friends(response)
+            }
+        })
+    }
+    get_friends()
 </script>
 {% endblock %}
