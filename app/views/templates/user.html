@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
+{% block  links %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}"/>
+{% endblock %}
+
 {% block  content %}
-<div style="margin: 10px">
+<div id="user-info-container">
+    <h1>{{user}}</h1>
     <h5 style="display:inline;">Firstname: </h5><p style="display:inline;">{{user.first_name}}</p><br>
     <h5 style="display:inline;">Lastname: </h5><p style="display:inline;">{{user.last_name}}</p><br>
     <h5 style="display:inline;">Username: </h5><p style="display:inline;">{{user.username}}</p><br>

@@ -13,8 +13,8 @@ def get_chat_by_id(id):
     return cr.get_chat_by_id(id)
 
 
-def get_chat_between_users(user1, user2):
-    return cr.get_chat_between_users(user1, user2)
+def get_chat_between_users(user, friend):
+    return cr.get_chat_between_users(user, friend)
 
 
 def add_message_to_chat(chat, message):

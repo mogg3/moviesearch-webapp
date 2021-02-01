@@ -1,0 +1,20 @@
+#users {
+    margin: 40px;
+    padding-bottom: 20px;
+    border-bottom: solid gray 1px;
+}
+
+#users h1 {
+    font-size: 50px;
+    color: white;
+}
+
+.user-link {
+    font-size: 30px;
+    color: gray
+}
+
+.user-link:hover {
+    text-decoration: none;
+    color:white;
+}

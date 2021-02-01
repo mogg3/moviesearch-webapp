@@ -4,7 +4,7 @@ from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
 
 from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
-    add_profile_picture_to_user, delete_profile_picture_if_exists
+    add_profile_picture_to_user, delete_profile_picture_if_exists, clean_database
 
 from views import app
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
@@ -13,6 +13,7 @@ from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 @app.route("/", methods =['GET'])
 def index():
     login_form = LoginForm()
+    #clean_database()
     return render_template("index.html", login_form=login_form)
 
 
