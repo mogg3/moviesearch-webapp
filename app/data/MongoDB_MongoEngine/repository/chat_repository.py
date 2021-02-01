@@ -18,9 +18,9 @@ def get_chat_by_id(id):
     return Chat.objects.get(id=id)
 
 
-def get_chat_between_users(user1, user2):
-    for chat in Chat.objects:
-        if user1 and user2 in chat.members:
+def get_chat_between_users(user, friend):
+    for chat in user.chats:
+        if user and friend in chat.members:
             return chat
 
 

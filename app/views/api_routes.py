@@ -132,7 +132,8 @@ def post_friendship(username):
 @login_required
 def get_chat(username):
     friend = get_user_by_username(request.values['friend'])
-    chat = get_chat_between_users(get_user_by_username(current_user.username), friend)
+    chat = get_chat_between_users(current_user, friend)
+    print(chat.members)
     response = app.response_class(
         response=json.dumps(chat.to_json()),
         status=200,

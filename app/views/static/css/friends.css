@@ -1,17 +1,36 @@
-
 #friends-container {
     margin: 40px;
+}
+
+#friends {
+    border-bottom: solid gray 1px;
+    padding-bottom: 20px;
 }
 
 #friends-list{
     display: flex;
     flex-direction: column;
 }
+
+#friends h1 {
+    color: white;
+    font-size: 50px;
+}
+
 .friend-link {
-    color:lightgrey;
+    font-size: 30px;
+    color:gray;
 }
 
 .friend-link:hover {
     text-decoration: none;
     color:white;
+}
+
+#add-friend {
+    margin-top: 20px;
+}
+
+#add-friend h4 {
+    color: white;
 }

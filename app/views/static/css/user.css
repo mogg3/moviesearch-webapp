@@ -1,0 +1,19 @@
+#user-info-container {
+    margin: 40px;
+    padding-bottom: 20px;
+    border-bottom: solid gray 1px;
+}
+
+h1 {
+    color: white;
+}
+
+h5 {
+    color: gray;
+    font-size: 30px;
+}
+
+p {
+    font-size: 30px;
+    color: gray;
+}

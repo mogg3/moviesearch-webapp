@@ -17,20 +17,21 @@
 </div>
 
 <script>
+    let friend = "{{friend}}"
+    let user = "{{user}}"
     function show_chat(response) {
         $('#chat').empty()
         var i;
         for (i = 0; i < response.messages.length; i++) {
-            let br = $("<br>")
             if (response.messages[i].sent_by["$oid"] === "{{user.id}}") {
-                let message_from_you = $("<p>")
+                let message_from_you = $("<div>")
                     .attr("id", "message-from-you")
                     .attr("class", "message")
-                    .text(response.messages[i].text + "");
+                    .text(response.messages[i].text);
                 $('#chat').append(message_from_you);
             } else {
-                let message_from_friend = $("<p>")
-                    .attr("id", "message-from-friend")
+                let message_from_friend = $("<div>")
+                    .attr("id", "message-from-friend" )
                     .attr("class", "message")
                     .text(response.messages[i].text);
                 $('#chat').append(message_from_friend);

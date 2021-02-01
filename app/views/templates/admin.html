@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block  links %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}"/>
 {% endblock %}
 
 {% block  content %}
@@ -8,7 +9,7 @@
         <h1>Users</h1>
         {% for user in users %}
             {% if user != current_user %}
-            <a href="{{url_for('user', username=user.username)}}" style="display:inline">{{ user.username }}</a>
+            <a class="user-link" href="{{url_for('user', username=user.username)}}" style="display:inline">{{ user.username }}</a>
             <br/>
             {% endif %}
         {% endfor %}
