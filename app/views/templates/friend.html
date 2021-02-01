@@ -6,6 +6,7 @@
 {% block content %}
 
 <div id="chat-container">
+    <div style="color:white; font-size: 30px;">Chat with {{friend.username}}</div>
     <div id="chat" style="background-color:lightgray;width:auto;height:auto;"></div>
     <div id="send-bar">
         <form action="/" method="POST">
@@ -25,7 +26,7 @@
                 let message_from_you = $("<p>")
                     .attr("id", "message-from-you")
                     .attr("class", "message")
-                    .text(response.messages[i].text);
+                    .text(response.messages[i].text + "");
                 $('#chat').append(message_from_you);
             } else {
                 let message_from_friend = $("<p>")
@@ -43,11 +44,6 @@
             data: {"user": "{{user.username}}","friend":"{{friend.username}}"},
             success: (response) => {
                 chat = JSON.parse(response)
-                console.log(chat)
-                console.log("user:")
-                console.log("{{user}}")
-                console.log("friend:")
-                console.log("{{friend}}")
                 show_chat(chat)
             }
         })
