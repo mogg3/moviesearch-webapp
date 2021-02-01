@@ -3,11 +3,13 @@ from flask_security.utils import hash_password
 from data.MongoDB_MongoEngine.models.users import User
 from data.MongoDB_MongoEngine.db import user_datastore
 
+
 def clean_database():
     for user in User.objects:
-        user.friends=[]
-        user.chats=[]
+        user.friends = []
+        user.chats = []
         user.save()
+
 
 def create_user(first_name: str, last_name: str, email: str, password: str, username: str):
     user_datastore.create_user(
@@ -46,6 +48,7 @@ def add_friendship(user, friend):
     friend.friends.append(user)
     friend.save()
     user.save()
+
 
 def get_all_friends(user):
     return [friend.username for friend in user.friends]
