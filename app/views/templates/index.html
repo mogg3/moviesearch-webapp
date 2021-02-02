@@ -4,6 +4,7 @@
 {% endblock %}
 {% block  content %}
     <div>
+        <div style="background-color: lightskyblue"></div>
         <form id="search-container">
             <input type="search" id="search" placeholder="Search.." name="search">
             <button type="submit" id="search_submit">Search</button>
@@ -19,7 +20,6 @@
             $(element).each( function () {
                 $(this).val( $(this).attr("movie") );
             });
-
               $.ajax({
                 method: 'DELETE',
                 url: '{{ url_for('delete_from_watchlist', username=current_user.username) }}',
@@ -65,7 +65,7 @@
             };
 
             let movie_box = $("<div>")
-                .attr("id", "movie-box");
+                .attr("class", "movie-box");
                 {#.attr("onmouseover", "hoover_movie_on(this)")#}
                 {#.attr("onmouseout", "hoover_movie_off(this)");#}
 
