@@ -16,7 +16,6 @@ def index():
     #clean_database()
     return render_template("index.html", login_form=login_form)
 
-
 @app.route("/", methods=['POST'])
 def sign_in():
     login_form = LoginForm()
