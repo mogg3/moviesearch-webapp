@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, Blueprint
 from flask_login import login_required, current_user
 from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
@@ -9,15 +9,17 @@ from controllers.user_controller import create_user, get_all_users, get_user_by_
 from views import app
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
 
+index = Blueprint('index', __name__, url_prefix='/')
 
-@app.route("/", methods =['GET'])
-def index():
+
+@index.route("/", methods = ['GET'])
+def _index():
     login_form = LoginForm()
     #clean_database()
     return render_template("index.html", login_form=login_form)
 
 
-@app.route("/", methods=['POST'])
+@index.route("/", methods=['POST'])
 def sign_in():
     login_form = LoginForm()
 
@@ -50,7 +52,7 @@ def sign_up():
                 password=form.password.data,
                 username=form.username.data
             )
-            return redirect(url_for('sign_in'))
+            return redirect(url_for('index.sign_in'))
 
     return render_template('signup.html', register_form=form, errors=errors)
 
@@ -58,7 +60,7 @@ def sign_up():
 @login_required
 def sign_out():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('index._index'))
 
 
 @app.route('/profile', methods=['GET'])
