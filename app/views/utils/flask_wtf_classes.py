@@ -16,8 +16,8 @@ class RegisterForm(FlaskForm):
         render_kw={"placeholder": "Last name", "class": "form-control"})
     email = StringField(
         'Email Address',
-        validators=[InputRequired(), Email(message='Invalid email'), Length(min=2, max=50)],
-        render_kw={"placeholder": "Email", "class": "form-control"})
+        validators=[InputRequired(), Length(min=2, max=50)],
+        render_kw={"placeholder": "Email", "class": "form-control", "pattern": "[a-z0-9.+-]+@[a-z0-9.-]+\.[a-z]+", "title" : "Your email is not valid"})
     username = StringField(
         'Username',
         validators=[InputRequired(), Length(min=4, max=15)],
