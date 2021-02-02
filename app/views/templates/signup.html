@@ -49,20 +49,20 @@
                  </div>
              </div>
     </form>
-
-            <div class="form-row justify-content-center">
-                 <div class="form-group col-md-4 offset-md-1" style="color: white;">
-                     {% for field in register_form %}
-                         {% for error in field.errors %}
-                             {{ error }} <br>
-                         {% endfor %}
+        <div class="form-row justify-content-center">
+             <div class="form-group col-md-4 offset-md-1" style="color: white;">
+                 {% for field in register_form %}
+                     {% for error in field.errors %}
+                         {{ error }} <br>
                      {% endfor %}
-
-                 {% for error in errors %}
-                     {{ error }} <br>
                  {% endfor %}
-                 </div>
+
+             {% for error in errors %}
+                 {{ error }} <br>
+             {% endfor %}
+             
              </div>
+        </div>
 </div>
 
 
