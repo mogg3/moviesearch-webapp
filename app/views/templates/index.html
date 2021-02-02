@@ -8,13 +8,60 @@
             <input type="search" id="search" placeholder="Search.." name="search">
             <button type="submit" id="search_submit">Search</button>
         </form>
+          <button id="random_movie">Random movie or tv serie</button>
     </div>
+
+
     <div id="result"></div>
     <div id="movie-content-container">
         <div id="movie-content"></div>
     </div>
 
 <script>
+    document.getElementById("random_movie").addEventListener('click', (event) => {
+        event.stopPropagation()
+
+        for(let i = 0; i < 20; i++) {
+            let movie = get_random_movie_from_api()
+
+            if(movie === false) {
+                continue;
+            }
+            else {
+                show_movie_content(movie);
+                break;
+            }
+        }
+    });
+
+    function get_random_movie_from_api() {
+        $.ajax({
+              method: 'POST',
+              url: '{{ url_for('get_movie') }}',
+              data: {'imdb_id': get_random_imdb_id()},
+              success: (response) => {
+                  console.log(response)
+                   if (response['Response'] === 'False') {
+                       console.log("Woorks")
+                       return false;
+                   }
+                   else
+                   {
+                       return response;
+                   }
+              },
+              datatype: 'json'
+          });
+    }
+
+    function get_random_imdb_id() {
+        let max_imdb_id = 3135393
+        let beginning = 'tt';
+        let random_nr_that_imdb_id_can_have = (Math.floor(Math.random()*max_imdb_id) + 1).toString();
+        let random_imdb_id = beginning + random_nr_that_imdb_id_can_have;
+        return random_imdb_id;
+    }
+
     function remove_movie_from_watchlist(element) {
             $(element).each( function () {
                 $(this).val( $(this).attr("movie") );
