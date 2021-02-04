@@ -20,7 +20,7 @@ class RegisterForm(FlaskForm):
         render_kw={"placeholder": "Email", "class": "form-control", "id": "email", "pattern": "[a-z0-9.+-]+@[a-z0-9.-]+\.[a-z]+", "title" : "Your email is not valid"})
     username = StringField(
         'Username',
-        validators=[InputRequired(), Length(min=4, max=15)],
+        validators=[InputRequired(), Length(min=4, max=50)],
         render_kw={"placeholder": "username", "class": "form-control", "id": "username"})
     password = PasswordField(
         'Password',
@@ -40,3 +40,5 @@ class LoginForm(FlaskForm):
                              render_kw={"placeholder": "Password", "id": "password"})
     remember = BooleanField('Remember me')
     submit = SubmitField('Sign in', render_kw={"id": "submit"})
+
+

@@ -53,7 +53,7 @@
              <div class="form-group col-md-4 offset-md-1" style="color: white;">
                  {% for field in register_form %}
                      {% for error in field.errors %}
-                         {{ error }} <br>
+                         {{ field.id }} : {{ error }} <br>
                      {% endfor %}
                  {% endfor %}
 
