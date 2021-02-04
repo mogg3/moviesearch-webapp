@@ -20,6 +20,10 @@ def create_user(first_name: str, last_name: str, email: str, password: str, user
         username=username)
 
 
+def remove_user(user):
+    user_datastore.delete(user)
+
+
 def get_user_by_email(email: str):
     return user_datastore.find_user(email=email)
 
