@@ -76,7 +76,6 @@ class MovieBuffTests(unittest.TestCase):
             print(num_friends_before)
             print(num_friends_after)
         login()
-        add_friend()
 
     def test_add_friend(self):
         pass
