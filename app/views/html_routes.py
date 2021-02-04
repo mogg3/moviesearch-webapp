@@ -4,7 +4,7 @@ from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
 
 from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
-    add_profile_picture_to_user, delete_profile_picture_if_exists, clean_database
+    add_profile_picture_to_user, delete_profile_picture_if_exists, remove_user as ru
 
 from views import app
 from views.utils.flask_wtf_classes import RegisterForm, LoginForm
@@ -60,6 +60,14 @@ def sign_up():
 @login_required
 def sign_out():
     logout_user()
+    return redirect(url_for('index._index'))
+
+
+@app.route('/users/<username>', methods=['GET'])
+@login_required
+def remove_user(username):
+    user = get_user_by_username(username)
+    ru(user)
     return redirect(url_for('index._index'))
 
 
