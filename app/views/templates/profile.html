@@ -32,7 +32,12 @@
             </div>
             <div class="column" id="row1-col2">
                 <h1 id ="name-h">{{current_user.username}}</h1>
-                <a href="{{ url_for('remove_user', username=current_user.username)}}">Remove account</a>
+                <a href="" id="delete_user" onclick="function confirm_delete() {
+                    if (confirm('want do delete?')) {
+                        document.getElementById('delete_user').href='{{ url_for('remove_user', username=current_user.username)}}';
+                    }
+                }
+                remove_user()">Remove account</a>
                 <h3>{{current_user.roles[0] if current_user.roles| length > 0}}</h3><br>
 
                 <div id="user-info">
