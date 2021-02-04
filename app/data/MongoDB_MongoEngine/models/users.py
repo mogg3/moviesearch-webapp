@@ -1,6 +1,7 @@
 from flask_security import UserMixin
 
-from mongoengine import StringField, Document, BooleanField, DateTimeField, ListField, ReferenceField, FileField
+from mongoengine import StringField, Document, BooleanField, DateTimeField, ListField, ReferenceField, FileField, \
+    CASCADE
 
 
 class User(Document, UserMixin):
@@ -12,7 +13,7 @@ class User(Document, UserMixin):
     active = BooleanField(default=True)
     confirmed_at = DateTimeField(nullable=True)
     watchlist = ListField()
-    friends = ListField(ReferenceField('User'))
+    friends = ListField(ReferenceField('User'), reverse_delete_rule=CASCADE)
     roles = ListField(ReferenceField('Role'))
     chats = ListField(ReferenceField('Chat'))
     profile_picture = FileField()
