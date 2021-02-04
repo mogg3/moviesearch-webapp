@@ -205,5 +205,10 @@ def get_profile_picture(username):
     # TODO: add check if picture do not exist
     response = current_user.profile_picture.read()
 
+    response = app.response_class(
+        response=response,
+        status=200,
+    )
+
     return response
 
