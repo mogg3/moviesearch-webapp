@@ -21,7 +21,7 @@
     let user = "{{user}}"
     function show_chat(response) {
         $('#chat').empty()
-        var i;
+        let i;
         for (i = 0; i < response.messages.length; i++) {
             if (response.messages[i].sent_by["$oid"] === "{{user.id}}") {
                 let message_from_you = $("<div>")

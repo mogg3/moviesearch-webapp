@@ -4,4 +4,5 @@ __pycache__/
 app/data/omdb/api_settings/
 docker-compose.yml
 app/data/MongoDB_MongoEngine/db_settings
+tests/chromedriver.exe
 

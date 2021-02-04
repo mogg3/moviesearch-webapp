@@ -13,19 +13,19 @@
     </div>
     <div id="add-friend">
         <h4>Add friend</h4>
-        <form id="search-container">
-            <input type="text" id="search" placeholder="Search.." name="search">
-            <button type="submit" id="search_submit">Add</button>
+        <form id="add-container">
+            <input type="text" id="add" placeholder="(username)" name="add">
+            <button type="submit" id="add-submit">Add</button>
         </form>
     </div>
 </div>
 <script>
-    $("#search_submit").click((e) => {
+    $("#add-submit").click((e) => {
         e.preventDefault();
         $.ajax({
             method: 'POST',
             url: '{{ url_for('post_friendship', username=current_user.username) }}',
-            data: {'username': $(search).val()},
+            data: {'username': $(add).val()},
             success: (response) => {
                 get_friends();
             },
@@ -39,6 +39,7 @@
             let link = "friends/" + friends[i]
             let friend = $("<a>")
                 .attr("class", "friend-link")
+                .attr("id", "friend")
                 .attr("href", link)
                 .text(friends[i])
             $('#friends-list').append(friend);

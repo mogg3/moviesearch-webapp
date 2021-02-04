@@ -21,15 +21,11 @@
 <script>
     document.getElementById("random_movie").addEventListener('click', (event) => {
         event.stopPropagation()
-
         for(let i = 0; i < 20; i++) {
             let movie = get_random_movie_from_api()
 
-            if(movie === false) {
-                continue;
-            }
-            else {
-                show_movie_content(movie);
+            if(movie !== false) {
+                show_movie_content(movie)
                 break;
             }
         }
@@ -43,11 +39,11 @@
               success: (response) => {
                   console.log(response)
                    if (response['Response'] === 'False') {
-                       console.log("Woorks")
                        return false;
                    }
                    else
                    {
+                       console.log(response["Title"])
                        return response;
                    }
               },
@@ -112,6 +108,7 @@
             };
 
             let movie_box = $("<div>")
+                .attr("name", "movie-box")
                 .attr("class", "movie-box");
                 {#.attr("onmouseover", "hoover_movie_on(this)")#}
                 {#.attr("onmouseout", "hoover_movie_off(this)");#}
