@@ -106,9 +106,9 @@ def get_friends(username):
 @app.route('/api/users/<username>/friends', methods=['POST'])
 @login_required
 def post_friendship(username):
-    # todo: add friendship request
     found_friend = get_user_by_username(request.values['username'])
     logged_in_user = get_user_by_username(current_user.username)
+
     if found_friend:
         if found_friend in logged_in_user.friends:
             resp = f"you are already friend with {found_friend.username}"
@@ -142,7 +142,6 @@ def get_chat(username):
     return response
 
 
-# Not done
 @app.route('/api/users/<username>/friends/user_name_for_friend/chat', methods=['POST'])
 @login_required
 def post_message(username):

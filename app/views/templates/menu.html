@@ -1,6 +1,7 @@
 <ul id="menu">
 
      {% if current_user.is_authenticated %}
+
         <li>
             <a href="{{ url_for('profile') }}" class="menu__link" >
                 Profile
@@ -34,7 +35,9 @@
             </a>
         </li>
         </ul>
+
      {% else %}
+
          {% if login_form is defined %}
 
         <div id="login_box">
@@ -44,7 +47,9 @@
             <div id="signup-signin">
                 <form action="/" method="POST">
                     <div id="signin">
+
                         {{ login_form.csrf_token }}
+
                         <div style="margin-right:5px;">{{ login_form.email() }}</div>
                         <div style="margin-left:5px;">{{ login_form.password() }}</div>
                         <div style="margin-left:5px;">{{ login_form.submit() }}</div>
@@ -56,5 +61,6 @@
                 </div>
             </div>
         </div>
+
          {% endif %}
     {% endif %}

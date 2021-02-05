@@ -4,36 +4,36 @@
     <meta charset="UTF-8">
     <title>MovieBuff</title>
     <link rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous">
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
             crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mainstyles.css') }}"/>
+
     {% block links %}
     {% endblock %}
-</head>
 
+</head>
 <body>
 
     <div id="menu-header">
         <div id="menu-title">
             <a href="{{ url_for('index._index') }}" class = menu__link>MovieBuff</a>
         </div>
+
         {% include "menu.html" %}
+
     </div>
 
     <div id = "main-container">
+
         {% block content %}
         {% endblock %}
+
     </div>
-
-
-<!--    <footer class="footer">-->
-<!--        <p>MovieBuff , copyright © 2020</p>-->
-<!--    </footer>-->
 
 </body>
 </html>

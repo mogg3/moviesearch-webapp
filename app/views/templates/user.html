@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block  content %}
+
 <div id="user-info-container">
     <h1>{{user}}</h1>
     <h5 style="display:inline;">Firstname: </h5><p style="display:inline;">{{user.first_name}}</p><br>
@@ -16,24 +17,27 @@
 </div>
 <script>
     let username = "{{user.username}}"
+
      function get_role() {
-            $.ajax({
-                method: 'get',
-                url: '{{ url_for('get_if_admin_role', username=current_user.username) }}',
-                data: {'username': JSON.stringify(username)},
-                success: (response) => {
-                           show_role_info(JSON.parse(response));
-                },
-                datatype: 'json'
-            })
+        $.ajax({
+            method: 'get',
+            url: '{{ url_for('get_if_admin_role', username=current_user.username) }}',
+            data: {'username': JSON.stringify(username)},
+            success: (response) => {
+                       show_role_info(JSON.parse(response));
+            },
+            datatype: 'json'
+        })
         }
+
      function show_role_info(role_info) {
-         $('#user_role_info').empty()
+        $('#user_role_info').empty()
          let make_admin_button = "<p style=\"display:inline; margin-right:10px\">(no roles)</p><button id=" + "make_admin" + " onclick ='add_role_to_user()'>Add admin priviliges</button>";
          let remove_admin_button = "<p style=\"display:inline; margin-right:10px\">Admin</p><button id=" + "remove_admin"  + " onclick ='remove_role_from_user()'>Remove admin priviliges</button>";
 
          $('#user_role_info').append(role_info ? remove_admin_button : make_admin_button);
      }
+
      function add_role_to_user() {
          get_role()
           $.ajax({
@@ -47,19 +51,22 @@
             })
          get_role()
      }
+
      function remove_role_from_user() {
          get_role()
          $.ajax({
-                method: 'DELETE',
-                url: '{{ url_for('delete_role', username=current_user.username) }}',
-                data: {'username': JSON.stringify(username)},
-                success: (response) => {
-                           console.log(response)
-                },
-                datatype: 'json'
+             method: 'DELETE',
+             url: '{{ url_for('delete_role', username=current_user.username) }}',
+             data: {'username': JSON.stringify(username)},
+
+             success: (response) => {
+                 console.log(response)
+            },
+            datatype: 'json'
             })
          get_role()
      }
      get_role()
  </script>
+
 {% endblock %}
