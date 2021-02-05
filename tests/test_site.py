@@ -1,14 +1,15 @@
+import time
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
-
+import selenium
 class MovieBuffTests(unittest.TestCase):
 
     def setUp(self):
+
         self.driver = webdriver.Chrome('chromedriver.exe')
 
     def test_search(self):
@@ -49,40 +50,51 @@ class MovieBuffTests(unittest.TestCase):
         self.assertEquals(expectedUrl, actualUrl)
 
     def test_login(self):
-        def login():
-            self.driver.get('http://127.0.0.1:5000')
+        self.driver.get('http://127.0.0.1:5000')
 
-            email_field = self.driver.find_element_by_id('email')
-            password_field = self.driver.find_element_by_id('password')
-            submit = self.driver.find_element_by_name('submit')
+        email_field = self.driver.find_element_by_id('email')
+        password_field = self.driver.find_element_by_id('password')
+        submit = self.driver.find_element_by_name('submit')
 
-            email_field.send_keys('test@test.se')
-            password_field.send_keys('test123')
-            submit.send_keys(Keys.RETURN)
+        email_field.send_keys('test@test.se')
+        password_field.send_keys('test123')
+        submit.send_keys(Keys.RETURN)
 
-            expectedUrl = "http://127.0.0.1:5000/profile"
-            actualUrl = self.driver.current_url
-            self.assertEquals(actualUrl, expectedUrl)
-
-        def add_friend():
-            self.driver.get('http://127.0.0.1:5000/friends')
-            username_field = self.driver.find_element_by_id('add')
-            submit = self.driver.find_element_by_id('add-submit')
-
-            num_friends_before = len(self.driver.find_elements_by_class_name('friend-link'))
-            username_field.send_keys('ellica123')
-            submit.send_keys(Keys.RETURN)
-            num_friends_after = len(self.driver.find_elements_by_class_name('friend-link'))
-            print(num_friends_before)
-            print(num_friends_after)
-        login()
+        expectedUrl = "http://127.0.0.1:5000/profile"
+        actualUrl = self.driver.current_url
+        self.assertEqual(actualUrl, expectedUrl)
 
     def test_add_friend(self):
-        pass
-        #self.assertEqual(num_friends_before+1, num_friends_after)
+        self.test_login()
+
+        self.driver.get('http://127.0.0.1:5000/friends')
+        username_field = self.driver.find_element_by_id('add')
+        submit = self.driver.find_element_by_id('add-submit')
+
+        num_friends_before = len(self.driver.find_elements_by_class_name('friend-link'))
+        username_field.send_keys('ellica123')
+        submit.send_keys(Keys.RETURN)
+        num_friends_after = len(self.driver.find_elements_by_class_name('friend-link'))
+        print(num_friends_before)
+        print(num_friends_after)
 
     def test_send_message(self):
-        pass
+        self.test_login()
+
+        self.driver.get('http://127.0.0.1:5000/friends')
+
+        friends = self.driver.find_elements_by_class_name('friend-link')
+        friend_link = friends[0]
+        friend_link.click()
+
+        text_input = self.driver.find_element_by_id('send')
+        submit = self.driver.find_element_by_id('send_submit')
+
+        text_input.click()
+        text_input.send_keys('Hej på dig!')
+        submit.send_keys(Keys.RETURN)
+        print(text_input.get_attribute('value').encode('utf-8'))
+        print(self.driver.page_source)
 
     def test_remove_user(self):
         self.driver.get('http://127.0.0.1:5000/profile')
