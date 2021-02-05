@@ -110,10 +110,12 @@ def watchlist():
 def friends():
     return render_template("friends.html", user=current_user, friends=current_user.friends)
 
+
 @app.route('/friends/<username>', methods=['GET', 'POST'])
 @login_required
 def friend(username):
     return render_template("friend.html", user=current_user, friend=get_user_by_username(username))
+
 
 @app.route("/admin", methods=['GET'])
 @roles_required("admin")

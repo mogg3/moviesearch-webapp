@@ -5,6 +5,7 @@
 {% endblock %}
 
 {%  block content %}
+
 <div id="parent">
     <div id="square">
         <div class="row" id="row1">
@@ -30,6 +31,7 @@
                     </form>
                 </div>
             </div>
+
             <div class="column" id="row1-col2">
                 <h1 id ="name-h">{{current_user.username}}</h1>
                 <a href="" id="delete_user" onclick="function confirm_delete() {
@@ -50,4 +52,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

@@ -3,6 +3,7 @@
 {% block  links %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/friend.css') }}"/>
 {% endblock %}
+
 {% block content %}
 
 <div id="chat-container">
@@ -19,6 +20,7 @@
 <script>
     let friend = "{{friend}}"
     let user = "{{user}}"
+
     function show_chat(response) {
         $('#chat').empty()
         let i;
@@ -38,6 +40,7 @@
             }
         }
     }
+
     function get_chat() {
         $.ajax({
             method: 'GET',
@@ -49,6 +52,7 @@
             }
         })
     }
+
     $("#send_submit").click((e) => {
         e.preventDefault();
         $.ajax({
@@ -61,6 +65,7 @@
             datatype: 'json'
         })
     })
+
     get_chat()
 </script>
 {% endblock %}
