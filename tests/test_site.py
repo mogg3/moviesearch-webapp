@@ -72,7 +72,7 @@ class MovieBuffTests(unittest.TestCase):
         submit = self.driver.find_element_by_id('add-submit')
 
         num_friends_before = len(self.driver.find_elements_by_class_name('friend-link'))
-        username_field.send_keys('ellica123')
+        username_field.send_keys('hanna')
         submit.send_keys(Keys.RETURN)
         num_friends_after = len(self.driver.find_elements_by_class_name('friend-link'))
         print(num_friends_before)
@@ -87,16 +87,19 @@ class MovieBuffTests(unittest.TestCase):
         friend_link = friends[0]
         friend_link.click()
 
-        text_input = self.driver.find_element_by_id('send')
+        # text_input = self.driver.find_element_by_id('send')
+        text_input = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.ID, 'send')))
         submit = self.driver.find_element_by_id('send_submit')
 
         #Funkar ej
 
         text_input.click()
-        text_input.send_keys('Hej på dig!')
+        # time.sleep(1)
+        text_input.send_keys('hur är läget?!')
         submit.send_keys(Keys.RETURN)
         print(text_input.get_attribute('value').encode('utf-8'))
         print(self.driver.page_source)
+        time.sleep(5)
 
 
     def test_add_profile_picture(self):
