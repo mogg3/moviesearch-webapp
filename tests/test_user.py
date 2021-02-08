@@ -12,6 +12,8 @@ def get_random_chars():
     alphabet = string.ascii_lowercase
     return ''.join(random.choice(alphabet) for i in range(13))
 
+def get_random_email():
+    return f'{get_random_chars()}@{get_random_chars()}.com'
 
 def create_test_user():
 

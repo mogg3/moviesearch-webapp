@@ -4,13 +4,6 @@ from data.MongoDB_MongoEngine.models.users import User
 from data.MongoDB_MongoEngine.db import user_datastore
 
 
-def clean_database():
-    for user in User.objects:
-        user.friends = []
-        user.chats = []
-        user.save()
-
-
 def create_user(first_name: str, last_name: str, email: str, password: str, username: str):
     user_datastore.create_user(
         first_name=first_name,
@@ -73,3 +66,10 @@ def delete_profile_picture_if_exists(user):
     if user.profile_picture:
         user.profile_picture.delete()
     user.save()
+
+
+def clean_database():
+    for user in User.objects:
+        user.friends = []
+        user.chats = []
+        user.save()

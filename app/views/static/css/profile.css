@@ -19,16 +19,10 @@
     margin: 50px;
 }
 
-#file {
-    color:transparent;
-    width:70px;
-}
-
 #profile-picture {
-    border: 3px solid white;
     object-fit: cover;
-    height: 270px;
-    width: 270px;
+    height: 260px;
+    width: 260px;
 }
 
 p {
