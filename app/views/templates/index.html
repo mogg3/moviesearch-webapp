@@ -62,18 +62,9 @@
 
         $.each(response, (i, movie)=> {
 
-            let title = ()=> {
-                title_max_length = 20;
-                return (movie['Title'].length > title_max_length) ?
-                    $("<p>").attr("class", "title").text(movie['Title'].substring(0, 21) + "...") :
-                    $("<p>").attr("class", "title").text(movie['Title']);
-            };
-
             let movie_box = $("<div>")
                 .attr("name", "movie-box")
                 .attr("class", "movie-box");
-                {#.attr("onmouseover", "hoover_movie_on(this)")#}
-                {#.attr("onmouseout", "hoover_movie_off(this)");#}
 
             let poster = $("<img>")
                 .attr("src", response[i]['Poster'])
@@ -84,7 +75,14 @@
             let flex_break = $("<div>")
                 .attr("id", "break");
 
-            $(movie_box).append(title, poster);
+            function title () {
+                title_max_length = 20;
+                return (movie['Title'].length > title_max_length) ?
+                    $("<p>").attr("class", "title").text(movie['Title'].substring(0, 21) + "...") :
+                    $("<p>").attr("class", "title").text(movie['Title']);
+            };
+
+            $(movie_box).append(poster, title());
 
             i === 4 ? $('#result').append(movie_box, flex_break) : $('#result').append(movie_box);
 

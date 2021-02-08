@@ -1,15 +1,9 @@
-@font-face {
-    font-family: 'Netflix Sans';
-    font-weight: 100;
-    font-display: optional;
-    src: url('/views/static/fonts/NetflixSans_W_Th.woff2') format('woff2')
-}
+@import url("http://fonts.googleapis.com/css?family=Oswald:400,300,700");
 
-
-
- .title{
+.title{
      /*font-family: 'Netflix Sans';*/
-     font-size: 20px;
+     /*font-family: 'Oswald', sans-serif !important;*/
+     font-size: 15px;
      color: white;
    }
 
@@ -46,10 +40,8 @@
 .movie-box {
     display: flex;
     flex-direction: column;
-    background-color: black;
-    border: solid gray 1px;
     flex-basis: 15%;
-    align-items: center;
+    align-items: start;
     margin: 0.5%;
     color: white;
 }
@@ -61,7 +53,8 @@
 
 
 .movie-box:hover {
-    border: solid white 1px;
+    transform: scale(0.96);
+    transition: transform 0.5s;
     cursor: pointer;
 }
 
@@ -129,6 +122,7 @@
 
    .movie-box {
        flex-basis: 30%;
+
    }
 }
 

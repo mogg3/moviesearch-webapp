@@ -35,10 +35,10 @@ class RegisterForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Length(min=4, max=40)],
-                        render_kw={"placeholder": "Email address", "id": "email"})
+                        render_kw={"placeholder": "Email address", "id": "email", "class": "form-control"})
     password = PasswordField('Password', validators=[InputRequired(), Length(min=4)],
-                             render_kw={"placeholder": "Password", "id": "password"})
-    remember = BooleanField('Remember me')
-    submit = SubmitField('Sign in', render_kw={"id": "submit"})
+                             render_kw={"placeholder": "Password", "id": "password", "class": "form-control"})
+    remember = BooleanField('Remember me', render_kw={"class": "btn btn-primary"})
+    submit = SubmitField('Sign in', render_kw={"id": "submit", "class": "btn btn-primary"})
 
 
