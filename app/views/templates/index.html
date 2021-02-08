@@ -9,8 +9,8 @@
     <div>
         <div style="background-color: lightskyblue"></div>
         <form id="search-container">
-            <input type="search" id="search" placeholder="Search.." name="search">
-            <button type="submit" id="search_submit">Search</button>
+            <input type="search" id="search" placeholder="Search.." class="form-control" name="search">
+            <button type="submit" id="search_submit" class="form-control">Search</button>
         </form>
     </div>
 
@@ -62,18 +62,9 @@
 
         $.each(response, (i, movie)=> {
 
-            let title = ()=> {
-                title_max_length = 20;
-                return (movie['Title'].length > title_max_length) ?
-                    $("<p>").attr("class", "title").text(movie['Title'].substring(0, 21) + "...") :
-                    $("<p>").attr("class", "title").text(movie['Title']);
-            };
-
             let movie_box = $("<div>")
                 .attr("name", "movie-box")
                 .attr("class", "movie-box");
-                {#.attr("onmouseover", "hoover_movie_on(this)")#}
-                {#.attr("onmouseout", "hoover_movie_off(this)");#}
 
             let poster = $("<img>")
                 .attr("src", response[i]['Poster'])
@@ -84,7 +75,14 @@
             let flex_break = $("<div>")
                 .attr("id", "break");
 
-            $(movie_box).append(title, poster);
+            function title () {
+                title_max_length = 20;
+                return (movie['Title'].length > title_max_length) ?
+                    $("<p>").attr("class", "title").text(movie['Title'].substring(0, 21) + "...") :
+                    $("<p>").attr("class", "title").text(movie['Title']);
+            };
+
+            $(movie_box).append(poster, title());
 
             i === 4 ? $('#result').append(movie_box, flex_break) : $('#result').append(movie_box);
 
@@ -126,6 +124,7 @@
         $('#movie-content').empty();
         $('#movie-content-container').hide();
         document.getElementById("result").style.opacity = 0.3;
+
         $('#movie-content-container').fadeTo(300, 0.9, function () {
         });
         $('#movie-content').fadeTo(300, 0.9, function () {
@@ -148,35 +147,46 @@
         let back = $("<input>")
             .attr("id", "back")
             .attr("onClick", "go_back(this)")
-            .attr("type", "image")
-            .attr("src", "static/images/back_btn.png")
+            .attr("class", "btn btn-secondary")
+            .attr('value', 'Back')
+            .attr("src", "static/images/back_btn.png");
+
 
         let title = $("<h1>")
-            .text(movie["Title"]);
+            .text(movie["Title"])
+            .attr("class", "movie-title");
 
         let runtime = $("<p>")
-            .text(movie["Runtime"]);
+            .text(movie["Runtime"])
+            .attr("class", "movie-text");
+
 
         let year = $("<p>")
-            .text(movie["Year"]);
+            .text(movie["Year"])
+            .attr("class", "movie-text");
 
         let genre = $("<p>")
-            .text(movie["Genre"]);
+            .text(movie["Genre"])
+            .attr("class", "movie-text");
 
         let director = $("<p>")
-            .text(movie["Director"]);
+            .text(movie["Director"])
+            .attr("class", "movie-text");
 
         let actor = $("<p>")
-            .text(movie["Actors"]);
+            .text(movie["Actors"])
+            .attr("class", "movie-text");
 
         let plot = $("<p>")
-            .text(movie["Plot"]);
+            .text(movie["Plot"])
+            .attr("class", "movie-text");
 
-        $("#movie-content").append(title, runtime, year, genre, director, actor, plot, back);
+        $("#movie-content").append(title, runtime, year, genre, director, actor, plot);
 
         {% if current_user.is_authenticated %}
             $('#movie-content').append(add);
         {% endif %}
+        $("#movie-content").append(back);
     }
 
     function go_back(element) {

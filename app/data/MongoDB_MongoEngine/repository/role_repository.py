@@ -2,7 +2,6 @@ from data.MongoDB_MongoEngine.models.roles import Role
 from data.MongoDB_MongoEngine.db import user_datastore
 
 
-
 def create_role(name):
     user_datastore.create_role(name=name)
 

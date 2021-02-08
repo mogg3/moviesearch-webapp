@@ -90,17 +90,25 @@ class MovieBuffTests(unittest.TestCase):
         text_input = self.driver.find_element_by_id('send')
         submit = self.driver.find_element_by_id('send_submit')
 
+        #Funkar ej
+
         text_input.click()
         text_input.send_keys('Hej på dig!')
         submit.send_keys(Keys.RETURN)
         print(text_input.get_attribute('value').encode('utf-8'))
         print(self.driver.page_source)
 
-    def test_remove_user(self):
+
+    def test_add_profile_picture(self):
+        self.test_login()
         self.driver.get('http://127.0.0.1:5000/profile')
+        submit_button = self.driver.find_element_by_id('file')
+
+        self.driver.close()
 
     def tearDown(self):
-        self.driver.close()
+        pass
+
 
 
 if __name__ == '__main__':

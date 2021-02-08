@@ -1,10 +1,6 @@
 from data.MongoDB_MongoEngine.repository import user_repository as ur
 
 
-def clean_database():
-    ur.clean_database()
-
-
 def create_user(first_name: str, last_name: str, email: str, password: str, username: str):
     ur.create_user(first_name, last_name, email, password, username)
 
@@ -33,7 +29,6 @@ def add_profile_picture_to_user(user, profile_picture):
     ur.add_profile_picture_to_user(user, profile_picture)
 
 
-# används ej än
 def add_friendship(user, friend):
     ur.add_friendship(user, friend)
 
@@ -52,3 +47,7 @@ def delete_movie_from_users_watchlist(user, movie):
 
 def delete_profile_picture_if_exists(user):
     ur.delete_profile_picture_if_exists(user)
+
+
+def clean_database():
+    ur.clean_database()

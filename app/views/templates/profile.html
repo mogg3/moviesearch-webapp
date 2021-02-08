@@ -11,11 +11,19 @@
         <div class="row" id="row1">
             <div class="column" id="row1-col1">
                 <div id="profile-picture-container">
-                    <img id="profile-picture" src="{{url_for('get_profile_picture', username=current_user.username)}}" onerror="this.onerror=null;this.src='static/images/profile.png';" /><br>
+                    <img id="profile-picture"  src="{{url_for('get_profile_picture', username=current_user.username)}}" onerror="this.onerror=null;this.src='static/images/profile.png';" /><br>
                     <form action="{{ url_for('post_profile_picture') }}" method="POST" enctype="multipart/form-data">
                       <label for="profile_picture"></label>
-                      <input type="file" name="file" id="file" title="&nbsp;"><br/>
-                      <input type="submit">
+
+                    <div type='button' class = 'btn btn-secondary' id="edit" style="margin-top: 10px;" onClick="function show_file_input(e) {
+                        document.getElementById('file').style.visibility='visible';
+                        document.getElementById('submit_profile_picture').style.visibility='visible';
+                        document.getElementById('edit').style.visibility='hidden';
+
+                    }
+                    show_file_input()"> Edit </div>
+                        <input type="file" name="file" id="file" style="visibility: hidden;" title="&nbsp;"><br/>
+                      <input type="submit" id="submit_profile_picture" style="visibility: hidden;">
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
                             {% for message in messages %}

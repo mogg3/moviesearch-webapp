@@ -1,25 +1,16 @@
-@font-face {
-    font-family: 'Netflix Sans';
-    font-weight: 100;
-    font-display: optional;
-    src: url('/views/static/fonts/NetflixSans_W_Th.woff2') format('woff2')
-}
-
-
-
- .title{
-     /*font-family: 'Netflix Sans';*/
-     font-size: 20px;
+.title{
+    font-family: 'Roboto', sans-serif;
+     font-size: 15px;
      color: white;
    }
 
-
 #search_submit {
+
      position: absolute;
      top: -999px;
      left: -999px;
-     width: 0;
-     height: 0;
+     width: 20px;
+     height: 20px;
 }
 
 #search-container {
@@ -46,22 +37,19 @@
 .movie-box {
     display: flex;
     flex-direction: column;
-    background-color: black;
-    border: solid gray 1px;
     flex-basis: 15%;
-    align-items: center;
+    align-items: start;
     margin: 0.5%;
     color: white;
 }
 
 .poster {
     object-fit: cover;
-    /*object-position: center;*/
 }
 
-
 .movie-box:hover {
-    border: solid white 1px;
+    transform: scale(0.96);
+    transition: transform 0.5s;
     cursor: pointer;
 }
 
@@ -77,19 +65,26 @@
     margin-left: -450px;
     margin-top: -250px;
     border: solid white 2px;
-    /*animation: anim 2s;*/
 }
 
-/*@keyframes anim {*/
-/*    from { margin-left : 13%; }*/
-/*    to   { margin-top: 18%; }*/
-/*}*/
-
-
 #movie-content {
+    display: flex;
+    flex-direction: column;
     margin: 30px;
     color: whitesmoke;
 
+}
+
+.movie_text {
+    font-size: 14px;
+}
+
+.movie-title {
+    justify-self: center;
+    position: absolute;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%)
 }
 
 .poster {
@@ -103,16 +98,11 @@
     width: 30px;
 }
 
-#back {
-    height: 45px;
-    width: 45px;
-}
 
 #break {
   flex-basis: 100%;
   height: 0;
 }
-
 
 @media screen and (max-width: 1200px) {
     .title {
@@ -120,7 +110,6 @@
     }
 
      #movie-content-container {
-
          width: 600px;
          height: 200px;
          margin-left: -300px;
@@ -131,8 +120,6 @@
        flex-basis: 30%;
    }
 }
-
-
 
 @media screen and (max-width: 900px) {
     .title {
