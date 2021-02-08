@@ -1,7 +1,7 @@
 ## [ MovieBuff - By Marcus & Oskar ]
 
-#### **Backstory** ####
-Detta projekt gjordes för kursen 'Webbramverk'. Temat på hemsidan är film. 
+#### **Bakgrund** ####
+Detta projekt gjordes för kursen 'Webbramverk' inom ramen för utbildningen "Pythonutvecklare med inriktning AI". Temat på hemsidan är film. 
 
 Sidan har fungerat som en experimentverkstad för lärande. Vi har testat att lösa samma saker fast på olika sätt.
 
