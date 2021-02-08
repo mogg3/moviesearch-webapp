@@ -13,6 +13,3 @@ import views.api_routes
 from views.html_routes import index
 
 app.register_blueprint(index)
-
-
-print(app.url_map)
