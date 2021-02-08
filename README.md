@@ -27,7 +27,7 @@ Sidan har fungerat som en experimentverkstad för lärande. Vi har testat att l�
 ***Sökfunktionen***
 <p align="center">
 <img src= "https://github.com/OskarHal/Project_Movie_Web_App/blob/master/_documents/search.gif?raw=true/"
-  width="1000" height="527">
+  width="800" height="421">
 </p>
 
 
