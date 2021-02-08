@@ -6,20 +6,27 @@ Detta projekt gjordes för kursen 'Webbramverk'. Temat på hemsidan är film.
 Sidan har fungerat som en experimentverkstad för lärande. Vi har testat att lösa samma saker fast på olika sätt.
 
 **Funktionalitet** 
-- Söka fram filmer
-- Skapa konto
-- Chatta
-- Lägga till filmer i watchlist. 
+* Söka fram filmer
+* Skapa konto
+* Chatta
+* Lägga till filmer i watchlist. 
 
 **Implementation av funktionalitet**
-Flask
-MongoEngine
-Bootstrap
+* Flask som webbramverk
+* MongoEngine som databas
+* Selenium för testning
 
+**Språk**
+* Python
+* Javascript + jquery
+* CSS + Bootstrap
+* HTML
 
-***Admin application***
+***Sökfunktionen***
 <p align="center">
 <img src= "https://github.com/OskarHal/Project_Movie_Web_App/blob/master/_documents/search.gif?raw=true/"
   width="1000" height="527">
 </p>
+
+
 
