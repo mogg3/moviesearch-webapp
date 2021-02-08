@@ -56,6 +56,7 @@ def sign_up():
 
     return render_template('signup.html', register_form=form, errors=errors)
 
+
 @app.route("/signout")
 @login_required
 def sign_out():

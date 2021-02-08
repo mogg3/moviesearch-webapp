@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import selenium
+
+
 class MovieBuffTests(unittest.TestCase):
 
     def setUp(self):
@@ -98,7 +100,6 @@ class MovieBuffTests(unittest.TestCase):
         print(text_input.get_attribute('value').encode('utf-8'))
         print(self.driver.page_source)
 
-
     def test_add_profile_picture(self):
         self.test_login()
         self.driver.get('http://127.0.0.1:5000/profile')
@@ -108,8 +109,6 @@ class MovieBuffTests(unittest.TestCase):
 
     def tearDown(self):
         pass
-
-
 
 if __name__ == '__main__':
     unittest.main()
