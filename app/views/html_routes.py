@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from flask_security import roles_required
 from flask_security.utils import login_user, logout_user, verify_password
 
+from controllers.chat_controller import remove_user_chats
 from controllers.user_controller import create_user, get_all_users, get_user_by_username, get_user_by_email, \
     add_profile_picture_to_user, delete_profile_picture_if_exists, remove_user as ru
 
@@ -69,6 +70,7 @@ def sign_out():
 def remove_user(username):
     user = get_user_by_username(username)
     ru(user)
+    remove_user_chats(user)
     return redirect(url_for('index._index'))
 
 
