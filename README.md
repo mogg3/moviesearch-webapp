@@ -8,8 +8,10 @@ Sidan har fungerat som en experimentverkstad för lärande. Vi har testat att l�
 **Funktionalitet** 
 * Söka fram filmer
 * Skapa konto
+* Lägga till vänner
 * Chatta
 * Lägga till filmer i watchlist. 
+* Admin-roll
 
 **Implementation av funktionalitet**
 * Flask som webbramverk
