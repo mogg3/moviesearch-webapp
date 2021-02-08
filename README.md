@@ -16,3 +16,10 @@ Flask
 MongoEngine
 Bootstrap
 
+
+***Admin application***
+<p align="center">
+<img src= "https://github.com/OskarHal/Project_Movie_Web_App/blob/master/_documents/search.gif?raw=true/"
+  width="500" height="379">
+</p>
+
