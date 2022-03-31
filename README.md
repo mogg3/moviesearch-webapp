@@ -1,4 +1,4 @@
-## [ MovieBuff - By Marcus & Oskar ]
+## [ MovieBuff - By Marcus Eriksson & Oskar Halin (från Pythonutveckalre inriktning AI, Göteborg)]
 
 #### **Bakgrund** ####
 Detta projekt gjordes för kursen 'Webbramverk' inom ramen för utbildningen "Pythonutvecklare med inriktning AI". Temat på hemsidan är film. 
